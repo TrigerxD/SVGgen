@@ -1,9 +1,11 @@
 #pragma once
 #include <iostream>
 #include <windows.h>
+#include "Generator.h"
 
 typedef enum Handles {
-
+	GENERATE = 1,
+	SHOW
 } handles;
 
 class Control {
@@ -11,8 +13,9 @@ public:
 	Control();
 	Control(LPSTR type, LPSTR title, int x, int y, int width, int height);
 	void setParams(LPSTR type, LPSTR title, int x, int y, int width, int height);
-	void initialize(HWND handle, HINSTANCE instance);
+	void initialize(HWND window, HINSTANCE instance);
 	HWND getHandle();
+	LPSTR getTitleAddress();
 private:
 	HWND control;
 	LPSTR type, title;
@@ -27,6 +30,7 @@ public:
 	WNDCLASSEX getWindow();
 	LPSTR getClassName();
 	void createView(HINSTANCE instance, LPSTR title);
+	Control *getControl(handles handle);
 	HWND getView();
 private:
 	LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -36,5 +40,6 @@ private:
 	HWND view; // g³óne okno widoku
 	Control generate, show; // uchwyty do guzików
 	static UI *me;
+	Generator generator;
 };
 

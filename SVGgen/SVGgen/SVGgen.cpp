@@ -10,6 +10,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	if (RegisterClassEx(&okno.getWindow())) {
 		okno.createView(hInstance, (LPSTR)"SVGgen");
+		(okno.getControl(GENERATE))->setParams((LPSTR)"BUTTON", (LPSTR)"Generate", 510, 390, 100, 40);
+		(okno.getControl(GENERATE))->initialize(okno.getView(), hInstance);
 		if (okno.getView()) {
 			ShowWindow(okno.getView(), nCmdShow);
 			UpdateWindow(okno.getView());
@@ -26,6 +28,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 UI::UI() 
 {
+	generator = Generator();
 	generate = Control();
 	show = Control();
 	me = this;
@@ -66,6 +69,18 @@ void UI::createView(HINSTANCE instance, LPSTR title)
 	view = CreateWindowEx(WS_EX_WINDOWEDGE, className, title, WS_SYSMENU, CW_USEDEFAULT, CW_USEDEFAULT, width, height, NULL, NULL, instance, NULL);
 }
 
+Control * UI::getControl(handles handle)
+{
+	switch (handle) {
+	case GENERATE:
+		return &generate;
+	case SHOW:
+		return &show;
+	default:
+		break;
+	}
+}
+
 HWND UI::getView()
 {
 	return view;
@@ -78,6 +93,7 @@ LRESULT CALLBACK UI::Proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) 
 {
+	HWND t;
 	switch (msg)
 	{
 	case WM_CLOSE:
@@ -89,10 +105,11 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		break;
 
 	case WM_COMMAND:
-		if ((HWND)lParam == generate.getHandle()) {
-			// generate
+		t = (HWND)lParam;
+		if ((LPSTR)lParam == (&generate)->getTitleAddress()) {
+			//generate
 		}
-		else if ((HWND)lParam == show.getHandle()) {
+		else if ((HWND)lParam == (&show)->getHandle()) {
 
 		}
 		break;
@@ -134,12 +151,17 @@ void Control::setParams(LPSTR type, LPSTR title, int x, int y, int width, int he
 	this->height = height;
 }
 
-void Control::initialize(HWND handle, HINSTANCE instance)
+void Control::initialize(HWND window, HINSTANCE instance)
 {
-	control = CreateWindowEx(0, type, title, WS_CHILD | WS_VISIBLE, x, y, width, height, handle, NULL, instance, NULL);
+	control = CreateWindowEx(0, type, title, WS_CHILD | WS_VISIBLE, x, y, width, height, window, NULL, instance, NULL);
 }
 
 HWND Control::getHandle()
 {
 	return control;
+}
+
+LPSTR Control::getTitleAddress()
+{
+	return title;
 }
