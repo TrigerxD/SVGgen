@@ -31,6 +31,14 @@ Uzupełnianie pliku Readme.md - użyjemy go jako raportu końcowego projektu :D
 
 http://webmaster.helion.pl/index.php/svgbudowa
 
+# Importowanie projektu
+
+W razie problemów w file explorer (Visual Studio) SVGgen -> Proporties:
+  1. Configuration properties -> General -> Character set -> Use Multi-Byte Character Set
+  2. C/C++ -> General -> SDL checks -> NO
+  3. C/C++ -> Code generation -> Security Check -> Disable Security Check
+  4. Linker -> System -> Subsystem -> Windows
+
 # Changelog
 
-  - dodanie user UI, generacja koła poprzez wybór figury w user UI oraz naciśniecie przycisku 'generuj' - Jarek
+  - dodanie user UI - Jarek
