@@ -41,4 +41,4 @@ W razie problemów w file explorer (Visual Studio) SVGgen -> Proporties:
 
 # Changelog
 
-  - dodanie user UI - Jarek
+  - dodanie user UI - UI branch - Jarek
