@@ -1,7 +1,0 @@
-﻿cl : Command line warning D9025: overriding '/sdl-' with '/GS-'
-  Generator.cpp
-  SVGgen.cpp
-d:\workspace\svggen\svggen\svggen\svggen.cpp(28): warning C4244: 'return': conversion from 'WPARAM' to 'int', possible loss of data
-  Generating Code...
-d:\workspace\svggen\svggen\svggen\svggen.cpp(86): warning C4715: 'UI::getControl': not all control paths return a value
-  SVGgen.vcxproj -> D:\Workspace\SVGgen\SVGgen\x64\Debug\SVGgen.exe
