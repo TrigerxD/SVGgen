@@ -10,8 +10,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	if (RegisterClassEx(&okno.getWindow())) {
 		okno.createView(hInstance, (LPSTR)"SVGgen");
-		(okno.getControl(GENERATE))->setParams((LPSTR)"BUTTON", (LPSTR)"Generate", 510, 390, 100, 40);
+		(okno.getControl(GENERATE))->setParams((LPSTR)"BUTTON", (LPSTR)"Generate", 510, 390, 100, 40, GENERATE);
 		(okno.getControl(GENERATE))->initialize(okno.getView(), hInstance);
+		(okno.getControl(FILENAME))->setParams((LPSTR)"EDIT", (LPSTR)"Enter file name", 10, 10, 600, 30, FILENAME);
+		(okno.getControl(FILENAME))->initialize(okno.getView(), hInstance);
 		if (okno.getView()) {
 			ShowWindow(okno.getView(), nCmdShow);
 			UpdateWindow(okno.getView());
@@ -24,14 +26,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 	}
 	return komunikat.wParam;
-}
+}		
 
 UI::UI() 
 {
-	generator = Generator();
-	generate = Control();
-	show = Control();
-	me = this;
+	this->generate = Control();
+	this->show = Control();
+	this->me = this;
 }
 
 UI::UI(HINSTANCE instance, LPSTR className, int width, int height) 
@@ -71,11 +72,14 @@ void UI::createView(HINSTANCE instance, LPSTR title)
 
 Control * UI::getControl(handles handle)
 {
-	switch (handle) {
+	switch (handle)
+	{
 	case GENERATE:
 		return &generate;
 	case SHOW:
 		return &show;
+	case FILENAME: 
+		return &fileName;
 	default:
 		break;
 	}
@@ -93,7 +97,9 @@ LRESULT CALLBACK UI::Proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) 
 {
-	HWND t;
+	int size_alloc;
+	LPSTR Buffer;
+
 	switch (msg)
 	{
 	case WM_CLOSE:
@@ -105,12 +111,18 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		break;
 
 	case WM_COMMAND:
-		t = (HWND)lParam;
-		if ((LPSTR)lParam == (&generate)->getTitleAddress()) {
-			//generate
+		if ((HWND)lParam == hGenerate) {
+			Generator generator = Generator();
+			size_alloc = GetWindowTextLength(hFileName);
+			Buffer = (LPSTR)GlobalAlloc(GPTR, size_alloc + 1);
+			GetWindowText(hFileName, Buffer, size_alloc + 1);
+			if(generator.appendFileName((char*)Buffer))
+				SetWindowText(hFileName, "OK");
+			else
+				SetWindowText(hFileName, "ONLY ALPHANUMERIC CHARACTERS ARE ALLOWED (start with a-z or A-Z)");
 		}
-		else if ((HWND)lParam == (&show)->getHandle()) {
-
+		else if ((HWND)lParam == hShow) {
+			//podglad
 		}
 		break;
 
@@ -123,6 +135,7 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 Control::Control()
 {
+	name = DEFAULT;
 	type = (LPSTR)"STATIC";
 	title = (LPSTR)"default";
 	x = 0;
@@ -141,8 +154,9 @@ Control::Control(LPSTR type, LPSTR title, int x, int y, int width, int height)
 	this->height = height;
 }
 
-void Control::setParams(LPSTR type, LPSTR title, int x, int y, int width, int height)
+void Control::setParams(LPSTR type, LPSTR title, int x, int y, int width, int height, handles name)
 {
+	this->name = name;
 	this->title = title;
 	this->type = type;
 	this->x = x;
@@ -153,12 +167,19 @@ void Control::setParams(LPSTR type, LPSTR title, int x, int y, int width, int he
 
 void Control::initialize(HWND window, HINSTANCE instance)
 {
-	control = CreateWindowEx(0, type, title, WS_CHILD | WS_VISIBLE, x, y, width, height, window, NULL, instance, NULL);
-}
-
-HWND Control::getHandle()
-{
-	return control;
+	switch (name) {
+	case GENERATE:
+		hGenerate = CreateWindowEx(0, type, title, WS_CHILD | WS_VISIBLE, x, y, width, height, window, NULL, instance, NULL);
+		break;
+	case SHOW:
+		hShow = CreateWindowEx(0, type, title, WS_CHILD | WS_VISIBLE, x, y, width, height, window, NULL, instance, NULL);
+		break;
+	case FILENAME:
+		hFileName = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_VISIBLE | WS_BORDER, x, y, width, height, window, NULL, instance, NULL);
+		break;
+	default:
+		break;
+	}
 }
 
 LPSTR Control::getTitleAddress()

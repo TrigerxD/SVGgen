@@ -1,23 +1,25 @@
 #pragma once
 #include <iostream>
-#include <windows.h>
 #include "Generator.h"
+
+HWND hGenerate, hShow, hFileName;
 
 typedef enum Handles {
 	GENERATE = 1,
-	SHOW
+	SHOW,
+	FILENAME,
+	DEFAULT
 } handles;
 
 class Control {
 public:
 	Control();
 	Control(LPSTR type, LPSTR title, int x, int y, int width, int height);
-	void setParams(LPSTR type, LPSTR title, int x, int y, int width, int height);
+	void setParams(LPSTR type, LPSTR title, int x, int y, int width, int height, handles name);
 	void initialize(HWND window, HINSTANCE instance);
-	HWND getHandle();
 	LPSTR getTitleAddress();
 private:
-	HWND control;
+	handles name;
 	LPSTR type, title;
 	int x, y, width, height;
 };
@@ -39,7 +41,7 @@ private:
 	int width, height;
 	HWND view; // g³óne okno widoku
 	Control generate, show; // uchwyty do guzików
+	Control fileName;
 	static UI *me;
-	Generator generator;
 };
 
