@@ -9,6 +9,7 @@ Uzupełnianie pliku Readme.md - użyjemy go jako raportu końcowego projektu :D
 <b>6.1.2020</b>
 1. Wprowadzenie poprawnej nazwy pliku (nazwa musi zaczynac się od a-z lub A-Z oraz zawierać tylko znaki alfanumerczyne)
 2. Wciśnięcie przycisku Generate (komunikat o poprawności nazwy pliku zostanie wyswietlony w okienku nazwy pliku)
+3. Wynik generacji (czerwone kółko) znajduje się w lokalizacji Results
 
 # Wymagania projektowe
 
@@ -46,4 +47,5 @@ W razie problemów w file explorer (Visual Studio) SVGgen -> Proporties:
 # Changelog
 
   - dodanie user UI - UI branch - Jarek
-  - dodanie guzika generate i kontrolki do wprowadzania nazwy pliku (wraz ze sprawdzaniem nazwy pliku) - Jarek
+  - dodanie guzika generate i kontrolki do wprowadzania nazwy pliku (wraz ze sprawdzaniem nazwy pliku) - UI branch - Jarek
+  - generowanie czerwonego kółka - Generator branch - Jarek
