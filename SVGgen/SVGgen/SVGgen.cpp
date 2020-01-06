@@ -116,8 +116,10 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			size_alloc = GetWindowTextLength(hFileName);
 			Buffer = (LPSTR)GlobalAlloc(GPTR, size_alloc + 1);
 			GetWindowText(hFileName, Buffer, size_alloc + 1);
-			if(generator.appendFileName((char*)Buffer))
+			if (generator.appendFileName((char*)Buffer)) {
 				SetWindowText(hFileName, "OK");
+				generator.generate();
+			}
 			else
 				SetWindowText(hFileName, "ONLY ALPHANUMERIC CHARACTERS ARE ALLOWED (start with a-z or A-Z)");
 		}

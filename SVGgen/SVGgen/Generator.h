@@ -2,6 +2,8 @@
 #include <windows.h>
 #include <string>
 #include <regex>
+#include <fstream>
+#include <iostream>
 
 class Generator {
 public:

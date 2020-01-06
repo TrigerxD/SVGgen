@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 #include "Generator.h"
 
 HWND hGenerate, hShow, hFileName;
