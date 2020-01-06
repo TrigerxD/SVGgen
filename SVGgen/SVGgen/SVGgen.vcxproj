@@ -153,6 +153,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Figure.cpp" />
     <ClCompile Include="Generator.cpp" />
     <ClCompile Include="SVGgen.cpp" />
   </ItemGroup>
