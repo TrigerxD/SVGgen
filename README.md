@@ -11,6 +11,18 @@ Uzupełnianie pliku Readme.md - użyjemy go jako raportu końcowego projektu :D
 2. Wciśnięcie przycisku Generate (komunikat o poprawności nazwy pliku zostanie wyswietlony w okienku nazwy pliku)
 3. Wynik generacji (czerwone kółko) znajduje się w lokalizacji Results
 
+# Wyglad pliku
+
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC " -//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+<circle cx="100" cy="100" r="50" fill="red" /> - figura rysowana
+</svg>
+
+<description text="Enter description here"/> - opis figury
+
 # Wymagania projektowe
 
 1. User friendly UI
@@ -49,3 +61,4 @@ W razie problemów w file explorer (Visual Studio) SVGgen -> Proporties:
   - dodanie user UI - UI branch - Jarek
   - dodanie guzika generate i kontrolki do wprowadzania nazwy pliku (wraz ze sprawdzaniem nazwy pliku) - UI branch - Jarek
   - generowanie czerwonego kółka - Generator branch - Jarek
+  - generowanie opisu do figury, dodano okno do wpisania opisu - generateDescription branch - Jarek
