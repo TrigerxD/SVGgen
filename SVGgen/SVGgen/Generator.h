@@ -11,10 +11,11 @@
 class Generator {
 public:
 	Generator();
-	void generate();
+	void generate(char* Description);
 	int appendFileName(char* fileName);
 private:
 	Figure *figure;
+	Description * description;
 	void fileSave();
 	std::string fileName;
 	std::string file;

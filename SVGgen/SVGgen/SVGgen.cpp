@@ -14,6 +14,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		(okno.getControl(GENERATE))->initialize(okno.getView(), hInstance);
 		(okno.getControl(FILENAME))->setParams((LPSTR)"EDIT", (LPSTR)"Enter file name", 10, 10, 600, 30, FILENAME);
 		(okno.getControl(FILENAME))->initialize(okno.getView(), hInstance);
+		(okno.getControl(DESCRIPTION))->setParams((LPSTR)"EDIT", (LPSTR)"Enter description here", 250, 50, 360, 330, DESCRIPTION);
+		(okno.getControl(DESCRIPTION))->initialize(okno.getView(), hInstance);
 		if (okno.getView()) {
 			ShowWindow(okno.getView(), nCmdShow);
 			UpdateWindow(okno.getView());
@@ -32,6 +34,7 @@ UI::UI()
 {
 	this->generate = Control();
 	this->show = Control();
+	this->description = Control();
 	this->me = this;
 }
 
@@ -80,6 +83,8 @@ Control * UI::getControl(handles handle)
 		return &show;
 	case FILENAME: 
 		return &fileName;
+	case DESCRIPTION:
+		return &description;
 	default:
 		break;
 	}
@@ -98,7 +103,7 @@ LRESULT CALLBACK UI::Proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) 
 {
 	int size_alloc;
-	LPSTR Buffer;
+	LPSTR Buffer, Description;
 
 	switch (msg)
 	{
@@ -116,9 +121,12 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			size_alloc = GetWindowTextLength(hFileName);
 			Buffer = (LPSTR)GlobalAlloc(GPTR, size_alloc + 1);
 			GetWindowText(hFileName, Buffer, size_alloc + 1);
+			size_alloc = GetWindowTextLength(hDescription);
+			Description = (LPSTR)GlobalAlloc(GPTR, size_alloc + 1);
+			GetWindowText(hDescription, Description, size_alloc + 1);
 			if (generator.appendFileName((char*)Buffer)) {
 				SetWindowText(hFileName, "OK");
-				generator.generate();
+				generator.generate(Description);
 			}
 			else
 				SetWindowText(hFileName, "ONLY ALPHANUMERIC CHARACTERS ARE ALLOWED (start with a-z or A-Z)");
@@ -178,6 +186,9 @@ void Control::initialize(HWND window, HINSTANCE instance)
 		break;
 	case FILENAME:
 		hFileName = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_VISIBLE | WS_BORDER, x, y, width, height, window, NULL, instance, NULL);
+		break;
+	case DESCRIPTION:
+		hDescription = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_VISIBLE | WS_BORDER, x, y, width, height, window, NULL, instance, NULL);
 		break;
 	default:
 		break;

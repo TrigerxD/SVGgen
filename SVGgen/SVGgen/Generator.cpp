@@ -2,16 +2,20 @@
 
 Generator::Generator()
 {
-	figure = new Circle("100","100","50","red");
+	figure = new Circle();
+	description = new Description();
 	this->file = "";
 	this->fileName = "Results/";
 	this->fileNameSample = std::regex("([[:alpha:]])[[:alnum:]]*");
 }
 
-void Generator::generate()
-{
+void Generator::generate(char* Description)
+{	
+	this->((Circle*)figure)->setParams("100", "100", "50", "red");
+	this->description->setParams(Description);
 	this->file.append(this->header);
 	this->file.append(this->figure->generateSvgTag());
+	this->file.append(this->description->generateDescription());
 	fileSave();
 }
 

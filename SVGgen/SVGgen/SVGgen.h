@@ -1,12 +1,13 @@
 #pragma once
 #include "Generator.h"
 
-HWND hGenerate, hShow, hFileName;
+HWND hGenerate, hShow, hFileName, hDescription;
 
 typedef enum Handles {
 	GENERATE = 1,
 	SHOW,
 	FILENAME,
+	DESCRIPTION,
 	DEFAULT
 } handles;
 
@@ -41,6 +42,7 @@ private:
 	HWND view; // g³óne okno widoku
 	Control generate, show; // uchwyty do guzików
 	Control fileName;
+	Control description;
 	static UI *me;
 };
 

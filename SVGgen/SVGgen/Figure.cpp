@@ -17,7 +17,7 @@ Circle::Circle()
 	this->fill = "red";
 }
 
-Circle::Circle(std::string cx, std::string cy, std::string r, std::string color)
+void Circle::setParams(std::string cx, std::string cy, std::string r, std::string color)
 {
 	this->cx = cx;
 	this->cy = cy;
@@ -41,3 +41,44 @@ std::string Circle::generateSvgTag()
 	retVal.append("</svg>");
 	return retVal;
 }
+
+Description::Description()
+{
+	this->tag[0] = "<description text=\"";
+	this->tag[1] = "\"/>";
+	this->text = "";
+}
+
+void Description::setParams(char * text)
+{
+	this->text = text;
+}
+
+std::string Description::generateDescription()
+{
+	std::string retVal = "\n";
+	retVal.append(this->tag[0]);
+	for (int i = 0; i < (this->text).length(); i++) {
+		for (int j = 0; j < ForbiddenSignsSize; j++) {
+			if(this->text[i] == ForbiddenSigns[j])
+				retVal.append("\\");
+		}
+		retVal += (this->text[i]);
+	}
+	retVal.append(this->tag[1]);
+	return retVal;
+}
+
+Text::Text()
+{
+}
+
+void Text::setParams(char * text)
+{
+}
+
+std::string Text::generate()
+{
+	return std::string();
+}
+
