@@ -12,7 +12,7 @@ Uzupełnianie pliku Readme.md - użyjemy go jako raportu końcowego projektu :D
 3. Wynik generacji (czerwone kółko) znajduje się w lokalizacji Results
 
 # Wyglad pliku
-
+```xml
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC " -//W3C//DTD SVG 1.1//EN"
 "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
@@ -22,7 +22,7 @@ Uzupełnianie pliku Readme.md - użyjemy go jako raportu końcowego projektu :D
 </svg>
 
 <description text="Enter description here"/> - opis figury
-
+```
 # Wymagania projektowe
 
 1. User friendly UI
