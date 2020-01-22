@@ -47,3 +47,4 @@ W razie problemów w file explorer (Visual Studio) SVGgen -> Proporties:
 
   - dodanie user UI - UI branch - Jarek
   - dodanie guzika generate i kontrolki do wprowadzania nazwy pliku (wraz ze sprawdzaniem nazwy pliku) - Jarek
+  - dodanie klas Rect, Line i Poly do tworzenia figur i osi - Bartek
