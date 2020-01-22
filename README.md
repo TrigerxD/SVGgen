@@ -62,3 +62,4 @@ W razie problemów w file explorer (Visual Studio) SVGgen -> Proporties:
   - dodanie guzika generate i kontrolki do wprowadzania nazwy pliku (wraz ze sprawdzaniem nazwy pliku) - UI branch - Jarek
   - generowanie czerwonego kółka - Generator branch - Jarek
   - generowanie opisu do figury, dodano okno do wpisania opisu - generateDescription branch - Jarek
+  - dodanie combobox do UI - generateDescription branch - Jarek
