@@ -6,6 +6,8 @@ const char ForbiddenSigns[ForbiddenSignsSize] = {
 	'"','\\','~'
 };
 
+// Przyjrzyj sie setParams w klasie Figure i Circle!!! w twojej tez dodajesz taka metode i musisz powielic naglowek w ten sam sposob co jest teraz w klasie bazowej
+
 class Figure {
 public:
 	Figure();
