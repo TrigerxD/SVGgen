@@ -11,7 +11,7 @@ Generator::Generator()
 
 void Generator::generate(char* Description)
 {	
-	this->((Circle*)figure)->setParams("100", "100", "50", "red");
+	this->figure->setParams("100", "100", "50", "red");
 	this->description->setParams(Description);
 	this->file.append(this->header);
 	this->file.append(this->figure->generateSvgTag());

@@ -11,11 +11,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (RegisterClassEx(&okno.getWindow())) {
 		okno.createView(hInstance, (LPSTR)"SVGgen");
 		(okno.getControl(GENERATE))->setParams((LPSTR)"BUTTON", (LPSTR)"Generate", 510, 390, 100, 40, GENERATE);
-		(okno.getControl(GENERATE))->initialize(okno.getView(), hInstance);
+		(okno.getControl(GENERATE))->initialize(okno.getView(), hInstance, okno.comboBoxText);
 		(okno.getControl(FILENAME))->setParams((LPSTR)"EDIT", (LPSTR)"Enter file name", 10, 10, 600, 30, FILENAME);
-		(okno.getControl(FILENAME))->initialize(okno.getView(), hInstance);
+		(okno.getControl(FILENAME))->initialize(okno.getView(), hInstance, okno.comboBoxText);
 		(okno.getControl(DESCRIPTION))->setParams((LPSTR)"EDIT", (LPSTR)"Enter description here", 250, 50, 360, 330, DESCRIPTION);
-		(okno.getControl(DESCRIPTION))->initialize(okno.getView(), hInstance);
+		(okno.getControl(DESCRIPTION))->initialize(okno.getView(), hInstance, okno.comboBoxText);
+		(okno.getControl(MODULES))->setParams((LPSTR)"COMBOBOX", (LPSTR)"", 10, 50, 230, 400, MODULES);
+		(okno.getControl(MODULES))->initialize(okno.getView(), hInstance, okno.comboBoxText);
+
 		if (okno.getView()) {
 			ShowWindow(okno.getView(), nCmdShow);
 			UpdateWindow(okno.getView());
@@ -30,12 +33,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	return komunikat.wParam;
 }		
 
-UI::UI() 
+UI::UI()
 {
 	this->generate = Control();
 	this->show = Control();
 	this->description = Control();
 	this->me = this;
+	this->comboBoxText = 0;
 }
 
 UI::UI(HINSTANCE instance, LPSTR className, int width, int height) 
@@ -85,6 +89,8 @@ Control * UI::getControl(handles handle)
 		return &fileName;
 	case DESCRIPTION:
 		return &description;
+	case MODULES:
+		return &modules;
 	default:
 		break;
 	}
@@ -102,11 +108,15 @@ LRESULT CALLBACK UI::Proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) 
 {
-	int size_alloc;
+	int size_alloc, len, index;
+	char text[100];
 	LPSTR Buffer, Description;
 
 	switch (msg)
 	{
+	case WM_CREATE:
+		break;
+
 	case WM_CLOSE:
 		DestroyWindow(hwnd);
 		break;
@@ -129,10 +139,26 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				generator.generate(Description);
 			}
 			else
-				SetWindowText(hFileName, "ONLY ALPHANUMERIC CHARACTERS ARE ALLOWED (start with a-z or A-Z)");
+				MessageBox(NULL, "ONLY ALPHANUMERIC CHARACTERS ARE ALLOWED IN FILE NAME (start with a-z or A-Z)","Error",0);
 		}
 		else if ((HWND)lParam == hShow) {
 			//podglad
+		}
+		else if ((HWND)lParam == hModules) {
+			switch (HIWORD(wParam))
+			{
+				case CBN_SELCHANGE:
+					index = SendMessage((HWND)lParam, CB_GETCURSEL, NULL, NULL);
+					if (index == CB_ERR)
+						break;
+					len = (int)SendMessage((HWND)lParam, CB_GETLBTEXTLEN, (WPARAM)index, NULL);
+					if (len == CB_ERR)
+						break;
+					SendMessageW((HWND)lParam, CB_GETLBTEXT, (WPARAM)index, (LPARAM)text);
+					break;
+				default:
+					break;
+			}
 		}
 		break;
 
@@ -175,7 +201,7 @@ void Control::setParams(LPSTR type, LPSTR title, int x, int y, int width, int he
 	this->height = height;
 }
 
-void Control::initialize(HWND window, HINSTANCE instance)
+void Control::initialize(HWND window, HINSTANCE instance, int IDC_COMBOBOX_TEXT)
 {
 	switch (name) {
 	case GENERATE:
@@ -190,6 +216,12 @@ void Control::initialize(HWND window, HINSTANCE instance)
 	case DESCRIPTION:
 		hDescription = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_VISIBLE | WS_BORDER, x, y, width, height, window, NULL, instance, NULL);
 		break;
+	case MODULES:
+		hModules = CreateWindowEx(WS_EX_STATICEDGE, type, title, CBS_DROPDOWN | WS_CHILD | WS_VISIBLE | WS_BORDER, x, y, width, height, window, (HMENU)IDC_COMBOBOX_TEXT, instance, NULL);
+		SendMessage(hModules, CB_ADDSTRING, 0, (LPARAM)"Item 1");
+		SendMessage(hModules, CB_ADDSTRING, 0, (LPARAM)"Item 2");
+		SendMessage(hModules, CB_ADDSTRING, 0, (LPARAM)"Item 3");
+		break;
 	default:
 		break;
 	}
@@ -199,3 +231,4 @@ LPSTR Control::getTitleAddress()
 {
 	return title;
 }
+

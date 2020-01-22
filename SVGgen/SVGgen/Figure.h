@@ -10,6 +10,7 @@ class Figure {
 public:
 	Figure();
 	virtual std::string generateSvgTag();
+	virtual void setParams(std::string cx, std::string cy, std::string r, std::string color) {};
 	std::string tag[2];
 };
 
@@ -25,7 +26,7 @@ public:
 class Circle : public Figure {	
 public:
 	Circle();
-	void setParams(std::string cx, std::string cy, std::string r, std::string color);
+	void setParams(std::string cx, std::string cy, std::string r, std::string color) override;
 	std::string generateSvgTag();
 private:
 	std::string cx;
