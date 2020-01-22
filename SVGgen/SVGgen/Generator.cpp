@@ -6,12 +6,14 @@ Generator::Generator()
 	this->file = "";
 	this->fileName = "Results/";
 	this->fileNameSample = std::regex("([[:alpha:]])[[:alnum:]]*");
+	this->numeric = std::regex("[[:digit:]]*");
+	this->alphabet = std::regex("[[:alpha:]]*");
 }
 
-void Generator::generate(char* Description, generateType state)
+void Generator::generate(char* Description, generateType state, char* p1, char* p2, char* p3, char* p4)
 {	
 	figure = setFigure(state);
-	this->figure->setParams("100", "100", "50", "red");
+	this->figure->setParams(std::string(p1), std::string(p2), std::string(p3), std::string(p4));
 	this->description->setParams(Description);
 	this->file.append(this->header);
 	this->file.append(this->figure->generateSvgTag());
@@ -28,6 +30,21 @@ int Generator::appendFileName(char * fileName)
 	}
 	else {
 		return 0;
+	}
+}
+
+int Generator::tryParams(char * p1, char * p2, char * p3, char * p4)
+{
+	bool test = false;
+	test = !std::regex_match(p1, this->numeric);
+	test = !std::regex_match(p2, this->numeric);
+	test = !std::regex_match(p3, this->numeric);
+	test = !std::regex_match(p4, this->alphabet);
+	if (test) {
+		return 0;
+	}
+	else {
+		return 1;
 	}
 }
 

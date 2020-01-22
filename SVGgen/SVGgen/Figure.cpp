@@ -1,9 +1,5 @@
 #include "Figure.h"
 
-Figure::Figure()
-{
-}
-
 std::string Figure::generateSvgTag()
 {
 	return "";

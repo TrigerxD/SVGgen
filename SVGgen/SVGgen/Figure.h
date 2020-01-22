@@ -6,11 +6,16 @@ const char ForbiddenSigns[ForbiddenSignsSize] = {
 	'"','\\','~'
 };
 
+typedef enum {
+	CIRCLE = 1,
+	SQUARE
+} generateType;
+
 // Przyjrzyj sie setParams w klasie Figure i Circle!!! w twojej tez dodajesz taka metode i musisz powielic naglowek w ten sam sposob co jest teraz w klasie bazowej
 
 class Figure {
 public:
-	Figure();
+	Figure() {};
 	virtual std::string generateSvgTag();
 	virtual void setParams(std::string cx, std::string cy, std::string r, std::string color) {};
 	std::string tag[2];

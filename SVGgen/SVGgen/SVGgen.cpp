@@ -16,8 +16,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		(okno.getControl(FILENAME))->initialize(okno.getView(), hInstance, okno.comboBoxText);
 		(okno.getControl(DESCRIPTION))->setParams((LPSTR)"EDIT", (LPSTR)"Enter description here", 250, 50, 360, 330, DESCRIPTION);
 		(okno.getControl(DESCRIPTION))->initialize(okno.getView(), hInstance, okno.comboBoxText);
-		(okno.getControl(MODULES))->setParams((LPSTR)"COMBOBOX", (LPSTR)"", 10, 50, 230, 400, MODULES);
+		(okno.getControl(MODULES))->setParams((LPSTR)"COMBOBOX", (LPSTR)"", 10, 50, 230, 200, MODULES);
 		(okno.getControl(MODULES))->initialize(okno.getView(), hInstance, okno.comboBoxText);
+		(okno.getControl(X))->setParams((LPSTR)"EDIT", (LPSTR)"", 70, 90, 170, 20, X);
+		(okno.getControl(X))->initialize(okno.getView(), hInstance, okno.comboBoxText);
+		(okno.getControl(Y))->setParams((LPSTR)"EDIT", (LPSTR)"", 70, 120, 170, 20, Y);
+		(okno.getControl(Y))->initialize(okno.getView(), hInstance, okno.comboBoxText);
+		(okno.getControl(R))->setParams((LPSTR)"EDIT", (LPSTR)"", 70, 150, 170, 20, R);
+		(okno.getControl(R))->initialize(okno.getView(), hInstance, okno.comboBoxText);
+		(okno.getControl(COLOR))->setParams((LPSTR)"EDIT", (LPSTR)"", 70, 180, 170, 20, COLOR);
+		(okno.getControl(COLOR))->initialize(okno.getView(), hInstance, okno.comboBoxText);
 
 		if (okno.getView()) {
 			ShowWindow(okno.getView(), nCmdShow);
@@ -91,6 +99,14 @@ Control * UI::getControl(handles handle)
 		return &description;
 	case MODULES:
 		return &modules;
+	case handles::X:
+		return &X;
+	case handles::Y:
+		return &Y;
+	case handles::R:
+		return &R;
+	case COLOR:
+		return &Color;
 	default:
 		break;
 	}
@@ -99,6 +115,37 @@ Control * UI::getControl(handles handle)
 HWND UI::getView()
 {
 	return view;
+}
+
+void UI::stateChaged(generateType state)
+{
+	switch (state)
+	{
+	case CIRCLE:
+		ShowWindow(hX, SW_SHOW);
+		ShowWindow(textX, SW_SHOW);
+		ShowWindow(hY, SW_SHOW);
+		ShowWindow(textY, SW_SHOW);
+		ShowWindow(hR, SW_SHOW);
+		ShowWindow(textR, SW_SHOW);
+		ShowWindow(hColor, SW_SHOW);
+		ShowWindow(textColor, SW_SHOW);
+		break;
+	default:
+		break;
+	}
+}
+
+void UI::hideControls()
+{
+	ShowWindow(hX, SW_HIDE);
+	ShowWindow(textX, SW_HIDE);
+	ShowWindow(hY, SW_HIDE);
+	ShowWindow(textY, SW_HIDE);
+	ShowWindow(hR, SW_HIDE);
+	ShowWindow(textR, SW_HIDE);
+	ShowWindow(hColor, SW_HIDE);
+	ShowWindow(textColor, SW_HIDE);
 }
 
 LRESULT CALLBACK UI::Proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -110,7 +157,7 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	int size_alloc, len, index,j;
 	char text[100];
-	LPSTR Buffer, Description;
+	LPSTR Buffer, Description, p1, p2, p3, p4;
 
 	switch (msg)
 	{
@@ -131,12 +178,34 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			size_alloc = GetWindowTextLength(hFileName);
 			Buffer = (LPSTR)GlobalAlloc(GPTR, size_alloc + 1);
 			GetWindowText(hFileName, Buffer, size_alloc + 1);
+
 			size_alloc = GetWindowTextLength(hDescription);
 			Description = (LPSTR)GlobalAlloc(GPTR, size_alloc + 1);
 			GetWindowText(hDescription, Description, size_alloc + 1);
+
+			size_alloc = GetWindowTextLength(hX);
+			p1 = (LPSTR)GlobalAlloc(GPTR, size_alloc + 1);
+			GetWindowText(hX, p1, size_alloc + 1);
+
+			size_alloc = GetWindowTextLength(hY);
+			p2 = (LPSTR)GlobalAlloc(GPTR, size_alloc + 1);
+			GetWindowText(hY, p2, size_alloc + 1);
+
+			size_alloc = GetWindowTextLength(hR);
+			p3 = (LPSTR)GlobalAlloc(GPTR, size_alloc + 1);
+			GetWindowText(hR, p3, size_alloc + 1);
+
+			size_alloc = GetWindowTextLength(hColor);
+			p4 = (LPSTR)GlobalAlloc(GPTR, size_alloc + 1);
+			GetWindowText(hColor, p4, size_alloc + 1);
+
+			if (!generator.tryParams(p1,p2,p3,p4)) {
+				MessageBox(NULL, "Enter X, Y and R as numeric (only) and color as color name!", "Error", 0);
+				break;
+			}
 			if (generator.appendFileName((char*)Buffer)) {
 				SetWindowText(hFileName, "OK");
-				generator.generate(Description, state);
+				generator.generate(Description, CIRCLE, p1, p2, p3, p4);//todo
 			}
 			else
 				MessageBox(NULL, "ONLY ALPHANUMERIC CHARACTERS ARE ALLOWED IN FILE NAME (start with a-z or A-Z)","Error",0);
@@ -148,6 +217,7 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			switch (HIWORD(wParam))
 			{
 				case CBN_SELCHANGE:
+					hideControls();
 					index = SendMessage((HWND)lParam, CB_GETCURSEL, NULL, NULL);
 					if (index == CB_ERR)
 						break;
@@ -160,10 +230,12 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 						text[j] = text[i];
 					}
 					text[j] = '\0';
-					if (strcmp(text,"Circle") == 0)
-						state = CIRCLE;
-					else if (strcmp(text, "Square") == 0)
-						state = SQUARE;
+					if (strcmp(text, "Circle") == 0) {
+						stateChaged(CIRCLE);
+					}
+					else if (strcmp(text, "Square") == 0) {
+						stateChaged(SQUARE);
+					}
 					break;
 				default:
 					break;
@@ -230,6 +302,22 @@ void Control::initialize(HWND window, HINSTANCE instance, int IDC_COMBOBOX_TEXT)
 		SendMessage(hModules, CB_ADDSTRING, 1, (LPARAM)"Circle");
 		SendMessage(hModules, CB_ADDSTRING, 2, (LPARAM)"Square");
 		//SendMessage(hModules, CB_ADDSTRING, 0, (LPARAM)"Item 3");
+		break;
+	case handles::X:
+		hX = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_BORDER | SW_HIDE, x, y, width, height, window, NULL, instance, NULL);
+		textX = CreateWindowEx(0, "STATIC", "X: ", WS_CHILD | WS_BORDER | SW_HIDE, x - 60, y, 50, 20, window, NULL, instance, NULL);
+		break;
+	case handles::Y:
+		hY = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_BORDER | SW_HIDE, x, y, width, height, window, NULL, instance, NULL);
+		textY = CreateWindowEx(0, "STATIC", "Y: ", WS_CHILD | WS_BORDER | SW_HIDE, x - 60, y, 50, 20, window, NULL, instance, NULL);
+		break;
+	case handles::R:
+		hR = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_BORDER | SW_HIDE, x, y, width, height, window, NULL, instance, NULL);
+		textR = CreateWindowEx(0, "STATIC", "R: ", WS_CHILD | WS_BORDER | SW_HIDE, x - 60, y, 50, 20, window, NULL, instance, NULL);
+		break;
+	case COLOR:
+		hColor = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_BORDER | SW_HIDE, x, y, width, height, window, NULL, instance, NULL);
+		textColor = CreateWindowEx(0, "STATIC", "Color: ", WS_CHILD | WS_BORDER | SW_HIDE, x - 60, y, 50, 20, window, NULL, instance, NULL);
 		break;
 	default:
 		break;

@@ -3,7 +3,7 @@
 #include <vector>
 
 HWND hGenerate, hShow, hFileName, hDescription, hModules;
-HWND hCircleRadio, hCirceText, hCircleR, hCircleX, hCircleY;
+HWND textX, hX, textY, hY, textR, hR, textColor, hColor;
 
 typedef enum Handles {
 	GENERATE = 1,
@@ -11,6 +11,10 @@ typedef enum Handles {
 	FILENAME,
 	DESCRIPTION,
 	MODULES,
+	X,
+	Y,
+	R,
+	COLOR,
 	DEFAULT
 } handles;
 
@@ -40,6 +44,8 @@ public:
 	Control *getControl(handles handle);
 	HWND getView();
 	int comboBoxText;
+	void stateChaged(generateType state);
+	void hideControls();
 private:
 	LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	LPSTR className;
@@ -50,7 +56,7 @@ private:
 	Control fileName;
 	Control description;
 	Control modules;
-	generateType state;
+	Control X, Y, R, Color;
 	static UI *me;
 };
 
