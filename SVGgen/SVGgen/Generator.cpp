@@ -2,15 +2,15 @@
 
 Generator::Generator()
 {
-	figure = new Circle();
 	description = new Description();
 	this->file = "";
 	this->fileName = "Results/";
 	this->fileNameSample = std::regex("([[:alpha:]])[[:alnum:]]*");
 }
 
-void Generator::generate(char* Description)
+void Generator::generate(char* Description, generateType state)
 {	
+	figure = setFigure(state);
 	this->figure->setParams("100", "100", "50", "red");
 	this->description->setParams(Description);
 	this->file.append(this->header);
@@ -28,6 +28,18 @@ int Generator::appendFileName(char * fileName)
 	}
 	else {
 		return 0;
+	}
+}
+
+Figure * Generator::setFigure(generateType state)
+{
+	switch (state) 
+	{
+	case CIRCLE:
+		return new Circle();
+	case SQUARE:
+	default:
+		return new Circle();
 	}
 }
 

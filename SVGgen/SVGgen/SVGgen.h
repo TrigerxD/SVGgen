@@ -14,6 +14,8 @@ typedef enum Handles {
 	DEFAULT
 } handles;
 
+
+
 class Control {
 public:
 	Control();
@@ -48,6 +50,7 @@ private:
 	Control fileName;
 	Control description;
 	Control modules;
+	generateType state;
 	static UI *me;
 };
 

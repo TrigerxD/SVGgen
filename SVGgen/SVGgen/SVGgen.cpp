@@ -108,7 +108,7 @@ LRESULT CALLBACK UI::Proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) 
 {
-	int size_alloc, len, index;
+	int size_alloc, len, index,j;
 	char text[100];
 	LPSTR Buffer, Description;
 
@@ -136,7 +136,7 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			GetWindowText(hDescription, Description, size_alloc + 1);
 			if (generator.appendFileName((char*)Buffer)) {
 				SetWindowText(hFileName, "OK");
-				generator.generate(Description);
+				generator.generate(Description, state);
 			}
 			else
 				MessageBox(NULL, "ONLY ALPHANUMERIC CHARACTERS ARE ALLOWED IN FILE NAME (start with a-z or A-Z)","Error",0);
@@ -155,6 +155,15 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 					if (len == CB_ERR)
 						break;
 					SendMessageW((HWND)lParam, CB_GETLBTEXT, (WPARAM)index, (LPARAM)text);
+					j = 0;
+					for (int i = 0; text[i] != '\0'; i += 2, j+= 1) {
+						text[j] = text[i];
+					}
+					text[j] = '\0';
+					if (strcmp(text,"Circle") == 0)
+						state = CIRCLE;
+					else if (strcmp(text, "Square") == 0)
+						state = SQUARE;
 					break;
 				default:
 					break;
@@ -218,9 +227,9 @@ void Control::initialize(HWND window, HINSTANCE instance, int IDC_COMBOBOX_TEXT)
 		break;
 	case MODULES:
 		hModules = CreateWindowEx(WS_EX_STATICEDGE, type, title, CBS_DROPDOWN | WS_CHILD | WS_VISIBLE | WS_BORDER, x, y, width, height, window, (HMENU)IDC_COMBOBOX_TEXT, instance, NULL);
-		SendMessage(hModules, CB_ADDSTRING, 0, (LPARAM)"Item 1");
-		SendMessage(hModules, CB_ADDSTRING, 0, (LPARAM)"Item 2");
-		SendMessage(hModules, CB_ADDSTRING, 0, (LPARAM)"Item 3");
+		SendMessage(hModules, CB_ADDSTRING, 1, (LPARAM)"Circle");
+		SendMessage(hModules, CB_ADDSTRING, 2, (LPARAM)"Square");
+		//SendMessage(hModules, CB_ADDSTRING, 0, (LPARAM)"Item 3");
 		break;
 	default:
 		break;

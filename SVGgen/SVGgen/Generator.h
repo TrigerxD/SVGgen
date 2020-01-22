@@ -8,12 +8,18 @@
 
 #include "Figure.h"
 
+typedef enum {
+	CIRCLE = 1,
+	SQUARE
+} generateType;
+
 class Generator {
 public:
 	Generator();
-	void generate(char* Description);
+	void generate(char* Description, generateType state);
 	int appendFileName(char* fileName);
 private:
+	Figure * setFigure(generateType state);
 	Figure *figure;
 	Description * description;
 	void fileSave();
