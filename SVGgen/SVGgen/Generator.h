@@ -13,9 +13,9 @@
 class Generator {
 public:
 	Generator();
-	void generate(char* Description, generateType state, char* p1, char* p2, char* p3, char* p4);
+	int generate(char* Description, generateType state, std::vector<std::string> params);
 	int appendFileName(char* fileName);
-	int tryParams(char*p1, char*p2, char*p3, char*p4);
+	int tryParams(std::vector<std::string> params);
 private:
 	Figure * setFigure(generateType state);
 	Figure *figure;

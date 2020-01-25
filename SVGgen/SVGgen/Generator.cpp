@@ -10,15 +10,17 @@ Generator::Generator()
 	this->alphabet = std::regex("[[:alpha:]]*");
 }
 
-void Generator::generate(char* Description, generateType state, char* p1, char* p2, char* p3, char* p4)
+int Generator::generate(char* Description, generateType state, std::vector<std::string> params)
 {	
 	figure = setFigure(state);
-	this->figure->setParams(std::string(p1), std::string(p2), std::string(p3), std::string(p4));
+	if (this->figure->setParams(params))
+		return 1;
 	this->description->setParams(Description);
 	this->file.append(this->header);
 	this->file.append(this->figure->generateSvgTag());
 	this->file.append(this->description->generateDescription());
 	fileSave();
+	return 0;
 }
 
 int Generator::appendFileName(char * fileName)
@@ -33,13 +35,13 @@ int Generator::appendFileName(char * fileName)
 	}
 }
 
-int Generator::tryParams(char * p1, char * p2, char * p3, char * p4)
+int Generator::tryParams(std::vector<std::string> params)
 {
 	bool test = false;
-	test = !std::regex_match(p1, this->numeric);
-	test = !std::regex_match(p2, this->numeric);
-	test = !std::regex_match(p3, this->numeric);
-	test = !std::regex_match(p4, this->alphabet);
+	for (int i = 0; i < params.size() - 1; i++) {
+		test |= !std::regex_match(params[i], this->numeric);
+	}
+	test |= !std::regex_match(params[params.size() - 1], this->alphabet);
 	if (test) {
 		return 0;
 	}

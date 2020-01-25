@@ -199,13 +199,21 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			p4 = (LPSTR)GlobalAlloc(GPTR, size_alloc + 1);
 			GetWindowText(hColor, p4, size_alloc + 1);
 
-			if (!generator.tryParams(p1,p2,p3,p4)) {
-				MessageBox(NULL, "Enter X, Y and R as numeric (only) and color as color name!", "Error", 0);
+			std::vector<std::string> params;
+			params.push_back(p1);
+			params.push_back(p2);
+			params.push_back(p3);
+			params.push_back(p4);
+
+			if (!generator.tryParams(params)) {
+				MessageBox(NULL, "Enter color as color name and rest as numeric (only)!", "Error", 0);
 				break;
 			}
 			if (generator.appendFileName((char*)Buffer)) {
-				SetWindowText(hFileName, "OK");
-				generator.generate(Description, CIRCLE, p1, p2, p3, p4);//todo
+				if(!generator.generate(Description, CIRCLE, params))
+					SetWindowText(hFileName, "OK");
+				else
+					SetWindowText(hFileName, "To low number of parameters");
 			}
 			else
 				MessageBox(NULL, "ONLY ALPHANUMERIC CHARACTERS ARE ALLOWED IN FILE NAME (start with a-z or A-Z)","Error",0);

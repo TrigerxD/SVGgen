@@ -1,6 +1,5 @@
 #pragma once
 #include "Generator.h"
-#include <vector>
 
 HWND hGenerate, hShow, hFileName, hDescription, hModules;
 HWND textX, hX, textY, hY, textR, hR, textColor, hColor;

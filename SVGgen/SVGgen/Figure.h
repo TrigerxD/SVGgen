@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <vector>
 
 const int ForbiddenSignsSize = 3;
 const char ForbiddenSigns[ForbiddenSignsSize] = {
@@ -17,7 +18,7 @@ class Figure {
 public:
 	Figure() {};
 	virtual std::string generateSvgTag();
-	virtual void setParams(std::string cx, std::string cy, std::string r, std::string color) {};
+	virtual int setParams(std::vector<std::string> params) { return 1; };
 	std::string tag[2];
 };
 
@@ -33,13 +34,10 @@ public:
 class Circle : public Figure {	
 public:
 	Circle();
-	void setParams(std::string cx, std::string cy, std::string r, std::string color) override;
+	int setParams(std::vector<std::string> params);
 	std::string generateSvgTag();
 private:
-	std::string cx;
-	std::string cy;
-	std::string r;
-	std::string fill;
+	std::vector<std::string> params;
 };
 
 class Description : public Text {
