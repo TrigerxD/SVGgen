@@ -57,6 +57,13 @@ Figure * Generator::setFigure(generateType state)
 	case CIRCLE:
 		return new Circle();
 	case SQUARE:
+		return new Squa();
+	case RECTANGLE:
+		return new Rect();
+	case TRIANGLE1:
+		return new Triangle1();
+	case TRIANGLE2:
+		return new Triangle2();
 	default:
 		return new Circle();
 	}

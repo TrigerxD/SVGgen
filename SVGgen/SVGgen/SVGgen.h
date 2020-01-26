@@ -2,7 +2,8 @@
 #include "Generator.h"
 
 HWND hGenerate, hShow, hFileName, hDescription, hModules;
-HWND hTextParam1, hParam1, hTextParam2, hParam2, hTextParam3, hParam3, hTextParam4, hParam4;
+HWND hTextParam1, hParam1, hTextParam2, hParam2, hTextParam3, hParam3, hTextParam4, hParam4, hTextParam5, hParam5;
+int figure = 0;
 
 typedef enum Handles {
 	GENERATE = 1,
@@ -14,6 +15,7 @@ typedef enum Handles {
 	PARAM_2,
 	PARAM_3,
 	PARAM_4,
+	PARAM_5,
 	DEFAULT
 } handles;
 
@@ -55,7 +57,7 @@ private:
 	Control fileName;
 	Control description;
 	Control modules;
-	Control param1, param2, param3, param4;
+	Control param1, param2, param3, param4, param5;
 	static UI *me;
 };
 
