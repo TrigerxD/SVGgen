@@ -18,14 +18,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		(okno.getControl(DESCRIPTION))->initialize(okno.getView(), hInstance, okno.comboBoxText);
 		(okno.getControl(MODULES))->setParams((LPSTR)"COMBOBOX", (LPSTR)"", 10, 50, 230, 200, MODULES);
 		(okno.getControl(MODULES))->initialize(okno.getView(), hInstance, okno.comboBoxText);
-		(okno.getControl(X))->setParams((LPSTR)"EDIT", (LPSTR)"", 70, 90, 170, 20, X);
-		(okno.getControl(X))->initialize(okno.getView(), hInstance, okno.comboBoxText);
-		(okno.getControl(Y))->setParams((LPSTR)"EDIT", (LPSTR)"", 70, 120, 170, 20, Y);
-		(okno.getControl(Y))->initialize(okno.getView(), hInstance, okno.comboBoxText);
-		(okno.getControl(R))->setParams((LPSTR)"EDIT", (LPSTR)"", 70, 150, 170, 20, R);
-		(okno.getControl(R))->initialize(okno.getView(), hInstance, okno.comboBoxText);
-		(okno.getControl(COLOR))->setParams((LPSTR)"EDIT", (LPSTR)"", 70, 180, 170, 20, COLOR);
-		(okno.getControl(COLOR))->initialize(okno.getView(), hInstance, okno.comboBoxText);
+		(okno.getControl(PARAM_1))->setParams((LPSTR)"EDIT", (LPSTR)"", 70, 90, 170, 20, PARAM_1);
+		(okno.getControl(PARAM_1))->initialize(okno.getView(), hInstance, okno.comboBoxText);
+		(okno.getControl(PARAM_2))->setParams((LPSTR)"EDIT", (LPSTR)"", 70, 120, 170, 20, PARAM_2);
+		(okno.getControl(PARAM_2))->initialize(okno.getView(), hInstance, okno.comboBoxText);
+		(okno.getControl(PARAM_3))->setParams((LPSTR)"EDIT", (LPSTR)"", 70, 150, 170, 20, PARAM_3);
+		(okno.getControl(PARAM_3))->initialize(okno.getView(), hInstance, okno.comboBoxText);
+		(okno.getControl(PARAM_4))->setParams((LPSTR)"EDIT", (LPSTR)"", 70, 180, 170, 20, PARAM_4);
+		(okno.getControl(PARAM_4))->initialize(okno.getView(), hInstance, okno.comboBoxText);
 
 		if (okno.getView()) {
 			ShowWindow(okno.getView(), nCmdShow);
@@ -99,14 +99,14 @@ Control * UI::getControl(handles handle)
 		return &description;
 	case MODULES:
 		return &modules;
-	case handles::X:
-		return &X;
-	case handles::Y:
-		return &Y;
-	case handles::R:
-		return &R;
-	case COLOR:
-		return &Color;
+	case PARAM_1:
+		return &param1;
+	case PARAM_2:
+		return &param2;
+	case PARAM_3:
+		return &param3;
+	case PARAM_4:
+		return &param4;
 	default:
 		break;
 	}
@@ -122,14 +122,18 @@ void UI::stateChaged(generateType state)
 	switch (state)
 	{
 	case CIRCLE:
-		ShowWindow(hX, SW_SHOW);
-		ShowWindow(textX, SW_SHOW);
-		ShowWindow(hY, SW_SHOW);
-		ShowWindow(textY, SW_SHOW);
-		ShowWindow(hR, SW_SHOW);
-		ShowWindow(textR, SW_SHOW);
-		ShowWindow(hColor, SW_SHOW);
-		ShowWindow(textColor, SW_SHOW);
+		ShowWindow(hParam1, SW_SHOW);
+		SetWindowText(hTextParam1, "X");
+		ShowWindow(hTextParam1, SW_SHOW);
+		ShowWindow(hParam2, SW_SHOW);
+		SetWindowText(hTextParam2, "Y");
+		ShowWindow(hTextParam2, SW_SHOW);
+		ShowWindow(hParam3, SW_SHOW);
+		SetWindowText(hTextParam3, "R");
+		ShowWindow(hTextParam3, SW_SHOW);
+		ShowWindow(hParam4, SW_SHOW);
+		SetWindowText(hTextParam4, "Color");
+		ShowWindow(hTextParam4, SW_SHOW);
 		break;
 	default:
 		break;
@@ -138,14 +142,14 @@ void UI::stateChaged(generateType state)
 
 void UI::hideControls()
 {
-	ShowWindow(hX, SW_HIDE);
-	ShowWindow(textX, SW_HIDE);
-	ShowWindow(hY, SW_HIDE);
-	ShowWindow(textY, SW_HIDE);
-	ShowWindow(hR, SW_HIDE);
-	ShowWindow(textR, SW_HIDE);
-	ShowWindow(hColor, SW_HIDE);
-	ShowWindow(textColor, SW_HIDE);
+	ShowWindow(hParam1, SW_HIDE);
+	ShowWindow(hTextParam1, SW_HIDE);
+	ShowWindow(hParam2, SW_HIDE);
+	ShowWindow(hTextParam2, SW_HIDE);
+	ShowWindow(hParam3, SW_HIDE);
+	ShowWindow(hTextParam3, SW_HIDE);
+	ShowWindow(hParam4, SW_HIDE);
+	ShowWindow(hTextParam4, SW_HIDE);
 }
 
 LRESULT CALLBACK UI::Proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -183,27 +187,31 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			Description = (LPSTR)GlobalAlloc(GPTR, size_alloc + 1);
 			GetWindowText(hDescription, Description, size_alloc + 1);
 
-			size_alloc = GetWindowTextLength(hX);
+			size_alloc = GetWindowTextLength(hParam1);
 			p1 = (LPSTR)GlobalAlloc(GPTR, size_alloc + 1);
-			GetWindowText(hX, p1, size_alloc + 1);
+			GetWindowText(hParam1, p1, size_alloc + 1);
 
-			size_alloc = GetWindowTextLength(hY);
+			size_alloc = GetWindowTextLength(hParam2);
 			p2 = (LPSTR)GlobalAlloc(GPTR, size_alloc + 1);
-			GetWindowText(hY, p2, size_alloc + 1);
+			GetWindowText(hParam2, p2, size_alloc + 1);
 
-			size_alloc = GetWindowTextLength(hR);
+			size_alloc = GetWindowTextLength(hParam3);
 			p3 = (LPSTR)GlobalAlloc(GPTR, size_alloc + 1);
-			GetWindowText(hR, p3, size_alloc + 1);
+			GetWindowText(hParam3, p3, size_alloc + 1);
 
-			size_alloc = GetWindowTextLength(hColor);
+			size_alloc = GetWindowTextLength(hParam4);
 			p4 = (LPSTR)GlobalAlloc(GPTR, size_alloc + 1);
-			GetWindowText(hColor, p4, size_alloc + 1);
+			GetWindowText(hParam4, p4, size_alloc + 1);
 
 			std::vector<std::string> params;
-			params.push_back(p1);
-			params.push_back(p2);
-			params.push_back(p3);
-			params.push_back(p4);
+			if(IsWindowVisible(hParam1))
+				params.push_back(p1);
+			if (IsWindowVisible(hParam2))
+				params.push_back(p2);
+			if (IsWindowVisible(hParam3))
+				params.push_back(p3);
+			if (IsWindowVisible(hParam4))
+				params.push_back(p4);
 
 			if (!generator.tryParams(params)) {
 				MessageBox(NULL, "Enter color as color name and rest as numeric (only)!", "Error", 0);
@@ -311,21 +319,21 @@ void Control::initialize(HWND window, HINSTANCE instance, int IDC_COMBOBOX_TEXT)
 		SendMessage(hModules, CB_ADDSTRING, 2, (LPARAM)"Square");
 		//SendMessage(hModules, CB_ADDSTRING, 0, (LPARAM)"Item 3");
 		break;
-	case handles::X:
-		hX = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_BORDER | SW_HIDE, x, y, width, height, window, NULL, instance, NULL);
-		textX = CreateWindowEx(0, "STATIC", "X: ", WS_CHILD | WS_BORDER | SW_HIDE, x - 60, y, 50, 20, window, NULL, instance, NULL);
+	case PARAM_1:
+		hParam1 = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_BORDER | SW_HIDE, x, y, width, height, window, NULL, instance, NULL);
+		hTextParam1 = CreateWindowEx(0, "STATIC", "X: ", WS_CHILD | WS_BORDER | SW_HIDE, x - 60, y, 50, 20, window, NULL, instance, NULL);
 		break;
-	case handles::Y:
-		hY = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_BORDER | SW_HIDE, x, y, width, height, window, NULL, instance, NULL);
-		textY = CreateWindowEx(0, "STATIC", "Y: ", WS_CHILD | WS_BORDER | SW_HIDE, x - 60, y, 50, 20, window, NULL, instance, NULL);
+	case PARAM_2:
+		hParam2 = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_BORDER | SW_HIDE, x, y, width, height, window, NULL, instance, NULL);
+		hTextParam2 = CreateWindowEx(0, "STATIC", "Y: ", WS_CHILD | WS_BORDER | SW_HIDE, x - 60, y, 50, 20, window, NULL, instance, NULL);
 		break;
-	case handles::R:
-		hR = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_BORDER | SW_HIDE, x, y, width, height, window, NULL, instance, NULL);
-		textR = CreateWindowEx(0, "STATIC", "R: ", WS_CHILD | WS_BORDER | SW_HIDE, x - 60, y, 50, 20, window, NULL, instance, NULL);
+	case PARAM_3:
+		hParam3 = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_BORDER | SW_HIDE, x, y, width, height, window, NULL, instance, NULL);
+		hTextParam3 = CreateWindowEx(0, "STATIC", "R: ", WS_CHILD | WS_BORDER | SW_HIDE, x - 60, y, 50, 20, window, NULL, instance, NULL);
 		break;
-	case COLOR:
-		hColor = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_BORDER | SW_HIDE, x, y, width, height, window, NULL, instance, NULL);
-		textColor = CreateWindowEx(0, "STATIC", "Color: ", WS_CHILD | WS_BORDER | SW_HIDE, x - 60, y, 50, 20, window, NULL, instance, NULL);
+	case PARAM_4:
+		hParam4 = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_BORDER | SW_HIDE, x, y, width, height, window, NULL, instance, NULL);
+		hTextParam4 = CreateWindowEx(0, "STATIC", "Color: ", WS_CHILD | WS_BORDER | SW_HIDE, x - 60, y, 50, 20, window, NULL, instance, NULL);
 		break;
 	default:
 		break;

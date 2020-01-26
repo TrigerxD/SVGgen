@@ -2,7 +2,7 @@
 #include "Generator.h"
 
 HWND hGenerate, hShow, hFileName, hDescription, hModules;
-HWND textX, hX, textY, hY, textR, hR, textColor, hColor;
+HWND hTextParam1, hParam1, hTextParam2, hParam2, hTextParam3, hParam3, hTextParam4, hParam4;
 
 typedef enum Handles {
 	GENERATE = 1,
@@ -10,10 +10,10 @@ typedef enum Handles {
 	FILENAME,
 	DESCRIPTION,
 	MODULES,
-	X,
-	Y,
-	R,
-	COLOR,
+	PARAM_1,
+	PARAM_2,
+	PARAM_3,
+	PARAM_4,
 	DEFAULT
 } handles;
 
@@ -55,7 +55,7 @@ private:
 	Control fileName;
 	Control description;
 	Control modules;
-	Control X, Y, R, Color;
+	Control param1, param2, param3, param4;
 	static UI *me;
 };
 
