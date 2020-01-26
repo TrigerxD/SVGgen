@@ -64,3 +64,4 @@ W razie problemów w file explorer (Visual Studio) SVGgen -> Proporties:
   - generowanie opisu do figury, dodano okno do wpisania opisu - generateDescription branch - Jarek
   - dodanie combobox do UI - generateDescription, Generator branch - Jarek
   - możliwość generowania zdefiniowanych przez użytkownika figur (parametry) - Generator branch - Jarek
+  - genorawnie kwadratu, prostokąta, trójkąta równobocznego i równoramiennego - Generator branch - Bartek
