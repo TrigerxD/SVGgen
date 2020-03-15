@@ -71,7 +71,7 @@ W razie problemów w file explorer (Visual Studio) SVGgen -> Proporties:
 2. Rozdzielczość każdego obrazu - full HD
 3. Linie rysować jako małe prostokąty, pomijać kolory oraz brak wypełnienia
 4. Dodać wykresy - parametry:
-    wzór - np. sin(2x), cos(x/2), x^2+2*x+1, 2x+2, (⅓)x - 3, 1/x
-    przedział - od do : <3,4) ; (5,6) ; <1, 100> ; (,)
-    zbiór - domyślne liczby rzeczywiste (możliwość wybrania całkowitych, naturalnych)
+    - wzór - np. sin(2x), cos(x/2), x^2+2*x+1, 2x+2, (⅓)x - 3, 1/x
+    - przedział - od do : <3,4) ; (5,6) ; <1, 100> ; (,)
+    - zbiór - domyślne liczby rzeczywiste (możliwość wybrania całkowitych, naturalnych)
 
