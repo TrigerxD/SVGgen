@@ -67,10 +67,10 @@ W razie problemów w file explorer (Visual Studio) SVGgen -> Proporties:
   - generowanie kwadratu, prostokąta, trójkąta równobocznego i równoramiennego - Generator branch - Bartek
   
 # TODO:
-1. Rozszerzenie pola opisu do opisywania poszczególnych składowych parametrów rysowanej figury/wykresu (min 3)
-2. Rozdzielczość każdego obrazu - full HD
-3. Linie rysować jako małe prostokąty, pomijać kolory oraz <b>wypełnienie</b>
-4. Dodać wykresy - parametry:
+1. Rozszerzenie pola opisu do opisywania poszczególnych składowych parametrów rysowanej figury/wykresu (min 3) -> Bartek
+2. Rozdzielczość każdego obrazu - full HD 1920x1080
+3. Linie rysować jako małe prostokąty, pomijać kolory oraz <b>wypełnienie</b> - figury -> Bartek
+4. Dodać wykresy - parametry: -> Jarek (przykladowy wykres)
     - wzór - np. sin(2x), cos(x/2), x^2+2*x+1, 2x+2, (⅓)x - 3, 1/x
     - przedział - od do : <3,4) ; (5,6) ; <1, 100> ; (,)
     - zbiór - domyślne liczby rzeczywiste (możliwość wybrania całkowitych, naturalnych)
