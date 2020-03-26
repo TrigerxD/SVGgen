@@ -173,13 +173,13 @@ void UI::stateChaged(generateType state)
 		break;
 	case TRIANGLE1:
 		ShowWindow(hParam1, SW_SHOW);
-		SetWindowText(hTextParam1, "X");
+		SetWindowText(hTextParam1, "A");
 		ShowWindow(hTextParam1, SW_SHOW);
 		ShowWindow(hParam2, SW_SHOW);
-		SetWindowText(hTextParam2, "Y");
+		SetWindowText(hTextParam2, "B");
 		ShowWindow(hTextParam2, SW_SHOW);
 		ShowWindow(hParam3, SW_SHOW);
-		SetWindowText(hTextParam3, "A");
+		SetWindowText(hTextParam3, "C");
 		ShowWindow(hTextParam3, SW_SHOW);
 		ShowWindow(hParam4, SW_SHOW);
 		SetWindowText(hTextParam4, "Color");
@@ -431,11 +431,11 @@ void Control::initialize(HWND window, HINSTANCE instance, int IDC_COMBOBOX_TEXT)
 		break;
 	case MODULES:
 		hModules = CreateWindowEx(WS_EX_STATICEDGE, type, title, CBS_DROPDOWN | WS_CHILD | WS_VISIBLE | WS_BORDER, x, y, width, height, window, (HMENU)IDC_COMBOBOX_TEXT, instance, NULL);
-		SendMessage(hModules, CB_ADDSTRING, 1, (LPARAM)"Circle");
-		SendMessage(hModules, CB_ADDSTRING, 2, (LPARAM)"Square");
-		SendMessage(hModules, CB_ADDSTRING, 3, (LPARAM)"Rectangle");
-		SendMessage(hModules, CB_ADDSTRING, 4, (LPARAM)"Equilateral Triangle");	
-		SendMessage(hModules, CB_ADDSTRING, 5, (LPARAM)"Isosceles Triangle");
+		SendMessage(hModules, CB_ADDSTRING, 1, (LPARAM)"Circle"); // 1 okno opisu
+		SendMessage(hModules, CB_ADDSTRING, 2, (LPARAM)"Square"); // 1 okno opisu
+		SendMessage(hModules, CB_ADDSTRING, 3, (LPARAM)"Rectangle"); // 2 okna opisu
+		SendMessage(hModules, CB_ADDSTRING, 4, (LPARAM)"Triangle");	// 3 okna opisu
+		SendMessage(hModules, CB_ADDSTRING, 5, (LPARAM)"Line"); // 1 okno opisu
 		break;
 	case PARAM_1:
 		hParam1 = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_BORDER | SW_HIDE, x, y, width, height, window, NULL, instance, NULL);

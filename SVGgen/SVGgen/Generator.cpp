@@ -19,8 +19,10 @@ int Generator::generate(char* Description, generateType state, std::vector<std::
 		return 1;
 	this->description->setParams(Description);
 	this->file.append(this->header);
+	//for(i in zestaw_figur) -> 
 	this->file.append(this->figure->generateSvgTag());
 	this->file.append(this->description->generateDescription());
+	//
 	fileSave();
 	return 0;
 }
