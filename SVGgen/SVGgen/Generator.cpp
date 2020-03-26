@@ -2,8 +2,10 @@
 
 Generator::Generator()
 {
+
 	description = new Description();
 	this->file = "";
+
 	this->fileName = "Results/";
 	this->fileNameSample = std::regex("([[:alpha:]])[[:alnum:]]*");
 	this->numeric = std::regex("[[:digit:]]*");

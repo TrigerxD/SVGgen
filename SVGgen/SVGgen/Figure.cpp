@@ -1,9 +1,15 @@
 #include "Figure.h"
 
+Figure::Figure()
+{
+}
+
 std::string Figure::generateSvgTag()
 {
 	return "";
 }
+
+#pragma region Circle
 
 Circle::Circle()
 {
@@ -72,6 +78,7 @@ std::string Rect::generateSvgTag()
 	retVal.append("</svg>");
 	return retVal;
 }
+#pragma endregion
 
 Squa::Squa()
 {
@@ -105,6 +112,7 @@ std::string Squa::generateSvgTag()
 	retVal.append("</svg>");
 	return retVal;
 }
+#pragma endregion
 
 Triangle1::Triangle1()
 {

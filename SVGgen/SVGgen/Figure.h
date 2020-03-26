@@ -27,6 +27,7 @@ public:
 	std::string tag[2];
 };
 
+
 class Text {
 public:
 	Text();
@@ -37,6 +38,7 @@ public:
 };
 
 class Circle : public Figure {	
+
 public:
 	Circle();
 	int setParams(std::vector<std::string> params);
@@ -61,6 +63,7 @@ public:
 	int setParams(std::vector<std::string> params);
 	std::string generateSvgTag();
 private:
+
 	std::vector<std::string> params;
 };
 

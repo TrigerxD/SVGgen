@@ -2,7 +2,7 @@
 
 UI * UI::me = NULL;
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) 
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 
 	MSG komunikat;
@@ -41,7 +41,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 	}
 	return komunikat.wParam;
-}		
+}
 
 UI::UI()
 {
@@ -52,7 +52,7 @@ UI::UI()
 	this->comboBoxText = 0;
 }
 
-UI::UI(HINSTANCE instance, LPSTR className, int width, int height) 
+UI::UI(HINSTANCE instance, LPSTR className, int width, int height)
 {
 	UI();
 	this->width = width;
@@ -95,7 +95,7 @@ Control * UI::getControl(handles handle)
 		return &generate;
 	case SHOW:
 		return &show;
-	case FILENAME: 
+	case FILENAME:
 		return &fileName;
 	case DESCRIPTION:
 		return &description;
@@ -226,7 +226,7 @@ LRESULT CALLBACK UI::Proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	return me->WndProc(hwnd, msg, wParam, lParam);
 }
 
-LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) 
+LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	int size_alloc, len, index,j;
 	char text[100];
