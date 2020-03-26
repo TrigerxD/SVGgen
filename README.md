@@ -75,9 +75,6 @@ W razie problemów w file explorer (Visual Studio) SVGgen -> Proporties:
     - przedział - od do : <3,4) ; (5,6) ; <1, 100> ; (,)
     - zbiór - domyślne liczby rzeczywiste (możliwość wybrania całkowitych, naturalnych)
 
-  - dodanie guzika generate i kontrolki do wprowadzania nazwy pliku (wraz ze sprawdzaniem nazwy pliku) - Jarek
-  - dodanie klas Rect, Line i Poly do tworzenia figur i osi - Bartek
-
 5. Tylko podstawowe figury -> Bartek
   - trojkat - 3 opisy
   - kwadrat - 1 opis
