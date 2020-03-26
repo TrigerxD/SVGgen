@@ -78,3 +78,12 @@ W razie problemów w file explorer (Visual Studio) SVGgen -> Proporties:
   - dodanie guzika generate i kontrolki do wprowadzania nazwy pliku (wraz ze sprawdzaniem nazwy pliku) - Jarek
   - dodanie klas Rect, Line i Poly do tworzenia figur i osi - Bartek
 
+5. Tylko podstawowe figury -> Bartek
+  - trojkat - 3 opisy
+  - kwadrat - 1 opis
+  - prostokat - 2 opisy
+  - kolo - 1 opis
+  - linia - do rysowania bokow, przekatnych itd, - 1 opis - na bazie wspolrzednych poczatku i konca
+  KAZDA LINIA MUSI BYC PROSTOKATEM
+6. must be - podglad -> Jarek
+7. Lista figur -> Jarek + (przedyskutowanie Bartek)
