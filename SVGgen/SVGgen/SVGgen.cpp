@@ -12,6 +12,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		okno.createView(hInstance, (LPSTR)"SVGgen");
 		(okno.getControl(GENERATE))->setParams((LPSTR)"BUTTON", (LPSTR)"Generate", 510, 390, 100, 40, GENERATE);
 		(okno.getControl(GENERATE))->initialize(okno.getView(), hInstance, okno.comboBoxText);
+		(okno.getControl(SHOW))->setParams((LPSTR)"BUTTON", (LPSTR)"Show", 400, 390, 100, 40, SHOW);
+		(okno.getControl(SHOW))->initialize(okno.getView(), hInstance, okno.comboBoxText);
 		(okno.getControl(FILENAME))->setParams((LPSTR)"EDIT", (LPSTR)"Enter file name", 10, 10, 600, 30, FILENAME);
 		(okno.getControl(FILENAME))->initialize(okno.getView(), hInstance, okno.comboBoxText);
 		(okno.getControl(DESCRIPTION))->setParams((LPSTR)"EDIT", (LPSTR)"Enter description here", 250, 50, 360, 330, DESCRIPTION);
@@ -329,7 +331,20 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				MessageBox(NULL, "ONLY ALPHANUMERIC CHARACTERS ARE ALLOWED IN FILE NAME (start with a-z or A-Z)","Error",0);
 		}
 		else if ((HWND)lParam == hShow) {
-			//podglad
+			HINSTANCE hDll = LoadLibrary("Renderer\\SVGrenderer");
+			std::ofstream file;
+			file.open("text", std::ios::out);
+			if (file.is_open()) {
+				file.close();
+			}
+			MYPROC RunApp;
+			if (hDll != NULL) {
+				RunApp = (MYPROC)GetProcAddress(hDll, "RunApp");
+				if (RunApp != NULL) {
+					RunApp();
+				}
+				FreeLibrary(hDll);
+			}
 		}
 		else if ((HWND)lParam == hModules) {
 			switch (HIWORD(wParam))

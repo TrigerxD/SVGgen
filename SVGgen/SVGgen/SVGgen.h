@@ -1,6 +1,6 @@
 #pragma once
 #include "Generator.h"
-
+typedef double(*MYPROC)();
 HWND hGenerate, hShow, hFileName, hDescription, hModules;
 HWND hTextParam1, hParam1, hTextParam2, hParam2, hTextParam3, hParam3, hTextParam4, hParam4, hTextParam5, hParam5;
 int figure = 0;
