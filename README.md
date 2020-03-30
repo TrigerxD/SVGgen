@@ -82,5 +82,5 @@ W razie problemów w file explorer (Visual Studio) SVGgen -> Proporties:
   - kolo - 1 opis
   - linia - do rysowania bokow, przekatnych itd, - 1 opis - na bazie wspolrzednych poczatku i konca
   KAZDA LINIA MUSI BYC PROSTOKATEM
-6. must be - podglad -> Jarek
+6. must be - podglad -> Jarek + Bartek
 7. Lista figur -> Jarek + (przedyskutowanie Bartek)
