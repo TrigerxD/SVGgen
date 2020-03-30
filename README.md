@@ -11,7 +11,7 @@ Uzupełnianie pliku Readme.md - użyjemy go jako raportu końcowego projektu :D
 2. Wciśnięcie przycisku Generate (komunikat o poprawności nazwy pliku zostanie wyswietlony w okienku nazwy pliku)
 3. Wynik generacji (czerwone kółko) znajduje się w lokalizacji Results
 
-<b>30.3.2020</b>
+<b>30.3.2020</b><br/>
 https://www.youtube.com/watch?v=EI2taYkErRg
 1. Instalacja wxWidgets
 https://www.wxwidgets.org/downloads/
