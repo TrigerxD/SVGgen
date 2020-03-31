@@ -1,6 +1,7 @@
 SVGgen/.vs/*
 SVGgen/Debug/*
 SVGgen/x64/*
+SVGgen/packages/*
 SVGgen/SVGrenderer/x64/*
 SVGgen/Output/*
 SVGgen/SVGgen/Debug/*

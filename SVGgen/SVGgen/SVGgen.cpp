@@ -331,20 +331,7 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				MessageBox(NULL, "ONLY ALPHANUMERIC CHARACTERS ARE ALLOWED IN FILE NAME (start with a-z or A-Z)","Error",0);
 		}
 		else if ((HWND)lParam == hShow) {
-			HINSTANCE hDll = LoadLibrary("Renderer\\SVGrenderer");
-			std::ofstream file;
-			file.open("text", std::ios::out);
-			if (file.is_open()) {
-				file.close();
-			}
-			MYPROC RunApp;
-			if (hDll != NULL) {
-				RunApp = (MYPROC)GetProcAddress(hDll, "RunApp");
-				if (RunApp != NULL) {
-					RunApp();
-				}
-				FreeLibrary(hDll);
-			}
+			dummy();
 		}
 		else if ((HWND)lParam == hModules) {
 			switch (HIWORD(wParam))

@@ -25,3 +25,7 @@ void RunApp()
 	wxApp::SetInitializerFunction(wxCreateApp);
 	wxEntry(0, NULL);
 }
+
+void dummy() {
+	
+}
