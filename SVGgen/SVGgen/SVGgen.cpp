@@ -371,6 +371,7 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 					if (tmp != nullptr) {
 						SetWindowText(hFileName, "OK");
 						printSVG.push_back(tmp);
+						SendMessage(hGenerateSet, CB_ADDSTRING, 1, (LPARAM)"CIRCLE");
 					}
 					else
 						SetWindowText(hFileName, "To low number of parameters");
@@ -381,6 +382,7 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 					if (tmp != nullptr) {
 						SetWindowText(hFileName, "OK");
 						printSVG.push_back(tmp);
+						SendMessage(hGenerateSet, CB_ADDSTRING, 1, (LPARAM)"SQUARE");
 					}
 					else
 						SetWindowText(hFileName, "To low number of parameters");
@@ -391,6 +393,7 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 					if (tmp != nullptr) {
 						SetWindowText(hFileName, "OK");
 						printSVG.push_back(tmp);
+						SendMessage(hGenerateSet, CB_ADDSTRING, 1, (LPARAM)"RECTANGLE");
 					}
 					else
 						SetWindowText(hFileName, "To low number of parameters");
@@ -401,6 +404,7 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 					if (tmp != nullptr) {
 						SetWindowText(hFileName, "OK");
 						printSVG.push_back(tmp);
+						SendMessage(hGenerateSet, CB_ADDSTRING, 1, (LPARAM)"TRIANGLE1");
 					}
 					else
 						SetWindowText(hFileName, "To low number of parameters");
@@ -411,6 +415,7 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 					if (tmp != nullptr) {
 						SetWindowText(hFileName, "OK");
 						printSVG.push_back(tmp);
+						SendMessage(hGenerateSet, CB_ADDSTRING, 1, (LPARAM)"TRIANGLE2");
 					}
 					else
 						SetWindowText(hFileName, "To low number of parameters");
@@ -470,6 +475,9 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 					break;
 			}
 		}
+		else if ((HWND)lParam == hGenerateSet) {
+
+		}		
 		break;
 
 	default:
@@ -522,7 +530,6 @@ void Control::initialize(HWND window, HINSTANCE instance, int IDC_COMBOBOX_TEXT)
 		break;
 	case GENERATING_SET:
 		hGenerateSet = CreateWindowEx(WS_EX_STATICEDGE, type, title, CBS_DROPDOWN | WS_CHILD | WS_VISIBLE | WS_BORDER, x, y, width, height, window, (HMENU)IDC_COMBOBOX_TEXT, instance, NULL);
-		SendMessage(hModules, CB_ADDSTRING, 1, (LPARAM)"Circle"); // 1 okno opisu
 		break;
 	case FILENAME:
 		hFileName = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_VISIBLE | WS_BORDER, x, y, width, height, window, NULL, instance, NULL);
