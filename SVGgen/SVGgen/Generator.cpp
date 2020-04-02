@@ -2,28 +2,29 @@
 
 Generator::Generator()
 {
-
-	description = new Description();
 	this->file = "";
-
 	this->fileName = "Results/";
 	this->fileNameSample = std::regex("([[:alpha:]])[[:alnum:]]*");
 	this->numeric = std::regex("[[:digit:]]*");
 	this->alphabet = std::regex("[[:alpha:]]*");
 }
 
-int Generator::generate(char* Description, generateType state, std::vector<std::string> params)
+mem* Generator::add(char* desc, generateType state, std::vector<std::string> params)
 {	
-	figure = setFigure(state);
-	if (this->figure->setParams(params))
-		return 1;
-	this->description->setParams(Description);
-	this->file.append(this->header);
-	//for(i in zestaw_figur) -> 
-	this->file.append(this->figure->generateSvgTag());
-	this->file.append(this->description->generateDescription());
-	//
-	fileSave();
+	mem *memo = new mem;
+	memo->figure = new Figure();
+	memo->description = new Description();
+	memo->figure = setFigure(state);
+	if (memo->figure->setParams(params))
+		return nullptr;
+	memo->description->setParams(desc);
+	return memo;
+}
+
+int Generator::generate(Description *description, Figure * figure)
+{
+	this->file.append(figure->generateSvgTag());
+	//this->file.append(description->generateDescription());
 	return 0;
 }
 
@@ -73,10 +74,35 @@ Figure * Generator::setFigure(generateType state)
 	}
 }
 
-void Generator::fileSave()
+void Generator::fileSave(std::vector<mem*> svgs) 
 {
+	this->file.append(this->header);
+	this->file.append("<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"1920\" height=\"1080\">\n");
+	for (int i = 0; i < svgs.size(); i++) {
+		if (generate(svgs[i]->description, svgs[i]->figure))
+			return;
+	}
+	this->file.append("</svg>");
+
 	_mkdir("Results/");
 	std::ofstream File(this->fileName);
+	if (File.is_open()) {
+		File << this->file;
+	}
+	File.close();
+}
+
+void Generator::showFile(std::vector<mem*> svgs) {
+	this->file.append(this->header);
+	this->file.append("<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"1920\" height=\"1080\">\n");
+	for (int i = 0; i < svgs.size(); i++) {
+		if (generate(svgs[i]->description, svgs[i]->figure))
+			return;
+	}
+	this->file.append("</svg>");
+
+	_mkdir("Results/");
+	std::ofstream File("Results/dummy.svg");
 	if (File.is_open()) {
 		File << this->file;
 	}

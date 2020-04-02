@@ -15,34 +15,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SVGgen.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Generator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Figure.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SVGren.cpp">
+    <ClCompile Include="SVGrenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SVGgen.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="SVGrenderer.h">
+      <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="Figure.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Generator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SVGren.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
 </Project>

@@ -1,8 +1,8 @@
 #pragma once
 #include <string>
 #include <vector>
-#include<sstream>
-#include<cmath>
+#include <sstream>
+#include <cmath>
 
 const int ForbiddenSignsSize = 3;
 const char ForbiddenSigns[ForbiddenSignsSize] = {

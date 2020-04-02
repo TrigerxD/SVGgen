@@ -1,16 +1,25 @@
 #pragma once
 #include "Generator.h"
+#include "SVGren.h"
+#include <conio.h>
+#include <stdio.h>
+#include <windows.h>
+#include <gdiplus.h>
 
-HWND hGenerate, hShow, hFileName, hDescription, hModules;
+typedef double(*MYPROC)();
+WNDCLASSEX ChildWindow;
+HWND hAdd, hShow, hFileName, hDescription, hModules, hGenerateSet, hShowView;
 HWND hTextParam1, hParam1, hTextParam2, hParam2, hTextParam3, hParam3, hTextParam4, hParam4, hTextParam5, hParam5;
 int figure = 0;
+std::vector<mem*> printSVG = {};
 
 typedef enum Handles {
-	GENERATE = 1,
+	ADD = 1,
 	SHOW,
 	FILENAME,
 	DESCRIPTION,
 	MODULES,
+	GENERATING_SET,
 	PARAM_1,
 	PARAM_2,
 	PARAM_3,
@@ -39,7 +48,8 @@ public:
 	UI();
 	UI(HINSTANCE instance, LPSTR className, int width, int height);
 	static LRESULT CALLBACK Proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
-	WNDCLASSEX getWindow();
+	static LRESULT CALLBACK CProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+	WNDCLASSEX getWindow(bool parent);
 	LPSTR getClassName();
 	void createView(HINSTANCE instance, LPSTR title);
 	Control *getControl(handles handle);
@@ -49,14 +59,15 @@ public:
 	void hideControls();
 private:
 	LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+	LRESULT CALLBACK ChildProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	LPSTR className;
-	WNDCLASSEX window;
+	WNDCLASSEX window, ChildWindow;
 	int width, height;
 	HWND view; // g³óne okno widoku
 	Control generate, show; // uchwyty do guzików
 	Control fileName;
 	Control description;
-	Control modules;
+	Control modules, set;
 	Control param1, param2, param3, param4, param5;
 	static UI *me;
 };

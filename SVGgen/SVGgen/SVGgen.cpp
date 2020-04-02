@@ -1,17 +1,23 @@
 #include "SVGgen.h"
-
+#pragma comment (lib,"Gdiplus.lib")
 UI * UI::me = NULL;
+Gdiplus::GdiplusStartupInput gdiplusStartupInput;
+ULONG_PTR gdiplusToken;
+// Initialize GDI+.
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-
+	GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
 	MSG komunikat;
 	UI okno = UI(hInstance, (LPSTR)"Klasa Okienka", 640, 480);
-
-	if (RegisterClassEx(&okno.getWindow())) {
+	if (RegisterClassEx(&okno.getWindow(true)) && RegisterClassEx(&okno.getWindow(false))) {
 		okno.createView(hInstance, (LPSTR)"SVGgen");
-		(okno.getControl(GENERATE))->setParams((LPSTR)"BUTTON", (LPSTR)"Generate", 510, 390, 100, 40, GENERATE);
-		(okno.getControl(GENERATE))->initialize(okno.getView(), hInstance, okno.comboBoxText);
+		(okno.getControl(ADD))->setParams((LPSTR)"BUTTON", (LPSTR)"Add", 510, 390, 100, 40, ADD);
+		(okno.getControl(ADD))->initialize(okno.getView(), hInstance, okno.comboBoxText);
+		(okno.getControl(SHOW))->setParams((LPSTR)"BUTTON", (LPSTR)"Show", 400, 390, 100, 40, SHOW);
+		(okno.getControl(SHOW))->initialize(okno.getView(), hInstance, okno.comboBoxText);
+		(okno.getControl(GENERATING_SET))->setParams((LPSTR)"COMBOBOX", (LPSTR)"", 290, 400, 100, 40, GENERATING_SET);
+		(okno.getControl(GENERATING_SET))->initialize(okno.getView(), hInstance, okno.comboBoxText);
 		(okno.getControl(FILENAME))->setParams((LPSTR)"EDIT", (LPSTR)"Enter file name", 10, 10, 600, 30, FILENAME);
 		(okno.getControl(FILENAME))->initialize(okno.getView(), hInstance, okno.comboBoxText);
 		(okno.getControl(DESCRIPTION))->setParams((LPSTR)"EDIT", (LPSTR)"Enter description here", 250, 50, 360, 330, DESCRIPTION);
@@ -28,6 +34,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		(okno.getControl(PARAM_4))->initialize(okno.getView(), hInstance, okno.comboBoxText);
 		(okno.getControl(PARAM_5))->setParams((LPSTR)"EDIT", (LPSTR)"", 70, 210, 170, 20, PARAM_5);
 		(okno.getControl(PARAM_5))->initialize(okno.getView(), hInstance, okno.comboBoxText);
+		
+		
 
 		if (okno.getView()) {
 			ShowWindow(okno.getView(), nCmdShow);
@@ -48,8 +56,8 @@ UI::UI()
 	this->generate = Control();
 	this->show = Control();
 	this->description = Control();
-	this->me = this;
 	this->comboBoxText = 0;
+	this->me = this;
 }
 
 UI::UI(HINSTANCE instance, LPSTR className, int width, int height)
@@ -70,11 +78,27 @@ UI::UI(HINSTANCE instance, LPSTR className, int width, int height)
 	window.lpszMenuName = NULL;
 	window.lpszClassName = className;
 	window.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
+
+	ChildWindow.cbSize = sizeof(WNDCLASSEX);
+	ChildWindow.style = 0;
+	ChildWindow.lpfnWndProc = CProc;
+	ChildWindow.cbClsExtra = 0;
+	ChildWindow.cbWndExtra = 0;
+	ChildWindow.hInstance = instance;
+	ChildWindow.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+	ChildWindow.hCursor = LoadCursor(NULL, IDC_ARROW);
+	ChildWindow.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+	ChildWindow.lpszMenuName = NULL;
+	ChildWindow.lpszClassName = "Child";
+	ChildWindow.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
 }
 
-WNDCLASSEX UI::getWindow()
+WNDCLASSEX UI::getWindow(bool parent)
 {
-	return window;
+	if (parent)
+		return window;
+	else
+		return ChildWindow;
 }
 
 LPSTR UI::getClassName()
@@ -91,7 +115,7 @@ Control * UI::getControl(handles handle)
 {
 	switch (handle)
 	{
-	case GENERATE:
+	case ADD:
 		return &generate;
 	case SHOW:
 		return &show;
@@ -101,6 +125,8 @@ Control * UI::getControl(handles handle)
 		return &description;
 	case MODULES:
 		return &modules;
+	case GENERATING_SET:
+		return &set;
 	case PARAM_1:
 		return &param1;
 	case PARAM_2:
@@ -226,11 +252,57 @@ LRESULT CALLBACK UI::Proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	return me->WndProc(hwnd, msg, wParam, lParam);
 }
 
+LRESULT CALLBACK UI::CProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	return me->ChildProc(hwnd, msg, wParam, lParam);
+}
+
+LRESULT CALLBACK UI::ChildProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	PAINTSTRUCT ps;
+	HDC hdc;
+	Gdiplus::Graphics *graphics;
+	Gdiplus::Image *image;
+	Gdiplus::Pen *pen;
+	switch (msg)
+	{
+	case WM_CREATE:
+		break;
+
+	case WM_CLOSE:
+		remove("Results/dummy.svg");
+		remove("Results/dummy.png");
+		DestroyWindow(hwnd);
+		break;
+
+	case WM_PAINT:
+		hdc = BeginPaint(hwnd, &ps);
+		FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
+		graphics = new Gdiplus::Graphics(hdc);
+		image = Gdiplus::Image::FromFile(L"Results/dummy.png");
+		pen = new Gdiplus::Pen(Gdiplus::Color(255, 0, 0, 0), 2);
+		graphics->DrawRectangle(pen, Gdiplus::Rect(10, 10, image->GetWidth() / 2, image->GetHeight() / 2));
+		graphics->DrawImage(image, Gdiplus::Rect(10, 10, image->GetWidth() / 2, image->GetHeight() / 2));
+		delete(graphics);
+		delete(pen);
+		delete(image);
+		EndPaint(hwnd, &ps);
+		break;
+		
+	default:
+		return DefWindowProc(hwnd, msg, wParam, lParam);
+}
+	return 0;
+}
+
 LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	int size_alloc, len, index,j;
 	char text[100];
 	LPSTR Buffer, Description, p1, p2, p3, p4, p5;
+	HWND hStatic;
+	DWORD error;
+	HBITMAP bmpSource;
 
 	switch (msg)
 	{
@@ -246,7 +318,7 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		break;
 	//pobieranie wartoœci z parametrów
 	case WM_COMMAND:
-		if ((HWND)lParam == hGenerate) {
+		if ((HWND)lParam == hAdd) {
 			Generator generator = Generator();
 			size_alloc = GetWindowTextLength(hFileName);
 			Buffer = (LPSTR)GlobalAlloc(GPTR, size_alloc + 1);
@@ -292,44 +364,69 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				MessageBox(NULL, "Enter color as color name and rest as numeric (only)!", "Error", 0);
 				break;
 			}
-			if (generator.appendFileName((char*)Buffer)) 
+			if (1) 
 			{
-				if(figure == CIRCLE)
-				if(!generator.generate(Description, CIRCLE, params))
-					SetWindowText(hFileName, "OK");
-				else
-					SetWindowText(hFileName, "To low number of parameters");
-
-				if (figure == SQUARE)
-				if (!generator.generate(Description, SQUARE, params))
-					SetWindowText(hFileName, "OK");
-				else
-					SetWindowText(hFileName, "To low number of parameters");
-
-				if (figure == RECTANGLE)
-					if (!generator.generate(Description, RECTANGLE, params))
+				if (figure == CIRCLE) {
+					mem *tmp = generator.add(Description, CIRCLE, params);
+					if (tmp != nullptr) {
 						SetWindowText(hFileName, "OK");
+						printSVG.push_back(tmp);
+					}
 					else
 						SetWindowText(hFileName, "To low number of parameters");
+				}
 
-				if (figure == TRIANGLE1)
-					if (!generator.generate(Description, TRIANGLE1, params))
+				if (figure == SQUARE) {
+					mem *tmp = generator.add(Description, SQUARE, params);
+					if (tmp != nullptr) {
 						SetWindowText(hFileName, "OK");
+						printSVG.push_back(tmp);
+					}
 					else
 						SetWindowText(hFileName, "To low number of parameters");
+				}
 
-				if (figure == TRIANGLE2)
-					if (!generator.generate(Description, TRIANGLE2, params))
+				if (figure == RECTANGLE) {
+					mem *tmp = generator.add(Description, RECTANGLE, params);
+					if (tmp != nullptr) {
 						SetWindowText(hFileName, "OK");
+						printSVG.push_back(tmp);
+					}
 					else
 						SetWindowText(hFileName, "To low number of parameters");
+				}
+
+				if (figure == TRIANGLE1) {
+					mem *tmp = generator.add(Description, TRIANGLE1, params);
+					if (tmp != nullptr) {
+						SetWindowText(hFileName, "OK");
+						printSVG.push_back(tmp);
+					}
+					else
+						SetWindowText(hFileName, "To low number of parameters");
+				}
+
+				if (figure == TRIANGLE2) {
+					mem *tmp = generator.add(Description, TRIANGLE2, params);
+					if (tmp != nullptr) {
+						SetWindowText(hFileName, "OK");
+						printSVG.push_back(tmp);
+					}
+					else
+						SetWindowText(hFileName, "To low number of parameters");
+				}
 
 			}
 			else
 				MessageBox(NULL, "ONLY ALPHANUMERIC CHARACTERS ARE ALLOWED IN FILE NAME (start with a-z or A-Z)","Error",0);
 		}
 		else if ((HWND)lParam == hShow) {
-			//podglad
+			Generator generator = Generator();
+			generator.showFile(printSVG);
+			dummy();			
+			hShowView = CreateWindowEx(WS_EX_WINDOWEDGE, "Child", "Show", WS_SYSMENU, CW_USEDEFAULT, CW_USEDEFAULT, 1000, 600, NULL, NULL, GetModuleHandle(NULL), NULL);
+			ShowWindow(hShowView, SW_SHOWNORMAL);
+			UpdateWindow(hShowView);
 		}
 		else if ((HWND)lParam == hModules) {
 			switch (HIWORD(wParam))
@@ -417,11 +514,15 @@ void Control::setParams(LPSTR type, LPSTR title, int x, int y, int width, int he
 void Control::initialize(HWND window, HINSTANCE instance, int IDC_COMBOBOX_TEXT)
 {
 	switch (name) {
-	case GENERATE:
-		hGenerate = CreateWindowEx(0, type, title, WS_CHILD | WS_VISIBLE, x, y, width, height, window, NULL, instance, NULL);
+	case ADD:
+		hAdd = CreateWindowEx(0, type, title, WS_CHILD | WS_VISIBLE, x, y, width, height, window, NULL, instance, NULL);
 		break;
 	case SHOW:
 		hShow = CreateWindowEx(0, type, title, WS_CHILD | WS_VISIBLE, x, y, width, height, window, NULL, instance, NULL);
+		break;
+	case GENERATING_SET:
+		hGenerateSet = CreateWindowEx(WS_EX_STATICEDGE, type, title, CBS_DROPDOWN | WS_CHILD | WS_VISIBLE | WS_BORDER, x, y, width, height, window, (HMENU)IDC_COMBOBOX_TEXT, instance, NULL);
+		SendMessage(hModules, CB_ADDSTRING, 1, (LPARAM)"Circle"); // 1 okno opisu
 		break;
 	case FILENAME:
 		hFileName = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_VISIBLE | WS_BORDER, x, y, width, height, window, NULL, instance, NULL);
