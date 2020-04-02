@@ -1,26 +1,30 @@
 #pragma once
-#include <windows.h>
+
 #include <string>
 #include <regex>
 #include <fstream>
 #include <iostream>
 #include <direct.h>
+#include <vector>
 
 #include "Figure.h"
 
-
+typedef struct Mem {
+	Figure * figure;
+	Description * description;
+}mem;
 
 class Generator {
 public:
 	Generator();
-	int generate(char* Description, generateType state, std::vector<std::string> params);
+	mem* add(char* Description, generateType state, std::vector<std::string> params);
 	int appendFileName(char* fileName);
+	void showFile(std::vector<mem*> svgs);
+	void fileSave(std::vector<mem*> svgs);
 	int tryParams(std::vector<std::string> params);
 private:
 	Figure * setFigure(generateType state);
-	Figure *figure;
-	Description * description;
-	void fileSave();
+	int generate(Description *description, Figure * figure);
 	std::string fileName;
 	std::string file;
 	std::regex fileNameSample, numeric, alphabet;

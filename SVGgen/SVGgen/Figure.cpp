@@ -29,14 +29,12 @@ int Circle::setParams(std::vector<std::string> params)
 std::string Circle::generateSvgTag()
 {
 	std::string retVal = "";
-	retVal.append("<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">\n");
 	retVal.append(this->tag[0]);
 	retVal.append("cx=\"" + params[0] + "\" ");
 	retVal.append("cy=\"" + params[1] + "\" ");
 	retVal.append("r=\"" + params[2] + "\" ");
 	retVal.append("fill=\"" + params[3] + "\" ");
 	retVal.append(this->tag[1]);
-	retVal.append("</svg>");
 	return retVal;
 }
 //iloœc paramentrów która bêdzie potrzebna
@@ -63,7 +61,6 @@ int Rect::setParams(std::vector<std::string> params)
 std::string Rect::generateSvgTag()
 {
 	std::string retVal = "";
-	retVal.append("<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">\n");
 	retVal.append(this->tag[0]);
 	retVal.append("x=\"" + params[0] + "\" ");
 	retVal.append("y=\"" + params[1] + "\" ");
@@ -71,7 +68,6 @@ std::string Rect::generateSvgTag()
 	retVal.append("height=\"" + params[3] + "\" ");
 	retVal.append("fill=\"" + params[4] + "\" ");
 	retVal.append(this->tag[1]);
-	retVal.append("</svg>");
 	return retVal;
 }
 #pragma endregion
@@ -97,7 +93,6 @@ int Squa::setParams(std::vector<std::string> params)
 std::string Squa::generateSvgTag()
 {
 	std::string retVal = "";
-	retVal.append("<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">\n");
 	retVal.append(this->tag[0]);
 	retVal.append("x=\"" + params[0] + "\" ");
 	retVal.append("y=\"" + params[1] + "\" ");
@@ -105,7 +100,6 @@ std::string Squa::generateSvgTag()
 	retVal.append("height=\"" + params[2] + "\" ");
 	retVal.append("fill=\"" + params[3] + "\" ");
 	retVal.append(this->tag[1]);
-	retVal.append("</svg>");
 	return retVal;
 }
 #pragma endregion
@@ -150,12 +144,10 @@ std::string Triangle1::generateSvgTag()
 	p3 = sx3.str() + "," + sy2.str();
 
 	std::string retVal = "";
-	retVal.append("<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">\n");
 	retVal.append(this->tag[0]);
 	retVal.append("points=\"" + p1 + " " + p2 + " " + p3 + "\" ");
 	retVal.append("fill=\"" + params[3] + "\" ");
 	retVal.append(this->tag[1]);
-	retVal.append("</svg>");
 	return retVal;
 }
 
@@ -201,12 +193,10 @@ std::string Triangle2::generateSvgTag()
 	p3 = sx3.str() + "," + sy2.str();
 
 	std::string retVal = "";
-	retVal.append("<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">\n");
 	retVal.append(this->tag[0]);
 	retVal.append("points=\"" + p1 + " " + p2 + " " + p3 + "\" ");
 	retVal.append("fill=\"" + params[4] + "\" ");
 	retVal.append(this->tag[1]);
-	retVal.append("</svg>");
 	return retVal;
 }
 

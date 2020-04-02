@@ -1,12 +1,12 @@
 #include "SVGren.h"
 
 void dummy() {
-	auto dom = svgdom::load(papki::FSFile("Results/dummy.svg"));
+ 	auto dom = svgdom::load(papki::FSFile("Results/dummy.svg"));
 	auto img = svgren::render(*dom);
-	write_png("Results/dummy.bmp", img.width, img.height, &*img.pixels.begin());
+	write_bmp("Results/dummy.png", img.width, img.height, &*img.pixels.begin());
 }
 
-void write_png(const char* filename, int width, int height, std::uint32_t *buffer) {
+void write_bmp(const char* filename, int width, int height, std::uint32_t *buffer) {
 	FILE *fp = NULL;
 	png_structp png_ptr = NULL;
 	png_infop info_ptr = NULL;

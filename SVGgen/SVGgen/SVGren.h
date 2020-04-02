@@ -10,4 +10,4 @@
 
 #include <png.h>
 void dummy();
-void write_png(const char* filename, int width, int height, std::uint32_t *buffer);
+void write_bmp(const char* filename, int width, int height, std::uint32_t *buffer);
