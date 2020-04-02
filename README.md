@@ -14,6 +14,7 @@ Uzupełnianie pliku Readme.md - użyjemy go jako raportu końcowego projektu :D
 <b>2.4.2020</b>
 1. Dodanie do projektu we wszystkich konfiguracjach Properties -> Linker -> Input -> Additional Dependencies -> Gdiplus.lib
 2. Instalacja za pomoc NuGet packages libsvgre, aktualizacja wszystkich do najnowszej wersji.
+3. https://archive.codeplex.com/?p=fastmathparser -> link do dokumentacji parsera funkcji (możliwe funkcje rozpoznawane)
 
 # Wyglad pliku
 ```xml
@@ -75,10 +76,10 @@ W razie problemów w file explorer (Visual Studio) SVGgen -> Proporties:
 1. Rozszerzenie pola opisu do opisywania poszczególnych składowych parametrów rysowanej figury/wykresu (min 3) -> Bartek
 2. <s>Rozdzielczość każdego obrazu - full HD 1920x1080</s> DONE
 3. Linie rysować jako małe prostokąty, pomijać kolory oraz <b>wypełnienie</b> - figury -> Bartek
-4. Dodać wykresy - parametry: -> Jarek (przykladowy wykres)
+4. <s>Dodać wykresy - parametry: -> Jarek (przykladowy wykres)
     - wzór - np. sin(2x), cos(x/2), x^2+2*x+1, 2x+2, (⅓)x - 3, 1/x
     - przedział - od do : <3,4) ; (5,6) ; <1, 100> ; (,)
-    - zbiór - domyślne liczby rzeczywiste (możliwość wybrania całkowitych, naturalnych)
+    - zbiór - domyślne liczby rzeczywiste (możliwość wybrania całkowitych, naturalnych)</s>
 
 5. Tylko podstawowe figury -> Bartek
   - trojkat - 3 opisy
