@@ -69,6 +69,8 @@ Figure * Generator::setFigure(generateType state)
 		return new Triangle1();
 	case TRIANGLE2:
 		return new Triangle2();
+	case CARTESIAN:
+		return new Cartesian();
 	default:
 		return new Circle();
 	}

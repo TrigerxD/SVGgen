@@ -240,3 +240,82 @@ std::string Text::generate()
 	return std::string();
 }
 
+Cartesian::Cartesian()
+{
+	this->params.push_back("-1,1");
+	this->params.push_back("-1,1");
+}
+
+int Cartesian::setParams(std::vector<std::string> params)
+{
+	if (params.size() != 3)
+		return 1;
+	this->params = params;
+	this->tag[0] = "<path d=\" ";
+	this->tag[1] = "\" stroke=\"black\" stroke-width=\"1\" fill=\"none\"/>\n";
+	return 0;
+}
+
+std::string Cartesian::generateSvgTag()
+{
+	std::string retVal = "";
+	std::string xrange = params[0];
+	std::string yrange = params[1];
+	std::string center = params[2];
+
+	int coma = xrange.find_first_of(',');
+	int xmin = atoi((xrange.substr(0, coma)).c_str());
+	int xmax = atoi((xrange.substr(coma + 1, xrange.size() - 1)).c_str());
+	coma = yrange.find_first_of(',');
+	int ymin = atoi((yrange.substr(0, coma)).c_str());
+	int ymax = atoi((yrange.substr(coma + 1, yrange.size() - 1)).c_str());
+	coma = center.find_first_of(',');
+	int x = atoi((center.substr(0, coma)).c_str());
+	int y = atoi((center.substr(coma + 1, center.size() - 1)).c_str());
+
+	retVal.append(this->tag[0]);
+	retVal.append("M" + std::to_string(x + xmin) + " " + std::to_string(y - 1) + " ");
+	retVal.append("L" + std::to_string(x + xmin) + " " + std::to_string(y + 1) + " ");
+	retVal.append("L" + std::to_string(x + xmax) + " " + std::to_string(y + 1) + " ");
+	retVal.append("L" + std::to_string(x + xmax) + " " + std::to_string(y - 1) + " Z");
+	retVal.append(this->tag[1]);
+	for (int i = 0; i < xmax/100; i++) { // -140, 140 -> 0,140 -> 1,
+		retVal.append(this->tag[0]);
+		retVal.append("M" + std::to_string(x + (i + 1) * 100 + 1) + " " + std::to_string(y + 20) + " ");
+		retVal.append("L" + std::to_string(x + (i + 1) * 100 - 1) + " " + std::to_string(y + 20) + " ");
+		retVal.append("L" + std::to_string(x + (i + 1) * 100 - 1) + " " + std::to_string(y - 20) + " ");
+		retVal.append("L" + std::to_string(x + (i + 1) * 100 + 1) + " " + std::to_string(y - 20) + " Z");
+		retVal.append(this->tag[1]);
+	}
+	for (int i = (xmin) / 100; i < 0; i++) { // -140, 140 -> 0,140 -> 1,
+		retVal.append(this->tag[0]);
+		retVal.append("M" + std::to_string(x + (i) * 100 + 1) + " " + std::to_string(y + 20) + " ");
+		retVal.append("L" + std::to_string(x + (i) * 100 - 1) + " " + std::to_string(y + 20) + " ");
+		retVal.append("L" + std::to_string(x + (i) * 100 - 1) + " " + std::to_string(y - 20) + " ");
+		retVal.append("L" + std::to_string(x + (i) * 100 + 1) + " " + std::to_string(y - 20) + " Z");
+		retVal.append(this->tag[1]);
+	}
+	retVal.append(this->tag[0]);
+	retVal.append("M" + std::to_string(x + 1) + " " + std::to_string(y + ymin) + " ");
+	retVal.append("L" + std::to_string(x - 1) + " " + std::to_string(y + ymin) + " ");
+	retVal.append("L" + std::to_string(x - 1) + " " + std::to_string(y + ymax) + " ");
+	retVal.append("L" + std::to_string(x + 1) + " " + std::to_string(y + ymax) + " Z");
+	retVal.append(this->tag[1]);
+	for (int i = 0; i < ymax / 100; i++) { // -140, 140 -> 0,140 -> 1,
+		retVal.append(this->tag[0]);
+		retVal.append("M" + std::to_string(x + 20) + " " + std::to_string(y + (i + 1) * 100 + 1) + " ");
+		retVal.append("L" + std::to_string(x + 20) + " " + std::to_string(y + (i + 1) * 100 - 1) + " ");
+		retVal.append("L" + std::to_string(x - 20) + " " + std::to_string(y + (i + 1) * 100 - 1) + " ");
+		retVal.append("L" + std::to_string(x - 20) + " " + std::to_string(y + (i + 1) * 100 + 1) + " Z");
+		retVal.append(this->tag[1]);
+	}
+	for (int i = (ymin) / 100; i < 0; i++) { // -140, 140 -> 0,140 -> 1,
+		retVal.append(this->tag[0]);
+		retVal.append("M" + std::to_string(x + 20) + " " + std::to_string(y + (i) * 100 + 1) + " ");
+		retVal.append("L" + std::to_string(x + 20) + " " + std::to_string(y + (i) * 100 - 1) + " ");
+		retVal.append("L" + std::to_string(x - 20) + " " + std::to_string(y + (i) * 100 - 1) + " ");
+		retVal.append("L" + std::to_string(x - 20) + " " + std::to_string(y + (i) * 100 + 1) + " Z");
+		retVal.append(this->tag[1]);
+	}
+	return retVal;
+}

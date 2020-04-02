@@ -9,12 +9,14 @@ const char ForbiddenSigns[ForbiddenSignsSize] = {
 	'"','\\','~'
 };
 
+
 typedef enum {
 	CIRCLE = 1,
-	SQUARE = 2,
-	RECTANGLE = 3,
-	TRIANGLE1 = 4,
-	TRIANGLE2 = 5
+	SQUARE,
+	RECTANGLE,
+	TRIANGLE1,
+	TRIANGLE2,
+	CARTESIAN
 } generateType;
 
 // Przyjrzyj sie setParams w klasie Figure i Circle!!! w twojej tez dodajesz taka metode i musisz powielic naglowek w ten sam sposob co jest teraz w klasie bazowej
@@ -107,4 +109,13 @@ public:
 
 class Function : public Figure {
 
+};
+
+class Cartesian : public Figure {
+public:
+	Cartesian();
+	int setParams(std::vector<std::string> params);
+	std::string generateSvgTag();
+private:
+	std::vector<std::string> params;
 };

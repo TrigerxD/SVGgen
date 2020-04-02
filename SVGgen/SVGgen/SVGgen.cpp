@@ -228,6 +228,20 @@ void UI::stateChaged(generateType state)
 		SetWindowText(hTextParam5, "Color");
 		ShowWindow(hTextParam5, SW_SHOW);
 		break;
+	case CARTESIAN:
+		SetWindowText(hParam1, "-960,960");
+		ShowWindow(hParam1, SW_SHOW);
+		SetWindowText(hTextParam1, "rangeX");
+		ShowWindow(hTextParam1, SW_SHOW);
+		SetWindowText(hParam2, "-540,540");
+		ShowWindow(hParam2, SW_SHOW);
+		SetWindowText(hTextParam2, "rangeY");
+		ShowWindow(hTextParam2, SW_SHOW);
+		SetWindowText(hParam3, "960,540");
+		ShowWindow(hParam3, SW_SHOW);
+		SetWindowText(hTextParam3, "center");
+		ShowWindow(hTextParam3, SW_SHOW);
+		break;
 	default:
 		break;
 	}
@@ -360,10 +374,10 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			if (IsWindowVisible(hParam5))
 				params.push_back(p5);
 
-			if (!generator.tryParams(params)) {
+			/*if (!generator.tryParams(params)) {
 				MessageBox(NULL, "Enter color as color name and rest as numeric (only)!", "Error", 0);
 				break;
-			}
+			}*/
 			if (1) 
 			{
 				if (figure == CIRCLE) {
@@ -408,6 +422,15 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 				if (figure == TRIANGLE2) {
 					mem *tmp = generator.add(Description, TRIANGLE2, params);
+					if (tmp != nullptr) {
+						SetWindowText(hFileName, "OK");
+						printSVG.push_back(tmp);
+					}
+					else
+						SetWindowText(hFileName, "To low number of parameters");
+				}
+				if (figure == CARTESIAN) {
+					mem *tmp = generator.add(Description, CARTESIAN, params);
 					if (tmp != nullptr) {
 						SetWindowText(hFileName, "OK");
 						printSVG.push_back(tmp);
@@ -464,6 +487,10 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 					else if (strcmp(text, "Isosceles Triangle") == 0) {
 						stateChaged(TRIANGLE2);
 						figure = TRIANGLE2;
+					}
+					else if (strcmp(text, "Cartesian System") == 0) {
+						stateChaged(CARTESIAN);
+						figure = CARTESIAN;
 					}
 					break;
 				default:
@@ -537,6 +564,7 @@ void Control::initialize(HWND window, HINSTANCE instance, int IDC_COMBOBOX_TEXT)
 		SendMessage(hModules, CB_ADDSTRING, 3, (LPARAM)"Rectangle"); // 2 okna opisu
 		SendMessage(hModules, CB_ADDSTRING, 4, (LPARAM)"Triangle");	// 3 okna opisu
 		SendMessage(hModules, CB_ADDSTRING, 5, (LPARAM)"Line"); // 1 okno opisu
+		SendMessage(hModules, CB_ADDSTRING, 6, (LPARAM)"Cartesian System"); // 2 okna opisu
 		break;
 	case PARAM_1:
 		hParam1 = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_BORDER | SW_HIDE, x, y, width, height, window, NULL, instance, NULL);
