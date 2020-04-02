@@ -69,7 +69,7 @@ W razie problemów w file explorer (Visual Studio) SVGgen -> Proporties:
   - dodanie combobox do UI - generateDescription, Generator branch - Jarek
   - możliwość generowania zdefiniowanych przez użytkownika figur (parametry) - Generator branch - Jarek
   - generowanie kwadratu, prostokąta, trójkąta równobocznego i równoramiennego - Generator branch - Bartek
-  - simple viewer -> przycisk show otwiera okno z podgladem na plik - Jarek + Bartek
+  - simple viewer -> przycisk show otwiera okno z podgladem na plik (rozdzielczosc FHD, podglad 960x540 (skalowanie /2) - Jarek + Bartek
   
 # TODO:
 1. Rozszerzenie pola opisu do opisywania poszczególnych składowych parametrów rysowanej figury/wykresu (min 3) -> Bartek
@@ -87,5 +87,5 @@ W razie problemów w file explorer (Visual Studio) SVGgen -> Proporties:
   - kolo - 1 opis
   - linia - do rysowania bokow, przekatnych itd, - 1 opis - na bazie wspolrzednych poczatku i konca
   KAZDA LINIA MUSI BYC PROSTOKATEM
-6. <s>must be - podglad -> Jarek + Bartek</s> DONE, TODO: Wyswietlanie w odpowiedniej rozdzielczosci (tak zeby nie wychodzilo poza ekran)
+6. <s>must be - podglad -> Jarek + Bartek</s> DONE
 7. Lista figur -> Jarek + (przedyskutowanie Bartek)
