@@ -11,13 +11,9 @@ Uzupełnianie pliku Readme.md - użyjemy go jako raportu końcowego projektu :D
 2. Wciśnięcie przycisku Generate (komunikat o poprawności nazwy pliku zostanie wyswietlony w okienku nazwy pliku)
 3. Wynik generacji (czerwone kółko) znajduje się w lokalizacji Results
 
-<b>30.3.2020</b><br/>
-https://www.youtube.com/watch?v=EI2taYkErRg
-1. Instalacja wxWidgets
-https://www.wxwidgets.org/downloads/
-2. pobieramy Windows 7z
-3. Zaznaczyć wszystkie projekty -> PPM -> properties -> All configurations / x64 -> Use Multi-byte -> Apply
-4. Na filmiku odpowiednio : mswu -> msw; mswud -> mswd; vc_dll -> vc_x64_dll
+<b>2.4.2020</b>
+1. Dodanie do projektu we wszystkich konfiguracjach Properties -> Linker -> Input -> Additional Dependencies -> Gdiplus.lib
+2. Instalacja za pomoc NuGet packages libsvgre, aktualizacja wszystkich do najnowszej wersji.
 
 # Wyglad pliku
 ```xml
@@ -73,10 +69,11 @@ W razie problemów w file explorer (Visual Studio) SVGgen -> Proporties:
   - dodanie combobox do UI - generateDescription, Generator branch - Jarek
   - możliwość generowania zdefiniowanych przez użytkownika figur (parametry) - Generator branch - Jarek
   - generowanie kwadratu, prostokąta, trójkąta równobocznego i równoramiennego - Generator branch - Bartek
+  - simple viewer -> przycisk show otwiera okno z podgladem na plik - Jarek + Bartek
   
 # TODO:
 1. Rozszerzenie pola opisu do opisywania poszczególnych składowych parametrów rysowanej figury/wykresu (min 3) -> Bartek
-2. Rozdzielczość każdego obrazu - full HD 1920x1080
+2. <s>Rozdzielczość każdego obrazu - full HD 1920x1080</s> DONE
 3. Linie rysować jako małe prostokąty, pomijać kolory oraz <b>wypełnienie</b> - figury -> Bartek
 4. Dodać wykresy - parametry: -> Jarek (przykladowy wykres)
     - wzór - np. sin(2x), cos(x/2), x^2+2*x+1, 2x+2, (⅓)x - 3, 1/x
@@ -90,5 +87,5 @@ W razie problemów w file explorer (Visual Studio) SVGgen -> Proporties:
   - kolo - 1 opis
   - linia - do rysowania bokow, przekatnych itd, - 1 opis - na bazie wspolrzednych poczatku i konca
   KAZDA LINIA MUSI BYC PROSTOKATEM
-6. must be - podglad -> Jarek + Bartek
+6. <s>must be - podglad -> Jarek + Bartek</s> DONE, TODO: Wyswietlanie w odpowiedniej rozdzielczosci (tak zeby nie wychodzilo poza ekran)
 7. Lista figur -> Jarek + (przedyskutowanie Bartek)
