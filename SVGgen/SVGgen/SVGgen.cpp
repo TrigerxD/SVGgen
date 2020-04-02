@@ -229,11 +229,11 @@ void UI::stateChaged(generateType state)
 		ShowWindow(hTextParam5, SW_SHOW);
 		break;
 	case CARTESIAN:
-		SetWindowText(hParam1, "-960,960");
+		SetWindowText(hParam1, "-500,500");
 		ShowWindow(hParam1, SW_SHOW);
 		SetWindowText(hTextParam1, "rangeX");
 		ShowWindow(hTextParam1, SW_SHOW);
-		SetWindowText(hParam2, "-540,540");
+		SetWindowText(hParam2, "-500,500");
 		ShowWindow(hParam2, SW_SHOW);
 		SetWindowText(hTextParam2, "rangeY");
 		ShowWindow(hTextParam2, SW_SHOW);
@@ -241,6 +241,24 @@ void UI::stateChaged(generateType state)
 		ShowWindow(hParam3, SW_SHOW);
 		SetWindowText(hTextParam3, "center");
 		ShowWindow(hTextParam3, SW_SHOW);
+		break;
+	case FUNCTION_DRAWER:
+		SetWindowText(hParam1, "x");
+		ShowWindow(hParam1, SW_SHOW);
+		SetWindowText(hTextParam1, "y = ");
+		ShowWindow(hTextParam1, SW_SHOW);
+		SetWindowText(hParam2, "-500,500");
+		ShowWindow(hParam2, SW_SHOW);
+		SetWindowText(hTextParam2, "rangeX");
+		ShowWindow(hTextParam2, SW_SHOW);
+		SetWindowText(hParam3, "-500,500");
+		ShowWindow(hParam3, SW_SHOW);
+		SetWindowText(hTextParam3, "rangeY");
+		ShowWindow(hTextParam3, SW_SHOW);
+		SetWindowText(hParam4, "960,540");
+		ShowWindow(hParam4, SW_SHOW);
+		SetWindowText(hTextParam4, "center");
+		ShowWindow(hTextParam4, SW_SHOW);
 		break;
 	default:
 		break;
@@ -438,6 +456,15 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 					else
 						SetWindowText(hFileName, "To low number of parameters");
 				}
+				if (figure == FUNCTION_DRAWER) {
+					mem *tmp = generator.add(Description, FUNCTION_DRAWER, params);
+					if (tmp != nullptr) {
+						SetWindowText(hFileName, "OK");
+						printSVG.push_back(tmp);
+					}
+					else
+						SetWindowText(hFileName, "To low number of parameters");
+				}
 
 			}
 			else
@@ -447,7 +474,7 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			Generator generator = Generator();
 			generator.showFile(printSVG);
 			dummy();			
-			hShowView = CreateWindowEx(WS_EX_WINDOWEDGE, "Child", "Show", WS_SYSMENU, CW_USEDEFAULT, CW_USEDEFAULT, 1000, 600, NULL, NULL, GetModuleHandle(NULL), NULL);
+			hShowView = CreateWindowEx(WS_EX_WINDOWEDGE, "Child", "Show", WS_SYSMENU, CW_USEDEFAULT, CW_USEDEFAULT, (ResultWidth+80)/2, (ResultHeight+120)/2, NULL, NULL, GetModuleHandle(NULL), NULL);
 			ShowWindow(hShowView, SW_SHOWNORMAL);
 			UpdateWindow(hShowView);
 		}
@@ -491,6 +518,10 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 					else if (strcmp(text, "Cartesian System") == 0) {
 						stateChaged(CARTESIAN);
 						figure = CARTESIAN;
+					}
+					else if (strcmp(text, "Function") == 0) {
+						stateChaged(FUNCTION_DRAWER);
+						figure = FUNCTION_DRAWER;
 					}
 					break;
 				default:
@@ -565,6 +596,7 @@ void Control::initialize(HWND window, HINSTANCE instance, int IDC_COMBOBOX_TEXT)
 		SendMessage(hModules, CB_ADDSTRING, 4, (LPARAM)"Triangle");	// 3 okna opisu
 		SendMessage(hModules, CB_ADDSTRING, 5, (LPARAM)"Line"); // 1 okno opisu
 		SendMessage(hModules, CB_ADDSTRING, 6, (LPARAM)"Cartesian System"); // 2 okna opisu
+		SendMessage(hModules, CB_ADDSTRING, 7, (LPARAM)"Function"); // ??? okna opisu
 		break;
 	case PARAM_1:
 		hParam1 = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_BORDER | SW_HIDE, x, y, width, height, window, NULL, instance, NULL);

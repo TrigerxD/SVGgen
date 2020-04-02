@@ -71,6 +71,8 @@ Figure * Generator::setFigure(generateType state)
 		return new Triangle2();
 	case CARTESIAN:
 		return new Cartesian();
+	case FUNCTION_DRAWER:
+		return new FunctionDraw();
 	default:
 		return new Circle();
 	}
@@ -79,7 +81,7 @@ Figure * Generator::setFigure(generateType state)
 void Generator::fileSave(std::vector<mem*> svgs) 
 {
 	this->file.append(this->header);
-	this->file.append("<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"1920\" height=\"1080\">\n");
+	this->file.append("<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\""+std::to_string(ResultWidth)+"\" height=\"" + std::to_string(ResultHeight) + "\">\n");
 	for (int i = 0; i < svgs.size(); i++) {
 		if (generate(svgs[i]->description, svgs[i]->figure))
 			return;
@@ -96,7 +98,7 @@ void Generator::fileSave(std::vector<mem*> svgs)
 
 void Generator::showFile(std::vector<mem*> svgs) {
 	this->file.append(this->header);
-	this->file.append("<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"1920\" height=\"1080\">\n");
+	this->file.append("<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"" + std::to_string(ResultWidth) + "\" height=\"" + std::to_string(ResultHeight) + "\">\n");
 	for (int i = 0; i < svgs.size(); i++) {
 		if (generate(svgs[i]->description, svgs[i]->figure))
 			return;

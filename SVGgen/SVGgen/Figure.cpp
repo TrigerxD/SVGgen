@@ -1,4 +1,5 @@
 #include "Figure.h"
+#include "exprtk.hpp"
 
 std::string Figure::generateSvgTag()
 {
@@ -240,10 +241,82 @@ std::string Text::generate()
 	return std::string();
 }
 
+FunctionDraw::FunctionDraw() 
+{
+	this->params.push_back("x");
+	this->params.push_back("-1,1");
+	this->params.push_back("-1,1");
+	this->params.push_back("960,540");
+}
+
+int FunctionDraw::setParams(std::vector<std::string> params)
+{
+	if (params.size() != 4)
+		return 1;
+	this->params = params;
+	this->tag[0] = "<path d=\" ";
+	this->tag[1] = "\" stroke=\"black\" stroke-width=\"1\" fill=\"none\"/>\n";
+	return 0;
+}
+
+std::string FunctionDraw::generateSvgTag()
+{
+	std::string retVal = "";
+	std::string function = params[0];
+	std::string xrange = params[1];
+	std::string yrange = params[2];
+	std::string center = params[3];
+
+	int coma = xrange.find_first_of(',');
+	int xmin = atoi((xrange.substr(0, coma)).c_str());
+	int xmax = atoi((xrange.substr(coma + 1, xrange.size() - 1)).c_str());
+	coma = yrange.find_first_of(',');
+	int ymin = atoi((yrange.substr(0, coma)).c_str());
+	int ymax = atoi((yrange.substr(coma + 1, yrange.size() - 1)).c_str());
+	coma = center.find_first_of(',');
+	int x = atoi((center.substr(0, coma)).c_str());
+	int y = atoi((center.substr(coma + 1, center.size() - 1)).c_str());
+
+	std::vector<double> data;
+	std::vector<double> results;
+
+	double variable = 0.0;
+
+	exprtk::symbol_table<double> symbol_table;
+	symbol_table.add_variable("x", variable);
+
+	exprtk::expression<double> expression;
+	expression.register_symbol_table(symbol_table);
+
+	exprtk::parser<double>  parser;
+	parser.compile(function, expression);
+
+	for (int i = xmin; i < xmax; i++) {
+		variable = (double)i / 100;
+		if (expression.value() * 100 <= ResultHeight) {
+			data.push_back((double)i / 100);
+			results.push_back(expression.value());
+		}
+	}
+
+	retVal.append(this->tag[0]);
+	retVal.append("M" + std::to_string((int)round(x + data[0] * 100)) + " " + std::to_string((int)round(y - results[0] * 100 + 1)) + " ");
+	for (int i = 1; i < results.size(); i++) {
+		retVal.append("L" + std::to_string((int)round(x + data[i] * 100)) + " " + std::to_string((int)round(y - results[i] * 100 + 1)) + " ");
+	}
+	for (int i = results.size() - 1; i > 0; i--) {
+		retVal.append("L" + std::to_string((int)round(x + data[i] * 100)) + " " + std::to_string((int)round(y - results[i] * 100 - 1)) + " ");
+	}
+	retVal.append("L" + std::to_string((int)round(x + data[0] * 100)) + " " + std::to_string((int)round(y - results[0] * 100 - 1)) + " Z");
+	retVal.append(this->tag[1]);
+	return retVal;
+}
+
 Cartesian::Cartesian()
 {
 	this->params.push_back("-1,1");
 	this->params.push_back("-1,1");
+	this->params.push_back("960,540");
 }
 
 int Cartesian::setParams(std::vector<std::string> params)

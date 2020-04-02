@@ -4,6 +4,9 @@
 #include <sstream>
 #include <cmath>
 
+#define ResultWidth 1920
+#define ResultHeight 980
+
 const int ForbiddenSignsSize = 3;
 const char ForbiddenSigns[ForbiddenSignsSize] = {
 	'"','\\','~'
@@ -16,7 +19,8 @@ typedef enum {
 	RECTANGLE,
 	TRIANGLE1,
 	TRIANGLE2,
-	CARTESIAN
+	CARTESIAN,
+	FUNCTION_DRAWER
 } generateType;
 
 // Przyjrzyj sie setParams w klasie Figure i Circle!!! w twojej tez dodajesz taka metode i musisz powielic naglowek w ten sam sposob co jest teraz w klasie bazowej
@@ -107,8 +111,13 @@ public:
 	std::string generateDescription();
 };
 
-class Function : public Figure {
-
+class FunctionDraw : public Figure {
+public:
+	FunctionDraw();
+	int setParams(std::vector<std::string> params);
+	std::string generateSvgTag();
+private:
+	std::vector<std::string> params;
 };
 
 class Cartesian : public Figure {
