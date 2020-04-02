@@ -104,3 +104,7 @@ public:
 	void setParams(char * text);
 	std::string generateDescription();
 };
+
+class Function : public Figure {
+
+};
