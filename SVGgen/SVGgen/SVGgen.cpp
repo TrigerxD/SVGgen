@@ -264,7 +264,6 @@ LRESULT CALLBACK UI::ChildProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam
 	Gdiplus::Graphics *graphics;
 	Gdiplus::Image *image;
 	Gdiplus::Pen *pen;
-	Gdiplus::Rect *destRect;
 	switch (msg)
 	{
 	case WM_CREATE:
@@ -281,12 +280,12 @@ LRESULT CALLBACK UI::ChildProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam
 		FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
 		graphics = new Gdiplus::Graphics(hdc);
 		image = Gdiplus::Image::FromFile(L"Results/dummy.png");
-		pen = new Gdiplus::Pen(Gdiplus::Color(0, 0, 0, 0), 2);
-		destRect = new Gdiplus::Rect(0, 0, 1920, 1080);
-		graphics->DrawImage(image, 0, 0);
+		pen = new Gdiplus::Pen(Gdiplus::Color(255, 0, 0, 0), 2);
+		graphics->DrawRectangle(pen, Gdiplus::Rect(10, 10, image->GetWidth() / 2, image->GetHeight() / 2));
+		graphics->DrawImage(image, Gdiplus::Rect(10, 10, image->GetWidth() / 2, image->GetHeight() / 2));
 		delete(graphics);
 		delete(pen);
-		delete(destRect);
+		delete(image);
 		EndPaint(hwnd, &ps);
 		break;
 		
@@ -425,7 +424,7 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			Generator generator = Generator();
 			generator.showFile(printSVG);
 			dummy();			
-			hShowView = CreateWindowEx(WS_EX_WINDOWEDGE, "Child", "Show", WS_SYSMENU, CW_USEDEFAULT, CW_USEDEFAULT, 1930, 1090, NULL, NULL, GetModuleHandle(NULL), NULL);
+			hShowView = CreateWindowEx(WS_EX_WINDOWEDGE, "Child", "Show", WS_SYSMENU, CW_USEDEFAULT, CW_USEDEFAULT, 1000, 600, NULL, NULL, GetModuleHandle(NULL), NULL);
 			ShowWindow(hShowView, SW_SHOWNORMAL);
 			UpdateWindow(hShowView);
 		}
