@@ -16,6 +16,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		(okno.getControl(ADD))->initialize(okno.getView(), hInstance, okno.comboBoxText);
 		(okno.getControl(SHOW))->setParams((LPSTR)"BUTTON", (LPSTR)"Show", 400, 390, 100, 40, SHOW);
 		(okno.getControl(SHOW))->initialize(okno.getView(), hInstance, okno.comboBoxText);
+		(okno.getControl(GENERATE))->setParams((LPSTR)"BUTTON", (LPSTR)"Generate", 10, 390, 100, 40, GENERATE);
+		(okno.getControl(GENERATE))->initialize(okno.getView(), hInstance, okno.comboBoxText);
 		(okno.getControl(GENERATING_SET))->setParams((LPSTR)"COMBOBOX", (LPSTR)"", 290, 400, 100, 40, GENERATING_SET);
 		(okno.getControl(GENERATING_SET))->initialize(okno.getView(), hInstance, okno.comboBoxText);
 		(okno.getControl(FILENAME))->setParams((LPSTR)"EDIT", (LPSTR)"Enter file name", 10, 10, 600, 30, FILENAME);
@@ -116,6 +118,8 @@ Control * UI::getControl(handles handle)
 	switch (handle)
 	{
 	case ADD:
+		return &add;
+	case GENERATE:
 		return &generate;
 	case SHOW:
 		return &show;
@@ -396,6 +400,7 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				MessageBox(NULL, "Enter color as color name and rest as numeric (only)!", "Error", 0);
 				break;
 			}*/
+			
 			if (1) 
 			{
 				if (figure == CIRCLE) {
@@ -467,8 +472,6 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				}
 
 			}
-			else
-				MessageBox(NULL, "ONLY ALPHANUMERIC CHARACTERS ARE ALLOWED IN FILE NAME (start with a-z or A-Z)","Error",0);
 		}
 		else if ((HWND)lParam == hShow) {
 			Generator generator = Generator();
@@ -477,6 +480,18 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			hShowView = CreateWindowEx(WS_EX_WINDOWEDGE, "Child", "Show", WS_SYSMENU, CW_USEDEFAULT, CW_USEDEFAULT, (ResultWidth+80)/2, (ResultHeight+120)/2, NULL, NULL, GetModuleHandle(NULL), NULL);
 			ShowWindow(hShowView, SW_SHOWNORMAL);
 			UpdateWindow(hShowView);
+		}
+		else if ((HWND)lParam == hGenerate) {
+			size_alloc = GetWindowTextLength(hFileName);
+			Buffer = (LPSTR)GlobalAlloc(GPTR, size_alloc + 1);
+			GetWindowText(hFileName, Buffer, size_alloc + 1);
+			
+			Generator generator = Generator();
+
+			if(generator.appendFileName(Buffer))
+				generator.fileSave(printSVG);
+			else
+				MessageBox(NULL, "ONLY ALPHANUMERIC CHARACTERS ARE ALLOWED IN FILE NAME (start with a-z or A-Z)", "Error", 0);
 		}
 		else if ((HWND)lParam == hModules) {
 			switch (HIWORD(wParam))
@@ -575,12 +590,14 @@ void Control::initialize(HWND window, HINSTANCE instance, int IDC_COMBOBOX_TEXT)
 	case ADD:
 		hAdd = CreateWindowEx(0, type, title, WS_CHILD | WS_VISIBLE, x, y, width, height, window, NULL, instance, NULL);
 		break;
+	case GENERATE:
+		hGenerate = CreateWindowEx(0, type, title, WS_CHILD | WS_VISIBLE, x, y, width, height, window, NULL, instance, NULL);
+		break;
 	case SHOW:
 		hShow = CreateWindowEx(0, type, title, WS_CHILD | WS_VISIBLE, x, y, width, height, window, NULL, instance, NULL);
 		break;
 	case GENERATING_SET:
 		hGenerateSet = CreateWindowEx(WS_EX_STATICEDGE, type, title, CBS_DROPDOWN | WS_CHILD | WS_VISIBLE | WS_BORDER, x, y, width, height, window, (HMENU)IDC_COMBOBOX_TEXT, instance, NULL);
-		SendMessage(hModules, CB_ADDSTRING, 1, (LPARAM)"Circle"); // 1 okno opisu
 		break;
 	case FILENAME:
 		hFileName = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_VISIBLE | WS_BORDER, x, y, width, height, window, NULL, instance, NULL);

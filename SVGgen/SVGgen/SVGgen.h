@@ -8,13 +8,14 @@
 
 typedef double(*MYPROC)();
 WNDCLASSEX ChildWindow;
-HWND hAdd, hShow, hFileName, hDescription, hModules, hGenerateSet, hShowView;
+HWND hAdd, hGenerate, hShow, hFileName, hDescription, hModules, hGenerateSet, hShowView;
 HWND hTextParam1, hParam1, hTextParam2, hParam2, hTextParam3, hParam3, hTextParam4, hParam4, hTextParam5, hParam5;
 int figure = 0;
 std::vector<mem*> printSVG = {};
 
 typedef enum Handles {
 	ADD = 1,
+	GENERATE,
 	SHOW,
 	FILENAME,
 	DESCRIPTION,
@@ -64,7 +65,7 @@ private:
 	WNDCLASSEX window, ChildWindow;
 	int width, height;
 	HWND view; // g³óne okno widoku
-	Control generate, show; // uchwyty do guzików
+	Control add, generate, show; // uchwyty do guzików
 	Control fileName;
 	Control description;
 	Control modules, set;
