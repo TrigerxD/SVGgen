@@ -71,6 +71,7 @@ W razie problemów w file explorer (Visual Studio) SVGgen -> Proporties:
   - możliwość generowania zdefiniowanych przez użytkownika figur (parametry) - Generator branch - Jarek
   - generowanie kwadratu, prostokąta, trójkąta równobocznego i równoramiennego - Generator branch - Bartek
   - simple viewer -> przycisk show otwiera okno z podgladem na plik (rozdzielczosc FHD, podglad 960x540 (skalowanie /2) - Jarek + Bartek
+  - generowanie ukadu kartezjańskiego i funkcji w postaci obszaru o krawedziach 1px i szerokosci 1px - Jarek
   
 # TODO:
 1. Rozszerzenie pola opisu do opisywania poszczególnych składowych parametrów rysowanej figury/wykresu (min 3) -> Bartek
