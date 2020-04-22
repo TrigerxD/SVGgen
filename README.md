@@ -90,4 +90,4 @@ W razie problemów w file explorer (Visual Studio) SVGgen -> Proporties:
   KAZDA LINIA MUSI BYC PROSTOKATEM
 6. <s>must be - podglad -> Jarek + Bartek</s> DONE
 7. Lista figur -> Jarek + (przedyskutowanie Bartek)
-8. Dynamiczne dodawanie dodanych ksztaltow do generowanego rysunku
+8. <s>Dynamiczne dodawanie dodanych ksztaltow do generowanego rysunku</s>
