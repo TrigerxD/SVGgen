@@ -304,10 +304,7 @@ void UI::stateChangedGenerateSet(generateType state, int index)
 		ShowWindow(hParam3, SW_SHOW);
 		SetWindowText(hTextParam3, "R");
 		ShowWindow(hTextParam3, SW_SHOW);
-		SetWindowText(hParam4, printSVG[index]->figure->getParams()[3].c_str());
-		ShowWindow(hParam4, SW_SHOW);
-		SetWindowText(hTextParam4, "Color");
-		ShowWindow(hTextParam4, SW_SHOW);
+		ShowWindow(hParam5, SW_SHOW);
 		break;
 	case SQUARE:
 		SetWindowText(hParam1, printSVG[index]->figure->getParams()[0].c_str());
@@ -322,10 +319,7 @@ void UI::stateChangedGenerateSet(generateType state, int index)
 		ShowWindow(hParam3, SW_SHOW);
 		SetWindowText(hTextParam3, "A");
 		ShowWindow(hTextParam3, SW_SHOW);
-		SetWindowText(hParam4, printSVG[index]->figure->getParams()[3].c_str());
-		ShowWindow(hParam4, SW_SHOW);
-		SetWindowText(hTextParam4, "Color");
-		ShowWindow(hTextParam4, SW_SHOW);
+		ShowWindow(hParam5, SW_SHOW);
 		break;
 	case RECTANGLE:
 		SetWindowText(hParam1, printSVG[index]->figure->getParams()[0].c_str());
@@ -344,50 +338,43 @@ void UI::stateChangedGenerateSet(generateType state, int index)
 		ShowWindow(hParam4, SW_SHOW);
 		SetWindowText(hTextParam4, "B");
 		ShowWindow(hTextParam4, SW_SHOW);
-		SetWindowText(hParam5, printSVG[index]->figure->getParams()[4].c_str());
 		ShowWindow(hParam5, SW_SHOW);
-		SetWindowText(hTextParam5, "Color");
-		ShowWindow(hTextParam5, SW_SHOW);
+		ShowWindow(hParam7, SW_SHOW);
 		break;
 	case TRIANGLE:
 		SetWindowText(hParam1, printSVG[index]->figure->getParams()[0].c_str());
 		ShowWindow(hParam1, SW_SHOW);
-		SetWindowText(hTextParam1, "A");
+		SetWindowText(hTextParam1, "A (X,Y)");
 		ShowWindow(hTextParam1, SW_SHOW);
 		SetWindowText(hParam2, printSVG[index]->figure->getParams()[1].c_str());
 		ShowWindow(hParam2, SW_SHOW);
-		SetWindowText(hTextParam2, "B");
+		SetWindowText(hTextParam2, "B (X,Y)");
 		ShowWindow(hTextParam2, SW_SHOW);
 		SetWindowText(hParam3, printSVG[index]->figure->getParams()[2].c_str());
 		ShowWindow(hParam3, SW_SHOW);
-		SetWindowText(hTextParam3, "C");
+		SetWindowText(hTextParam3, "C (X,Y)");
 		ShowWindow(hTextParam3, SW_SHOW);
-		SetWindowText(hParam4, printSVG[index]->figure->getParams()[3].c_str());
-		ShowWindow(hParam4, SW_SHOW);
-		SetWindowText(hTextParam4, "Color");
-		ShowWindow(hTextParam4, SW_SHOW);
+		ShowWindow(hParam5, SW_SHOW);
+		ShowWindow(hParam7, SW_SHOW);
+		ShowWindow(hParam8, SW_SHOW);
 		break;
 	case LINE:
 		SetWindowText(hParam1, printSVG[index]->figure->getParams()[0].c_str());
 		ShowWindow(hParam1, SW_SHOW);
-		SetWindowText(hTextParam1, "X");
+		SetWindowText(hTextParam1, "X1");
 		ShowWindow(hTextParam1, SW_SHOW);
 		SetWindowText(hParam2, printSVG[index]->figure->getParams()[1].c_str());
 		ShowWindow(hParam2, SW_SHOW);
-		SetWindowText(hTextParam2, "Y");
+		SetWindowText(hTextParam2, "X2");
 		ShowWindow(hTextParam2, SW_SHOW);
 		SetWindowText(hParam3, printSVG[index]->figure->getParams()[2].c_str());
 		ShowWindow(hParam3, SW_SHOW);
-		SetWindowText(hTextParam3, "A");
+		SetWindowText(hTextParam3, "X3");
 		ShowWindow(hTextParam3, SW_SHOW);
 		SetWindowText(hParam4, printSVG[index]->figure->getParams()[3].c_str());
 		ShowWindow(hParam4, SW_SHOW);
-		SetWindowText(hTextParam4, "H");
+		SetWindowText(hTextParam4, "HX4");
 		ShowWindow(hTextParam4, SW_SHOW);
-		SetWindowText(hParam5, printSVG[index]->figure->getParams()[4].c_str());
-		ShowWindow(hParam5, SW_SHOW);
-		SetWindowText(hTextParam5, "Color");
-		ShowWindow(hTextParam5, SW_SHOW);
 		break;
 	case CARTESIAN:
 		SetWindowText(hParam1, printSVG[index]->figure->getParams()[0].c_str());
@@ -715,6 +702,18 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			p5 = (LPSTR)GlobalAlloc(GPTR, size_alloc + 1);
 			GetWindowText(hParam5, p5, size_alloc + 1);
 
+			size_alloc = GetWindowTextLength(hParam6);
+			p6 = (LPSTR)GlobalAlloc(GPTR, size_alloc + 1);
+			GetWindowText(hParam6, p6, size_alloc + 1);
+
+			size_alloc = GetWindowTextLength(hParam7);
+			p7 = (LPSTR)GlobalAlloc(GPTR, size_alloc + 1);
+			GetWindowText(hParam7, p7, size_alloc + 1);
+
+			size_alloc = GetWindowTextLength(hParam8);
+			p8 = (LPSTR)GlobalAlloc(GPTR, size_alloc + 1);
+			GetWindowText(hParam8, p8, size_alloc + 1);
+
 			std::vector<std::string> params;
 			if (IsWindowVisible(hParam1))
 				params.push_back(p1);
@@ -724,8 +723,16 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				params.push_back(p3);
 			if (IsWindowVisible(hParam4))
 				params.push_back(p4);
+			//Tu zmiana
 			if (IsWindowVisible(hParam5))
-				params.push_back(p5);
+			{
+				if (checked == BST_UNCHECKED)
+					params.push_back("none");
+				else
+					params.push_back("black");
+			}
+			if (IsWindowVisible(hParam6))
+				params.push_back(p6);
 
 			/*if (!generator.tryParams(params)) {
 			MessageBox(NULL, "Enter color as color name and rest as numeric (only)!", "Error", 0);
@@ -757,6 +764,7 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				}
 
 				if (figure == RECTANGLE) {
+					params.push_back(p7);
 					mem *tmp = generator.add(Description, RECTANGLE, params);
 					if (tmp != nullptr) {
 						SetWindowText(hFileName, "OK");
@@ -768,6 +776,8 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				}
 
 				if (figure == TRIANGLE) {
+					params.push_back(p7);
+					params.push_back(p8);
 					mem *tmp = generator.add(Description, TRIANGLE, params);
 					if (tmp != nullptr) {
 						SetWindowText(hFileName, "OK");
@@ -812,10 +822,10 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			}
 		}
 		else if ((HWND)lParam == hErase) {
-			printSVG.erase(printSVG.cbegin() + index2);
-			SendMessage(hGenerateSet, CB_DELETESTRING, (WPARAM)index2, (LPARAM)0);
-			prevPrintSVGSize = printSVG.size();
-			indexIncAfterErase++;
+				printSVG.erase(printSVG.cbegin() + index2);
+				SendMessage(hGenerateSet, CB_DELETESTRING, (WPARAM)index2, (LPARAM)0);
+				prevPrintSVGSize = printSVG.size();
+				indexIncAfterErase++;
 		}
 		else if ((HWND)lParam == hShow) {
 			Generator generator = Generator();

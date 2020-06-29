@@ -242,7 +242,7 @@ int Triangle::setParams(std::vector<std::string> params)
 		return 1;
 	this->params = params;
 	this->tag[0] = "<path ";
-	this->tag[1] = "\" stroke=\"black\" stroke-width=\"1\" />\n";
+	this->tag[1] = "\" stroke=\"black\" stroke-width=\"3\" />\n";
 	return 0;
 }
 
