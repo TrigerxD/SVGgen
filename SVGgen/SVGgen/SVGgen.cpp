@@ -4,6 +4,7 @@ UI * UI::me = NULL;
 Gdiplus::GdiplusStartupInput gdiplusStartupInput;
 ULONG_PTR gdiplusToken;
 int index2;
+int indexIncAfterErase;
 // Initialize GDI+.
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -680,7 +681,7 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 					mem *tmp = generator.add(Description, CIRCLE, params);
 					if (tmp != nullptr) {
 						SetWindowText(hFileName, "OK");
-						printSVG.insert(it+index2+1, tmp);
+						printSVG.insert(it + index2 + 1, tmp);
 						printSVG.erase(printSVG.cbegin() + index2);
 					}
 					else
@@ -756,6 +757,8 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		else if ((HWND)lParam == hErase) {
 			printSVG.erase(printSVG.cbegin() + index2);
 			SendMessage(hGenerateSet, CB_DELETESTRING, (WPARAM)index2, (LPARAM)0);
+			prevPrintSVGSize = printSVG.size();
+			indexIncAfterErase++;
 		}
 		else if ((HWND)lParam == hShow) {
 			Generator generator = Generator();
@@ -830,7 +833,7 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		else if ((HWND)lParam == hGenerateSet) {
 			for (int i = prevPrintSVGSize; i < printSVG.size(); i++) {
 				char buffer[8];
-				itoa(i + 1, buffer, 10);
+				itoa(i + 1 + indexIncAfterErase, buffer, 10);
 				const char* figureName = printSVG[i]->figure->getName();
 				char str[80];
 				strcpy(str, figureName);
