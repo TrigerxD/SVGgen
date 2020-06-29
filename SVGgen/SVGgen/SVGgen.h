@@ -8,10 +8,11 @@
 
 typedef double(*MYPROC)();
 WNDCLASSEX ChildWindow;
-HWND hAdd, hGenerate, hShow, hFileName, hDescription, hModules, hGenerateSet, hShowView;
+HWND hAdd, hGenerate, hShow, hEdit, hErase, hFileName, hDescription, hModules, hGenerateSet, hShowView;
 HWND hTextParam1, hParam1, hTextParam2, hParam2, hTextParam3, hParam3, hTextParam4, hParam4, hTextParam5, hParam5;
 int figure = 0;
 std::vector<mem*> printSVG = {};
+int prevPrintSVGSize = 0;
 
 typedef enum Handles {
 	ADD = 1,
@@ -26,6 +27,8 @@ typedef enum Handles {
 	PARAM_3,
 	PARAM_4,
 	PARAM_5,
+	EDIT,
+	ERASE,
 	DEFAULT
 } handles;
 
@@ -57,6 +60,7 @@ public:
 	HWND getView();
 	int comboBoxText;
 	void stateChaged(generateType state);
+	void stateChangedGenerateSet(generateType state, int index);
 	void hideControls();
 private:
 	LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -64,8 +68,8 @@ private:
 	LPSTR className;
 	WNDCLASSEX window, ChildWindow;
 	int width, height;
-	HWND view; // g³óne okno widoku
-	Control add, generate, show; // uchwyty do guzików
+	HWND view; // g³ówne okno widoku
+	Control add, generate, show, edit, erase; // uchwyty do guzików
 	Control fileName;
 	Control description;
 	Control modules, set;

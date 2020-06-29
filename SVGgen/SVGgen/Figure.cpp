@@ -241,6 +241,7 @@ std::string Text::generate()
 	return std::string();
 }
 
+
 FunctionDraw::FunctionDraw() 
 {
 	this->params.push_back("x");
