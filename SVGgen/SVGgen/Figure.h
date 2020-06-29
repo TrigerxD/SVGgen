@@ -17,8 +17,8 @@ typedef enum {
 	CIRCLE = 1,
 	SQUARE,
 	RECTANGLE,
-	TRIANGLE1,
-	TRIANGLE2,
+	TRIANGLE,
+	LINE,
 	CARTESIAN,
 	FUNCTION_DRAWER
 } generateType;
@@ -73,21 +73,18 @@ private:
 	std::vector<std::string> params;
 };
 
-class Triangle1 : public Figure {
+class Triangle : public Figure {
 public:
-	Triangle1();
+	Triangle();
 	int setParams(std::vector<std::string> params);
 	std::string generateSvgTag();
 private:
 	std::vector<std::string> params;
-	int x, y, a, x1, y1, x2, y2, x3, y3;
-	std::string p1, p2, p3;
-	std::stringstream sx1, sx2, sy2, sx3, sy3;
 };
 
-class Triangle2 : public Figure {
+class Line : public Figure {
 public:
-	Triangle2();
+	Line();
 	int setParams(std::vector<std::string> params);
 	std::string generateSvgTag();
 private:

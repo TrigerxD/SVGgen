@@ -9,7 +9,8 @@
 typedef double(*MYPROC)();
 WNDCLASSEX ChildWindow;
 HWND hAdd, hGenerate, hShow, hFileName, hDescription, hModules, hGenerateSet, hShowView;
-HWND hTextParam1, hParam1, hTextParam2, hParam2, hTextParam3, hParam3, hTextParam4, hParam4, hTextParam5, hParam5;
+HWND hTextParam1, hParam1, hTextParam2, hParam2, hTextParam3, hParam3, hTextParam4, hParam4, hParam5, hParam6, hParam7, hParam8;
+UINT checked = BST_UNCHECKED;
 int figure = 0;
 std::vector<mem*> printSVG = {};
 
@@ -26,6 +27,9 @@ typedef enum Handles {
 	PARAM_3,
 	PARAM_4,
 	PARAM_5,
+	PARAM_6,
+	PARAM_7,
+	PARAM_8,
 	DEFAULT
 } handles;
 
@@ -69,7 +73,7 @@ private:
 	Control fileName;
 	Control description;
 	Control modules, set;
-	Control param1, param2, param3, param4, param5;
+	Control param1, param2, param3, param4, param5, param6, param7, param8;
 	static UI *me;
 };
 

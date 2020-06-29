@@ -34,9 +34,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		(okno.getControl(PARAM_3))->initialize(okno.getView(), hInstance, okno.comboBoxText);
 		(okno.getControl(PARAM_4))->setParams((LPSTR)"EDIT", (LPSTR)"", 70, 180, 170, 20, PARAM_4);
 		(okno.getControl(PARAM_4))->initialize(okno.getView(), hInstance, okno.comboBoxText);
-		(okno.getControl(PARAM_5))->setParams((LPSTR)"EDIT", (LPSTR)"", 70, 210, 170, 20, PARAM_5);
+		(okno.getControl(PARAM_5))->setParams((LPSTR)"BUTTON", (LPSTR)"FILL", 10, 210, 230, 20, PARAM_5);
 		(okno.getControl(PARAM_5))->initialize(okno.getView(), hInstance, okno.comboBoxText);
-		
+		(okno.getControl(PARAM_6))->setParams((LPSTR)"EDIT", (LPSTR)"Enter description A here", 250, 50, 360, 100, PARAM_6);
+		(okno.getControl(PARAM_6))->initialize(okno.getView(), hInstance, okno.comboBoxText);
+		(okno.getControl(PARAM_7))->setParams((LPSTR)"EDIT", (LPSTR)"Enter description B here", 250, 160, 360, 100, PARAM_7);
+		(okno.getControl(PARAM_7))->initialize(okno.getView(), hInstance, okno.comboBoxText);
+		(okno.getControl(PARAM_8))->setParams((LPSTR)"EDIT", (LPSTR)"Enter description C here", 250, 270, 360, 100, PARAM_8);
+		(okno.getControl(PARAM_8))->initialize(okno.getView(), hInstance, okno.comboBoxText);
 		
 
 		if (okno.getView()) {
@@ -141,6 +146,12 @@ Control * UI::getControl(handles handle)
 		return &param4;
 	case PARAM_5:
 		return &param5;
+	case PARAM_6:
+		return &param6;
+	case PARAM_7:
+		return &param7;
+	case PARAM_8:
+		return &param8;
 	default:
 		break;
 	}
@@ -166,9 +177,7 @@ void UI::stateChaged(generateType state)
 		ShowWindow(hParam3, SW_SHOW);
 		SetWindowText(hTextParam3, "R");
 		ShowWindow(hTextParam3, SW_SHOW);
-		ShowWindow(hParam4, SW_SHOW);
-		SetWindowText(hTextParam4, "Color");
-		ShowWindow(hTextParam4, SW_SHOW);
+		ShowWindow(hParam5, SW_SHOW);
 		break;
 	case SQUARE:
 		ShowWindow(hParam1, SW_SHOW);
@@ -180,9 +189,7 @@ void UI::stateChaged(generateType state)
 		ShowWindow(hParam3, SW_SHOW);
 		SetWindowText(hTextParam3, "A");
 		ShowWindow(hTextParam3, SW_SHOW);
-		ShowWindow(hParam4, SW_SHOW);
-		SetWindowText(hTextParam4, "Color");
-		ShowWindow(hTextParam4, SW_SHOW);
+		ShowWindow(hParam5, SW_SHOW);
 		break;
 	case RECTANGLE:
 		ShowWindow(hParam1, SW_SHOW);
@@ -198,39 +205,35 @@ void UI::stateChaged(generateType state)
 		SetWindowText(hTextParam4, "B");
 		ShowWindow(hTextParam4, SW_SHOW);
 		ShowWindow(hParam5, SW_SHOW);
-		SetWindowText(hTextParam5, "Color");
-		ShowWindow(hTextParam5, SW_SHOW);
+		ShowWindow(hParam7, SW_SHOW);
 		break;
-	case TRIANGLE1:
+	case TRIANGLE:
 		ShowWindow(hParam1, SW_SHOW);
-		SetWindowText(hTextParam1, "A");
+		SetWindowText(hTextParam1, "A (X,Y)");
 		ShowWindow(hTextParam1, SW_SHOW);
 		ShowWindow(hParam2, SW_SHOW);
-		SetWindowText(hTextParam2, "B");
+		SetWindowText(hTextParam2, "B (X,Y)");
 		ShowWindow(hTextParam2, SW_SHOW);
 		ShowWindow(hParam3, SW_SHOW);
-		SetWindowText(hTextParam3, "C");
+		SetWindowText(hTextParam3, "C (X,Y)");
 		ShowWindow(hTextParam3, SW_SHOW);
-		ShowWindow(hParam4, SW_SHOW);
-		SetWindowText(hTextParam4, "Color");
-		ShowWindow(hTextParam4, SW_SHOW);
-		break;
-	case TRIANGLE2:
-		ShowWindow(hParam1, SW_SHOW);
-		SetWindowText(hTextParam1, "X");
-		ShowWindow(hTextParam1, SW_SHOW);
-		ShowWindow(hParam2, SW_SHOW);
-		SetWindowText(hTextParam2, "Y");
-		ShowWindow(hTextParam2, SW_SHOW);
-		ShowWindow(hParam3, SW_SHOW);
-		SetWindowText(hTextParam3, "A");
-		ShowWindow(hTextParam3, SW_SHOW);
-		ShowWindow(hParam4, SW_SHOW);
-		SetWindowText(hTextParam4, "H");
-		ShowWindow(hTextParam4, SW_SHOW);
 		ShowWindow(hParam5, SW_SHOW);
-		SetWindowText(hTextParam5, "Color");
-		ShowWindow(hTextParam5, SW_SHOW);
+		ShowWindow(hParam7, SW_SHOW);
+		ShowWindow(hParam8, SW_SHOW);
+		break;
+	case LINE:
+		ShowWindow(hParam1, SW_SHOW);
+		SetWindowText(hTextParam1, "X1");
+		ShowWindow(hTextParam1, SW_SHOW);
+		ShowWindow(hParam2, SW_SHOW);
+		SetWindowText(hTextParam2, "Y1");
+		ShowWindow(hTextParam2, SW_SHOW);
+		ShowWindow(hParam3, SW_SHOW);
+		SetWindowText(hTextParam3, "X2");
+		ShowWindow(hTextParam3, SW_SHOW);
+		ShowWindow(hParam4, SW_SHOW);
+		SetWindowText(hTextParam4, "Y2");
+		ShowWindow(hTextParam4, SW_SHOW);
 		break;
 	case CARTESIAN:
 		SetWindowText(hParam1, "-500,500");
@@ -280,7 +283,9 @@ void UI::hideControls()
 	ShowWindow(hParam4, SW_HIDE);
 	ShowWindow(hTextParam4, SW_HIDE);
 	ShowWindow(hParam5, SW_HIDE);
-	ShowWindow(hTextParam5, SW_HIDE);
+	ShowWindow(hParam7, SW_HIDE);
+	ShowWindow(hParam8, SW_HIDE);
+	SendMessage(hParam5, BM_SETCHECK, BST_UNCHECKED, 0);
 }
 
 LRESULT CALLBACK UI::Proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -335,7 +340,7 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	int size_alloc, len, index,j;
 	char text[100];
-	LPSTR Buffer, Description, p1, p2, p3, p4, p5;
+	LPSTR Buffer, Description, p1, p2, p3, p4, p5, p6, p7, p8;
 	HWND hStatic;
 	DWORD error;
 	HBITMAP bmpSource;
@@ -356,6 +361,7 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_COMMAND:
 		if ((HWND)lParam == hAdd) {
 			Generator generator = Generator();
+
 			size_alloc = GetWindowTextLength(hFileName);
 			Buffer = (LPSTR)GlobalAlloc(GPTR, size_alloc + 1);
 			GetWindowText(hFileName, Buffer, size_alloc + 1);
@@ -380,9 +386,17 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			p4 = (LPSTR)GlobalAlloc(GPTR, size_alloc + 1);
 			GetWindowText(hParam4, p4, size_alloc + 1);
 
-			size_alloc = GetWindowTextLength(hParam5);
-			p5 = (LPSTR)GlobalAlloc(GPTR, size_alloc + 1);
-			GetWindowText(hParam5, p5, size_alloc + 1);
+			size_alloc = GetWindowTextLength(hParam6);
+			p6 = (LPSTR)GlobalAlloc(GPTR, size_alloc + 1);
+			GetWindowText(hParam6, p6, size_alloc + 1);
+
+			size_alloc = GetWindowTextLength(hParam7);
+			p7 = (LPSTR)GlobalAlloc(GPTR, size_alloc + 1);
+			GetWindowText(hParam7, p7, size_alloc + 1);
+
+			size_alloc = GetWindowTextLength(hParam8);
+			p8 = (LPSTR)GlobalAlloc(GPTR, size_alloc + 1);
+			GetWindowText(hParam8, p8, size_alloc + 1);
 
 			std::vector<std::string> params;
 			if(IsWindowVisible(hParam1))
@@ -393,8 +407,18 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				params.push_back(p3);
 			if (IsWindowVisible(hParam4))
 				params.push_back(p4);
+			//Tu zmiana
 			if (IsWindowVisible(hParam5))
-				params.push_back(p5);
+			{
+				if (checked == BST_UNCHECKED)
+				params.push_back("none");
+				else
+					params.push_back("black");
+			}
+			if (IsWindowVisible(hParam6))
+				params.push_back(p6);
+
+			
 
 			/*if (!generator.tryParams(params)) {
 				MessageBox(NULL, "Enter color as color name and rest as numeric (only)!", "Error", 0);
@@ -424,6 +448,7 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				}
 
 				if (figure == RECTANGLE) {
+					params.push_back(p7);											
 					mem *tmp = generator.add(Description, RECTANGLE, params);
 					if (tmp != nullptr) {
 						SetWindowText(hFileName, "OK");
@@ -433,8 +458,10 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 						SetWindowText(hFileName, "To low number of parameters");
 				}
 
-				if (figure == TRIANGLE1) {
-					mem *tmp = generator.add(Description, TRIANGLE1, params);
+				if (figure == TRIANGLE) {
+					params.push_back(p7);
+					params.push_back(p8);
+					mem *tmp = generator.add(Description, TRIANGLE, params);
 					if (tmp != nullptr) {
 						SetWindowText(hFileName, "OK");
 						printSVG.push_back(tmp);
@@ -443,8 +470,8 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 						SetWindowText(hFileName, "To low number of parameters");
 				}
 
-				if (figure == TRIANGLE2) {
-					mem *tmp = generator.add(Description, TRIANGLE2, params);
+				if (figure == LINE) {
+					mem *tmp = generator.add(Description, LINE, params);
 					if (tmp != nullptr) {
 						SetWindowText(hFileName, "OK");
 						printSVG.push_back(tmp);
@@ -472,6 +499,35 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				}
 
 			}
+		}
+		//Tu zmniana
+		else if ((HWND)lParam == hParam5) {
+		//obs³uga checkboxa
+
+			if (checked == BST_UNCHECKED)
+			{
+				SendMessage(hParam5, BM_SETCHECK, BST_CHECKED, 0);	
+				checked = BST_CHECKED;
+
+																					//Tutaj ukrywanie dodatkowego opsiu dla kontrolek
+				ShowWindow(hParam7, SW_HIDE);
+				ShowWindow(hParam8, SW_HIDE);
+			}
+			else 
+			{
+				SendMessage(hParam5, BM_SETCHECK, BST_UNCHECKED, 0);
+				checked = BST_UNCHECKED;
+
+				if (figure == RECTANGLE || figure == TRIANGLE)
+				{
+					ShowWindow(hParam7, SW_SHOW);
+					if (figure == TRIANGLE)
+						ShowWindow(hParam8, SW_SHOW);
+				}
+				// Tu ustawianie parametru
+			}
+
+			 
 		}
 		else if ((HWND)lParam == hShow) {
 			Generator generator = Generator();
@@ -520,15 +576,15 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 					}
 					else if (strcmp(text, "Rectangle") == 0) {
 						stateChaged(RECTANGLE);
-						figure = RECTANGLE;
+						figure = RECTANGLE;						
 					}
-					else if (strcmp(text, "Equilateral Triangle") == 0) {
-						stateChaged(TRIANGLE1);
-						figure = TRIANGLE1;
+					else if (strcmp(text, "Triangle") == 0) {
+						stateChaged(TRIANGLE);
+						figure = TRIANGLE;
 					}
-					else if (strcmp(text, "Isosceles Triangle") == 0) {
-						stateChaged(TRIANGLE2);
-						figure = TRIANGLE2;
+					else if (strcmp(text, "Line") == 0) {
+						stateChaged(LINE);
+						figure = LINE;
 					}
 					else if (strcmp(text, "Cartesian System") == 0) {
 						stateChaged(CARTESIAN);
@@ -603,7 +659,8 @@ void Control::initialize(HWND window, HINSTANCE instance, int IDC_COMBOBOX_TEXT)
 		hFileName = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_VISIBLE | WS_BORDER, x, y, width, height, window, NULL, instance, NULL);
 		break;
 	case DESCRIPTION:
-		hDescription = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_VISIBLE | WS_BORDER, x, y, width, height, window, NULL, instance, NULL);
+		//Tu zmnina WS_VISABLE -> SW_HIDE
+		hDescription = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | SW_HIDE | WS_BORDER, x, y, width, height, window, NULL, instance, NULL);
 		break;
 	case MODULES:
 		hModules = CreateWindowEx(WS_EX_STATICEDGE, type, title, CBS_DROPDOWN | WS_CHILD | WS_VISIBLE | WS_BORDER, x, y, width, height, window, (HMENU)IDC_COMBOBOX_TEXT, instance, NULL);
@@ -613,7 +670,7 @@ void Control::initialize(HWND window, HINSTANCE instance, int IDC_COMBOBOX_TEXT)
 		SendMessage(hModules, CB_ADDSTRING, 4, (LPARAM)"Triangle");	// 3 okna opisu
 		SendMessage(hModules, CB_ADDSTRING, 5, (LPARAM)"Line"); // 1 okno opisu
 		SendMessage(hModules, CB_ADDSTRING, 6, (LPARAM)"Cartesian System"); // 2 okna opisu
-		SendMessage(hModules, CB_ADDSTRING, 7, (LPARAM)"Function"); // ??? okna opisu
+		SendMessage(hModules, CB_ADDSTRING, 7, (LPARAM)"Function"); // 1 okno opisu
 		break;
 	case PARAM_1:
 		hParam1 = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_BORDER | SW_HIDE, x, y, width, height, window, NULL, instance, NULL);
@@ -632,8 +689,17 @@ void Control::initialize(HWND window, HINSTANCE instance, int IDC_COMBOBOX_TEXT)
 		hTextParam4 = CreateWindowEx(0, "STATIC", "G: ", WS_CHILD | WS_BORDER | SW_HIDE, x - 60, y, 50, 20, window, NULL, instance, NULL);
 		break;
 	case PARAM_5:
-		hParam5 = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_BORDER | SW_HIDE, x, y, width, height, window, NULL, instance, NULL);
-		hTextParam5 = CreateWindowEx(0, "STATIC", "Color: ", WS_CHILD | WS_BORDER | SW_HIDE, x - 60, y, 50, 20, window, NULL, instance, NULL);
+		//Tu zmiana
+		hParam5 = CreateWindowEx(WS_EX_STATICEDGE, type, title, BS_RIGHTBUTTON | BS_CHECKBOX | WS_CHILD | WS_BORDER | SW_HIDE, x , y, width, height, window, NULL, instance, NULL);		
+		break;
+	case PARAM_6:
+		hParam6 = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_BORDER | WS_VISIBLE, x, y, width, height, window, NULL, instance, NULL);
+		break;
+	case PARAM_7:
+		hParam7 = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_BORDER | SW_HIDE, x, y, width, height, window, NULL, instance, NULL);
+		break;
+	case PARAM_8:
+		hParam8 = CreateWindowEx(WS_EX_CLIENTEDGE, type, title, WS_CHILD | WS_BORDER | SW_HIDE, x, y, width, height, window, NULL, instance, NULL);
 		break;
 	default:
 		break;

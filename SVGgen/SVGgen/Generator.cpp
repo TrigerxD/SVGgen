@@ -65,10 +65,10 @@ Figure * Generator::setFigure(generateType state)
 		return new Squa();
 	case RECTANGLE:
 		return new Rect();
-	case TRIANGLE1:
-		return new Triangle1();
-	case TRIANGLE2:
-		return new Triangle2();
+	case TRIANGLE:
+		return new Triangle();
+	case LINE:
+		return new Line();
 	case CARTESIAN:
 		return new Cartesian();
 	case FUNCTION_DRAWER:

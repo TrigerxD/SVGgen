@@ -7,200 +7,444 @@ std::string Figure::generateSvgTag()
 }
 
 #pragma region Circle
-
 Circle::Circle()
 {
 	this->params.push_back("0");
 	this->params.push_back("0");
 	this->params.push_back("0");
-	this->params.push_back("red");
+	this->params.push_back("none");
 }
 
 int Circle::setParams(std::vector<std::string> params)
 {
-	if (params.size() != 4)
-		return 1;
-	this->params = params;
-	this->tag[0] = "<circle ";
-	this->tag[1] = "/>\n";
-	return 0;
-}
-
-//<circle r="84" cy="104" cx="108" fill="#ff7f00"/>
-std::string Circle::generateSvgTag()
-{
-	std::string retVal = "";
-	retVal.append(this->tag[0]);
-	retVal.append("cx=\"" + params[0] + "\" ");
-	retVal.append("cy=\"" + params[1] + "\" ");
-	retVal.append("r=\"" + params[2] + "\" ");
-	retVal.append("fill=\"" + params[3] + "\" ");
-	retVal.append(this->tag[1]);
-	return retVal;
-}
-//iloœc paramentrów która bêdzie potrzebna
-Rect::Rect()
-{
-	this->params.push_back("0");
-	this->params.push_back("0");
-	this->params.push_back("0");
-	this->params.push_back("0");
-	this->params.push_back("blue");
-}
-
-int Rect::setParams(std::vector<std::string> params)
-{
 	if (params.size() != 5)
 		return 1;
 	this->params = params;
-	this->tag[0] = "<rect ";
-	this->tag[1] = "/>\n";
+	this->tag[0] = "<path ";
+	this->tag[1] = "\" stroke=\"black\" stroke-width=\"1\" />\n";
 	return 0;
 }
 
-//<rect x="100" y="100" width="100" height="150" style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" />
-std::string Rect::generateSvgTag()
+std::string Circle::generateSvgTag()
 {
+	int circleX, circleY, circleR;
 	std::string retVal = "";
+
+	circleX = stoi(params[0]);
+	circleY = stoi(params[1]);
+	circleR = stoi(params[2]);
+
+
 	retVal.append(this->tag[0]);
-	retVal.append("x=\"" + params[0] + "\" ");
-	retVal.append("y=\"" + params[1] + "\" ");
-	retVal.append("width=\"" + params[2] + "\" ");
-	retVal.append("height=\"" + params[3] + "\" ");
-	retVal.append("fill=\"" + params[4] + "\" ");
+	retVal.append("id=\"" + params[4] + "\" ");
+
+	retVal.append("d=\"M" + std::to_string(circleX - circleR) + "," + params[1] + " ");
+	retVal.append("a " + std::to_string(circleR) + "," + std::to_string(circleR) + " 0 1,0 " + std::to_string(circleR+ circleR) + ",0 ");
+	retVal.append("a " + std::to_string(circleR) + "," + std::to_string(circleR) + " 0 1,0 -" + std::to_string(circleR + circleR) + ",0 ");
+
+	retVal.append("M" + std::to_string(circleX - circleR + 1) + "," + params[1] + " ");
+	retVal.append("a " + std::to_string(circleR-1) + "," + std::to_string(circleR) + " 0 1,0 " + std::to_string(circleR + circleR-2) + ",0 ");
+	retVal.append("a " + std::to_string(circleR-1) + "," + std::to_string(circleR) + " 0 1,0 -" + std::to_string(circleR + circleR-2) + ",0 ");
+
+	retVal.append("\" fill= \"" + params[3]);
 	retVal.append(this->tag[1]);
 	return retVal;
 }
 #pragma endregion
 
+
+#pragma region Rectangle
+Rect::Rect()
+{
+	//Tu zmiana
+	this->params.push_back("0");
+	this->params.push_back("0");
+	this->params.push_back("0");
+	this->params.push_back("0");
+	this->params.push_back("none");
+}
+
+int Rect::setParams(std::vector<std::string> params)
+{
+	if (params.size() !=7)
+		return 1;
+	this->params = params;
+	this->tag[0] = "<path ";
+	this->tag[1] = "\" stroke=\"black\" stroke-width=\"1\" />\n";
+	return 0;
+}
+
+std::string Rect::generateSvgTag()
+{
+	//Tu zmiana
+	int rectX, rectY, rectW, rectH, rectWidth, rectHeight;
+	std::string retVal = "";
+
+	rectX = stoi(params[0]);
+	rectY = stoi(params[1]);
+	rectW = stoi(params[2]);
+	rectH = stoi(params[3]);
+
+	//obliczenia
+
+	rectWidth = rectX + rectW;
+	rectHeight = rectY + rectH;
+
+	//operacje na stringach
+
+	if (params[4] == "black")
+	{	
+
+	retVal.append(this->tag[0]);
+
+	retVal.append("id=\"" + params[5] + "\" ");
+
+	//Zewnêtrzna kreska
+	retVal.append("d=\"M" + params[0] + " " + params[1] + " ");
+	retVal.append("L" + std::to_string(rectWidth) + " " + params[1] + " ");
+	retVal.append("L" + std::to_string(rectWidth) + " " + std::to_string(rectHeight) + " ");
+	retVal.append("L" + params[0] + " " + std::to_string(rectHeight) + " ");
+	retVal.append("L" + params[0] + " " + params[1] + " ");
+	//Wewnêtrzna kreska
+	retVal.append("M" + std::to_string(rectX + 2) + " " + std::to_string(rectY + 2) + " ");
+	retVal.append("L" + std::to_string(rectWidth - 2) + " " + std::to_string(rectY + 2) + " ");
+	retVal.append("L" + std::to_string(rectWidth - 2) + " " + std::to_string(rectHeight - 2) + " ");
+	retVal.append("L" + std::to_string(rectX + 2) + " " + std::to_string(rectHeight - 2) + " ");
+	retVal.append("L" + std::to_string(rectX + 2) + " " + std::to_string(rectY + 2) + " ");
+
+	retVal.append("\" fill= \"" + params[4]);
+	retVal.append(this->tag[1]);
+
+	}
+	else
+	{
+
+
+	retVal.append(this->tag[0]);
+
+	retVal.append("id=\"" + params[5] + "\" ");
+
+	//Zewnêtrzna górna, pozioma kreska
+	retVal.append("d=\"M" + params[0] + " " + params[1] + " ");
+	retVal.append("L" + std::to_string(rectWidth) + " " + params[1] + " ");
+	//Wewnêtrzna górna, pozioma kreska
+	retVal.append("M" + std::to_string(rectX + 2) + " " + std::to_string(rectY + 2) + " ");
+	retVal.append("L" + std::to_string(rectWidth - 2) + " " + std::to_string(rectY + 2) + " ");
+	//Zewnêtrzna dolna, pozioma kreska
+	retVal.append("M" + params[0] + " " + std::to_string(rectHeight) + " ");
+	retVal.append("L" + std::to_string(rectWidth) + " " + std::to_string(rectHeight) + " ");
+	//Wewnêtrzna dolna, pozioma kreska
+	retVal.append("M" + std::to_string(rectX + 2) + " " + std::to_string(rectHeight - 2) + " ");
+	retVal.append("L" + std::to_string(rectWidth - 2) + " " + std::to_string(rectHeight - 2) + " ");
+
+	retVal.append("\" fill= \"" + params[4]);
+	retVal.append(this->tag[1]);
+
+
+
+	retVal.append(this->tag[0]);
+
+	retVal.append("id=\"" + params[6] + "\" ");
+
+	//Zewnêtrzna lewa, pionowa kreska
+	retVal.append("d=\"M" + params[0] + " " + params[1] + " ");
+	retVal.append("L" + params[0] + " " + std::to_string(rectHeight) + " ");
+	//Wewnêtrzna lewa, pionowa kreska
+	retVal.append("M" + std::to_string(rectX + 2) + " " + std::to_string(rectY + 2) + " ");
+	retVal.append("L" + std::to_string(rectX + 2) + " " + std::to_string(rectHeight - 2) + " ");
+	//Zewnêtrzna prawa, pionowa kreska
+	retVal.append("M" + std::to_string(rectWidth) + " " + params[1] + " ");
+	retVal.append("L" + std::to_string(rectWidth) + " " + std::to_string(rectHeight) + " ");
+	//Wewnêtrzna prawa, pionowa kreska
+	retVal.append("M" + std::to_string(rectWidth - 2) + " " + std::to_string(rectY + 2) + " ");
+	retVal.append("L" + std::to_string(rectWidth - 2) + " " + std::to_string(rectHeight - 2) + " ");
+
+	retVal.append("\" fill= \"" + params[4]);
+	retVal.append(this->tag[1]);
+
+	}
+
+
+
+	return retVal;
+}
+#pragma endregion
+
+
+#pragma region Square
 Squa::Squa()
 {
 	this->params.push_back("0");
 	this->params.push_back("0");
 	this->params.push_back("0");
-	this->params.push_back("blue");
+	this->params.push_back("none");
 }
 
 int Squa::setParams(std::vector<std::string> params)
 {
-	if (params.size() != 4)
+	if (params.size() != 5)
 		return 1;
 	this->params = params;
-	this->tag[0] = "<rect ";
-	this->tag[1] = "/>\n";
+	this->tag[0] = "<path ";
+	this->tag[1] = "\" stroke=\"black\" stroke-width=\"1\" />\n";
 	return 0;
 }
 
 std::string Squa::generateSvgTag()
 {
+	int sqareX, sqareY, sqareA, sqareWidth, sqareHeight;
+
 	std::string retVal = "";
+
+	sqareX = stoi(params[0]);
+	sqareY = stoi(params[1]);
+	sqareA = stoi(params[2]);
+
+	sqareWidth = sqareX + sqareA;
+	sqareHeight = sqareY + sqareA;
+
 	retVal.append(this->tag[0]);
-	retVal.append("x=\"" + params[0] + "\" ");
-	retVal.append("y=\"" + params[1] + "\" ");
-	retVal.append("width=\"" + params[2] + "\" ");
-	retVal.append("height=\"" + params[2] + "\" ");
-	retVal.append("fill=\"" + params[3] + "\" ");
+	retVal.append("id=\"" + params[4] + "\" ");
+
+	//Zewnêtrzna kreska
+	retVal.append("d=\"M" + params[0] + " " + params[1] + " ");
+	retVal.append("L" + std::to_string(sqareWidth) + " " + params[1] + " ");
+	retVal.append("L" + std::to_string(sqareWidth) + " " + std::to_string(sqareWidth) + " ");
+	retVal.append("L" + params[0] + " " + std::to_string(sqareHeight) + " ");
+	retVal.append("L" + params[0] + " " + params[1] + " ");
+	//Wewnêtrzna kreska
+	retVal.append("M" + std::to_string(sqareX + 2) + " " + std::to_string(sqareY + 2) + " ");
+	retVal.append("L" + std::to_string(sqareWidth - 2) + " " + std::to_string(sqareY + 2) + " ");
+	retVal.append("L" + std::to_string(sqareWidth - 2) + " " + std::to_string(sqareHeight - 2) + " ");
+	retVal.append("L" + std::to_string(sqareX + 2) + " " + std::to_string(sqareHeight - 2) + " ");
+	retVal.append("L" + std::to_string(sqareX + 2) + " " + std::to_string(sqareY + 2) + " ");
+
+	retVal.append("\" fill= \"" + params[3]);
 	retVal.append(this->tag[1]);
+
 	return retVal;
 }
 #pragma endregion
 
-Triangle1::Triangle1()
+
+#pragma region Tringle
+Triangle::Triangle()
 {
 	this->params.push_back("0");
 	this->params.push_back("0");
 	this->params.push_back("0");
-	this->params.push_back("blue");
+	this->params.push_back("none");
 }
 
-int Triangle1::setParams(std::vector<std::string> params)
+int Triangle::setParams(std::vector<std::string> params)
 {
-	if (params.size() != 4)
+	if (params.size() != 7)
 		return 1;
 	this->params = params;
-	this->tag[0] = "<polygon ";
-	this->tag[1] = "/>\n";
+	this->tag[0] = "<path ";
+	this->tag[1] = "\" stroke=\"black\" stroke-width=\"1\" />\n";
 	return 0;
 }
 
-std::string Triangle1::generateSvgTag()
+std::string Triangle::generateSvgTag()
 {
-	x = stoi(params[0]);
-	y = stoi(params[1]);
-	a = stoi(params[2]);
-
-	x1 = x + a/2;
-	sx1 << x1;
-
-	x2 = a + x;
-	y2 = (a*sqrt(3) / 2) + y;
-	sx2 << x2;
-	sy2 << y2;
-
-	x3 = x;
-	sx3 << x3;
-
-	p1 = sx1.str() + "," + params[1];
-	p2 = sx2.str() + "," + sy2.str();
-	p3 = sx3.str() + "," + sy2.str();
-
+	std::string A = params[0];
+	std::string B = params[1];
+	std::string C = params[2];
 	std::string retVal = "";
-	retVal.append(this->tag[0]);
-	retVal.append("points=\"" + p1 + " " + p2 + " " + p3 + "\" ");
-	retVal.append("fill=\"" + params[3] + "\" ");
-	retVal.append(this->tag[1]);
+
+	//param0 A(x,y), param1 B(x,y), param2 C(x,y), param3 fill, param4 desc1. param5 desc2, param6 desc3
+	int coma = A.find_first_of(',');
+	int AX = atoi((A.substr(0, coma)).c_str());
+	int AY = atoi((A.substr(coma + 1, A.size() - 1)).c_str());
+	coma = B.find_first_of(',');
+	int BX = atoi((B.substr(0, coma)).c_str());
+	int BY = atoi((B.substr(coma + 1, B.size() - 1)).c_str());
+	coma = C.find_first_of(',');
+	int CX = atoi((C.substr(0, coma)).c_str());
+	int CY = atoi((C.substr(coma + 1, C.size() - 1)).c_str());
+
+
+	if (params[3] == "black")
+	{
+
+		retVal.append(this->tag[0]);
+		retVal.append("id=\"" + params[4] + "\" ");
+
+		//Tu obs³uga z wype³nieniem
+		retVal.append("d=\"M" + std::to_string(AX) + " " + std::to_string(AY) + " ");
+		retVal.append("L" + std::to_string(BX) + " " + std::to_string(BY)+ " ");
+		retVal.append("L" + std::to_string(CX) + " " + std::to_string(CY) + " ");
+		retVal.append("L" + std::to_string(AX) + " " + std::to_string(AY) + " ");
+
+		retVal.append("\" fill=\"" + params[3] + " ");
+		retVal.append(this->tag[1]);
+	}
+	else
+	{
+		//A
+		retVal.append(this->tag[0]);
+		retVal.append("id=\"" + params[4] + "\" ");
+
+		//Tu obs³uga z Lini A(X,Y)
+		retVal.append("d=\"M" + std::to_string(AX) + " " + std::to_string(AY) + " ");
+		retVal.append("L" + std::to_string(BX) + " " + std::to_string(BY) + " ");
+
+
+		retVal.append("\" fill=\"" + params[3] + " ");
+		retVal.append(this->tag[1]);
+
+		//B
+		retVal.append(this->tag[0]);
+		retVal.append("id=\"" + params[5] + "\" ");
+
+		//Tu obs³uga z Lini B(X,Y)
+		retVal.append("d=\"M" + std::to_string(BX) + " " + std::to_string(BY) + " ");
+		retVal.append("L" + std::to_string(CX) + " " + std::to_string(CY) + " ");
+
+
+		retVal.append("\" fill=\"" + params[3] + " ");
+		retVal.append(this->tag[1]);
+
+		//C
+		retVal.append(this->tag[0]);
+		retVal.append("id=\"" + params[6] + "\" ");
+
+		//Tu obs³uga z Lini C(X,Y)
+		retVal.append("d=\"M" + std::to_string(CX) + " " + std::to_string(CY) + " ");
+		retVal.append("L" + std::to_string(AX) + " " + std::to_string(AY) + " ");
+
+
+		retVal.append("\" fill=\"" + params[3] + " ");
+		retVal.append(this->tag[1]);
+
+	}
+
+
+
 	return retVal;
 }
+#pragma endregion
 
-Triangle2::Triangle2()
+
+#pragma region Line
+Line::Line()
 {
 	this->params.push_back("0");
 	this->params.push_back("0");
 	this->params.push_back("0");
-	this->params.push_back("0");
-	this->params.push_back("blue");
+	this->params.push_back("none");
 }
 
-int Triangle2::setParams(std::vector<std::string> params)
+int Line::setParams(std::vector<std::string> params)
 {
 	if (params.size() != 5)
 		return 1;
 	this->params = params;
-	this->tag[0] = "<polygon ";
-	this->tag[1] = "/>\n";
+	this->tag[0] = "<path ";
+	this->tag[1] = "\" stroke=\"black\" stroke-width=\"1\" />\n";
 	return 0;
 }
 
-std::string Triangle2::generateSvgTag()
+std::string Line::generateSvgTag()
 {
-	x = stoi(params[0]);
-	y = stoi(params[1]);
-	a = stoi(params[2]);
-	h = stoi(params[3]);
-
-	x1 = x + a/2;
-	sx1 << x1;
-
-	x2 = x + a;
-	y2 = y + h;
-	sx2 << x2;
-	sy2 << y2;
-
-	x3 = x;
-	sx3 << x3;
-
-	p1 = sx1.str() + "," + params[1];
-	p2 = sx2.str() + "," + sy2.str();
-	p3 = sx3.str() + "," + sy2.str();
+	int lineX1, lineY1, lineX2, lineY2;
 
 	std::string retVal = "";
+
+	lineX1 = stoi(params[0]);
+	lineY1 = stoi(params[1]);
+	lineX2 = stoi(params[2]);
+	lineY2 = stoi(params[3]);
+
 	retVal.append(this->tag[0]);
-	retVal.append("points=\"" + p1 + " " + p2 + " " + p3 + "\" ");
-	retVal.append("fill=\"" + params[4] + "\" ");
+	retVal.append("id=\"" + params[4] + "\" ");
+
+
+	if (lineX1 == lineX2 && lineY1 == lineY2)
+	{
+		retVal.append("d=\"M" + params[0] + " " + params[1] + " ");
+		retVal.append("L" + params[2] + " " + params[3] + " ");
+	}
+
+
+	if (lineX1 < lineX2 && lineY1 == lineY2) //1
+	{
+		retVal.append("d=\"M" + std::to_string(lineX1) + " " + std::to_string(lineY1 - 1) + " ");
+		retVal.append("L" + std::to_string(lineX2) + " " + std::to_string(lineY1 - 1) + " ");
+		retVal.append("L" + std::to_string(lineX2) + " " + std::to_string(lineY2 + 1) + " ");
+		retVal.append("L" + std::to_string(lineX1) + " " + std::to_string(lineY2 + 1) + " ");
+		retVal.append("L" + std::to_string(lineX1) + " " + std::to_string(lineY1 - 1) + " ");
+	}
+
+	if (lineX1 < lineX2 && lineY1 < lineY2) //2
+	{
+		retVal.append("d=\"M" + std::to_string(lineX1+1) + " " + std::to_string(lineY1 - 1) + " ");
+		retVal.append("L" + std::to_string(lineX2+1) + " " + std::to_string(lineY2 - 1) + " ");
+		retVal.append("L" + std::to_string(lineX2-1) + " " + std::to_string(lineY2 + 1) + " ");
+		retVal.append("L" + std::to_string(lineX1-1) + " " + std::to_string(lineY1 + 1) + " ");
+		retVal.append("L" + std::to_string(lineX1+1) + " " + std::to_string(lineY1 - 1) + " ");
+	}
+	if (lineX1 == lineX2 && lineY1 < lineY2) //3
+	{
+		retVal.append("d=\"M" + std::to_string(lineX1+1) + " " + std::to_string(lineY1) + " ");
+		retVal.append("L" + std::to_string(lineX2+1) + " " + std::to_string(lineY2) + " ");
+		retVal.append("L" + std::to_string(lineX2-1) + " " + std::to_string(lineY2) + " ");
+		retVal.append("L" + std::to_string(lineX1-1) + " " + std::to_string(lineY1) + " ");
+		retVal.append("L" + std::to_string(lineX1+1) + " " + std::to_string(lineY1) + " ");
+	}
+	if (lineX1 > lineX2 && lineY1 < lineY2) //4
+	{
+		retVal.append("d=\"M" + std::to_string(lineX1+1) + " " + std::to_string(lineY1 + 1) + " ");
+		retVal.append("L" + std::to_string(lineX2+1) + " " + std::to_string(lineY2 + 1) + " ");
+		retVal.append("L" + std::to_string(lineX2-1) + " " + std::to_string(lineY2 - 1) + " ");
+		retVal.append("L" + std::to_string(lineX1-1) + " " + std::to_string(lineY1 -1) + " ");
+		retVal.append("L" + std::to_string(lineX1 + 1) + " " + std::to_string(lineY1 + 1) + " ");
+	}
+	if (lineX1 > lineX2 && lineY1 == lineY2)//5
+	{
+		retVal.append("d=\"M" + std::to_string(lineX1) + " " + std::to_string(lineY1 + 1) + " ");
+		retVal.append("L" + std::to_string(lineX2) + " " + std::to_string(lineY1 + 1) + " ");
+		retVal.append("L" + std::to_string(lineX2) + " " + std::to_string(lineY2 - 1) + " ");
+		retVal.append("L" + std::to_string(lineX1) + " " + std::to_string(lineY2 - 1) + " ");
+		retVal.append("L" + std::to_string(lineX1) + " " + std::to_string(lineY1 + 1) + " ");
+	}
+	if (lineX1 > lineX2 && lineY1 > lineY2)//6
+	{
+		retVal.append("d=\"M" + std::to_string(lineX1 - 1) + " " + std::to_string(lineY1 + 1) + " ");
+		retVal.append("L" + std::to_string(lineX2 - 1) + " " + std::to_string(lineY2 + 1) + " ");
+		retVal.append("L" + std::to_string(lineX2 + 1) + " " + std::to_string(lineY2 - 1) + " ");
+		retVal.append("L" + std::to_string(lineX1 + 1) + " " + std::to_string(lineY1 - 1) + " ");
+		retVal.append("L" + std::to_string(lineX1 - 1) + " " + std::to_string(lineY1 + 1) + " ");
+	}
+	if (lineX1 == lineX2 && lineY1 > lineY2)//7
+	{
+		retVal.append("d=\"M" + std::to_string(lineX1 - 1) + " " + std::to_string(lineY1) + " ");
+		retVal.append("L" + std::to_string(lineX2 - 1) + " " + std::to_string(lineY2) + " ");
+		retVal.append("L" + std::to_string(lineX2 + 1) + " " + std::to_string(lineY2) + " ");
+		retVal.append("L" + std::to_string(lineX1 + 1) + " " + std::to_string(lineY1) + " ");
+		retVal.append("L" + std::to_string(lineX1 - 1) + " " + std::to_string(lineY1) + " ");
+	}
+	if (lineX1 < lineX2 && lineY1 > lineY2)//8
+	{
+		retVal.append("d=\"M" + std::to_string(lineX1 - 1) + " " + std::to_string(lineY1 - 1) + " ");
+		retVal.append("L" + std::to_string(lineX2 - 1) + " " + std::to_string(lineY2 - 1) + " ");
+		retVal.append("L" + std::to_string(lineX2 + 1) + " " + std::to_string(lineY2 + 1) + " ");
+		retVal.append("L" + std::to_string(lineX1 + 1) + " " + std::to_string(lineY1 + 1) + " ");
+		retVal.append("L" + std::to_string(lineX1 - 1) + " " + std::to_string(lineY1 - 1) + " ");
+	}
+
+
+
+	retVal.append("\" fill= \"none");
 	retVal.append(this->tag[1]);
+
 	return retVal;
 }
+#pragma endregion
 
+
+#pragma region Rest
 Description::Description()
 {
 	this->tag[0] = "<description text=\"";
@@ -240,7 +484,10 @@ std::string Text::generate()
 {
 	return std::string();
 }
+#pragma endregion
 
+
+#pragma region Func
 FunctionDraw::FunctionDraw() 
 {
 	this->params.push_back("x");
@@ -251,11 +498,11 @@ FunctionDraw::FunctionDraw()
 
 int FunctionDraw::setParams(std::vector<std::string> params)
 {
-	if (params.size() != 4)
+	if (params.size() != 5)
 		return 1;
 	this->params = params;
-	this->tag[0] = "<path d=\" ";
-	this->tag[1] = "\" stroke=\"black\" stroke-width=\"1\" fill=\"none\"/>\n";
+	this->tag[0] = "<path ";
+	this->tag[1] = "\" stroke=\"black\" stroke-width=\"1\" />\n";
 	return 0;
 }
 
@@ -300,7 +547,9 @@ std::string FunctionDraw::generateSvgTag()
 	}
 
 	retVal.append(this->tag[0]);
-	retVal.append("M" + std::to_string((int)round(x + data[0] * 100)) + " " + std::to_string((int)round(y - results[0] * 100 + 1)) + " ");
+	retVal.append("id=\"" + params[4] + "\" ");
+
+	retVal.append("d=\"M" + std::to_string((int)round(x + data[0] * 100)) + " " + std::to_string((int)round(y - results[0] * 100 + 1)) + " ");
 	for (int i = 1; i < results.size(); i++) {
 		retVal.append("L" + std::to_string((int)round(x + data[i] * 100)) + " " + std::to_string((int)round(y - results[i] * 100 + 1)) + " ");
 	}
@@ -308,10 +557,16 @@ std::string FunctionDraw::generateSvgTag()
 		retVal.append("L" + std::to_string((int)round(x + data[i] * 100)) + " " + std::to_string((int)round(y - results[i] * 100 - 1)) + " ");
 	}
 	retVal.append("L" + std::to_string((int)round(x + data[0] * 100)) + " " + std::to_string((int)round(y - results[0] * 100 - 1)) + " Z");
+
+	retVal.append("\" fill= \"none");
+
 	retVal.append(this->tag[1]);
 	return retVal;
 }
+#pragma endregion
 
+
+#pragma region Cartesian
 Cartesian::Cartesian()
 {
 	this->params.push_back("-1,1");
@@ -321,11 +576,11 @@ Cartesian::Cartesian()
 
 int Cartesian::setParams(std::vector<std::string> params)
 {
-	if (params.size() != 3)
+	if (params.size() != 4)
 		return 1;
 	this->params = params;
-	this->tag[0] = "<path d=\" ";
-	this->tag[1] = "\" stroke=\"black\" stroke-width=\"1\" fill=\"none\"/>\n";
+	this->tag[0] = "<path ";
+	this->tag[1] = "\" fill=\"none\" stroke=\"black\" stroke-width=\"1\" />\n";
 	return 0;
 }
 
@@ -347,14 +602,15 @@ std::string Cartesian::generateSvgTag()
 	int y = atoi((center.substr(coma + 1, center.size() - 1)).c_str());
 
 	retVal.append(this->tag[0]);
-	retVal.append("M" + std::to_string(x + xmin) + " " + std::to_string(y - 1) + " ");
+	retVal.append("id=\"" + params[3] + "\" ");
+	retVal.append("d=\"M" + std::to_string(x + xmin) + " " + std::to_string(y - 1) + " ");
 	retVal.append("L" + std::to_string(x + xmin) + " " + std::to_string(y + 1) + " ");
 	retVal.append("L" + std::to_string(x + xmax) + " " + std::to_string(y + 1) + " ");
 	retVal.append("L" + std::to_string(x + xmax) + " " + std::to_string(y - 1) + " Z");
 	retVal.append(this->tag[1]);
 	for (int i = 0; i < xmax/100; i++) { // -140, 140 -> 0,140 -> 1,
 		retVal.append(this->tag[0]);
-		retVal.append("M" + std::to_string(x + (i + 1) * 100 + 1) + " " + std::to_string(y + 20) + " ");
+		retVal.append("d=\"M" + std::to_string(x + (i + 1) * 100 + 1) + " " + std::to_string(y + 20) + " ");
 		retVal.append("L" + std::to_string(x + (i + 1) * 100 - 1) + " " + std::to_string(y + 20) + " ");
 		retVal.append("L" + std::to_string(x + (i + 1) * 100 - 1) + " " + std::to_string(y - 20) + " ");
 		retVal.append("L" + std::to_string(x + (i + 1) * 100 + 1) + " " + std::to_string(y - 20) + " Z");
@@ -362,21 +618,21 @@ std::string Cartesian::generateSvgTag()
 	}
 	for (int i = (xmin) / 100; i < 0; i++) { // -140, 140 -> 0,140 -> 1,
 		retVal.append(this->tag[0]);
-		retVal.append("M" + std::to_string(x + (i) * 100 + 1) + " " + std::to_string(y + 20) + " ");
+		retVal.append("d=\"M" + std::to_string(x + (i) * 100 + 1) + " " + std::to_string(y + 20) + " ");
 		retVal.append("L" + std::to_string(x + (i) * 100 - 1) + " " + std::to_string(y + 20) + " ");
 		retVal.append("L" + std::to_string(x + (i) * 100 - 1) + " " + std::to_string(y - 20) + " ");
 		retVal.append("L" + std::to_string(x + (i) * 100 + 1) + " " + std::to_string(y - 20) + " Z");
 		retVal.append(this->tag[1]);
 	}
 	retVal.append(this->tag[0]);
-	retVal.append("M" + std::to_string(x + 1) + " " + std::to_string(y + ymin) + " ");
+	retVal.append("d=\"M" + std::to_string(x + 1) + " " + std::to_string(y + ymin) + " ");
 	retVal.append("L" + std::to_string(x - 1) + " " + std::to_string(y + ymin) + " ");
 	retVal.append("L" + std::to_string(x - 1) + " " + std::to_string(y + ymax) + " ");
 	retVal.append("L" + std::to_string(x + 1) + " " + std::to_string(y + ymax) + " Z");
 	retVal.append(this->tag[1]);
 	for (int i = 0; i < ymax / 100; i++) { // -140, 140 -> 0,140 -> 1,
 		retVal.append(this->tag[0]);
-		retVal.append("M" + std::to_string(x + 20) + " " + std::to_string(y + (i + 1) * 100 + 1) + " ");
+		retVal.append("d=\"M" + std::to_string(x + 20) + " " + std::to_string(y + (i + 1) * 100 + 1) + " ");
 		retVal.append("L" + std::to_string(x + 20) + " " + std::to_string(y + (i + 1) * 100 - 1) + " ");
 		retVal.append("L" + std::to_string(x - 20) + " " + std::to_string(y + (i + 1) * 100 - 1) + " ");
 		retVal.append("L" + std::to_string(x - 20) + " " + std::to_string(y + (i + 1) * 100 + 1) + " Z");
@@ -384,7 +640,7 @@ std::string Cartesian::generateSvgTag()
 	}
 	for (int i = (ymin) / 100; i < 0; i++) { // -140, 140 -> 0,140 -> 1,
 		retVal.append(this->tag[0]);
-		retVal.append("M" + std::to_string(x + 20) + " " + std::to_string(y + (i) * 100 + 1) + " ");
+		retVal.append("d=\"M" + std::to_string(x + 20) + " " + std::to_string(y + (i) * 100 + 1) + " ");
 		retVal.append("L" + std::to_string(x + 20) + " " + std::to_string(y + (i) * 100 - 1) + " ");
 		retVal.append("L" + std::to_string(x - 20) + " " + std::to_string(y + (i) * 100 - 1) + " ");
 		retVal.append("L" + std::to_string(x - 20) + " " + std::to_string(y + (i) * 100 + 1) + " Z");
@@ -392,3 +648,4 @@ std::string Cartesian::generateSvgTag()
 	}
 	return retVal;
 }
+#pragma endregion
