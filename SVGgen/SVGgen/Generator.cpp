@@ -12,7 +12,6 @@ Generator::Generator()
 mem* Generator::add(char* desc, generateType state, std::vector<std::string> params)
 {	
 	mem *memo = new mem;
-	memo->figure = new Figure();
 	memo->description = new Description();
 	memo->figure = setFigure(state);
 	if (memo->figure->setParams(params))

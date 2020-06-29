@@ -25,6 +25,7 @@ int Circle::setParams(std::vector<std::string> params)
 	return 0;
 }
 
+//<circle r="84" cy="104" cx="108" fill="#ff7f00"/>
 std::string Circle::generateSvgTag()
 {
 	int circleX, circleY, circleR;
@@ -56,7 +57,6 @@ std::string Circle::generateSvgTag()
 #pragma region Rectangle
 Rect::Rect()
 {
-	//Tu zmiana
 	this->params.push_back("0");
 	this->params.push_back("0");
 	this->params.push_back("0");
@@ -171,7 +171,7 @@ std::string Rect::generateSvgTag()
 #pragma endregion
 
 
-#pragma region Square
+#pragma region Square	
 Squa::Squa()
 {
 	this->params.push_back("0");
@@ -196,7 +196,7 @@ std::string Squa::generateSvgTag()
 
 	std::string retVal = "";
 
-	sqareX = stoi(params[0]);
+	sqareX = stoi(params[0]);	
 	sqareY = stoi(params[1]);
 	sqareA = stoi(params[2]);
 

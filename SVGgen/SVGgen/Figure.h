@@ -30,7 +30,10 @@ public:
 	Figure() {};
 	virtual std::string generateSvgTag();
 	virtual int setParams(std::vector<std::string> params) { return 1; };
+	virtual std::vector<std::string> getParams() { return std::vector<std::string>(); };
 	std::string tag[2];
+	virtual const char* getName() { return "  "; };
+	const char* figureName;
 };
 
 
@@ -48,7 +51,10 @@ class Circle : public Figure {
 public:
 	Circle();
 	int setParams(std::vector<std::string> params);
+	std::vector<std::string> getParams() { return params; };
 	std::string generateSvgTag();
+	const char* figureName = "Circle";
+	const char* getName() { return figureName; };
 private:
 	std::vector<std::string> params;
 };
@@ -58,7 +64,10 @@ class Squa : public Figure {
 public:
 	Squa();
 	int setParams(std::vector<std::string> params);
+	std::vector<std::string> getParams() { return params; };
 	std::string generateSvgTag();
+	const char* figureName = "Square";
+	const char* getName() { return figureName; };
 private:
 	std::vector<std::string> params;
 };
@@ -67,9 +76,11 @@ class Rect : public Figure {
 public:
 	Rect();
 	int setParams(std::vector<std::string> params);
+	std::vector<std::string> getParams() { return params; };
 	std::string generateSvgTag();
+	const char* figureName = "Rectangle";
+	const char* getName() { return figureName; };
 private:
-
 	std::vector<std::string> params;
 };
 
@@ -77,7 +88,10 @@ class Triangle : public Figure {
 public:
 	Triangle();
 	int setParams(std::vector<std::string> params);
+	std::vector<std::string> getParams() { return params; };
 	std::string generateSvgTag();
+	const char* figureName = "Equilateral Triangle";
+	const char* getName() { return figureName; };
 private:
 	std::vector<std::string> params;
 };
@@ -86,7 +100,10 @@ class Line : public Figure {
 public:
 	Line();
 	int setParams(std::vector<std::string> params);
+	std::vector<std::string> getParams() { return params; };
 	std::string generateSvgTag();
+	const char* figureName = "Isosceles Triangle";
+	const char* getName() { return figureName; };
 private:
 	std::vector<std::string> params;
 	int x, y, a, h, x1, y1, x2, y2, x3, y3;
@@ -112,7 +129,10 @@ class FunctionDraw : public Figure {
 public:
 	FunctionDraw();
 	int setParams(std::vector<std::string> params);
+	std::vector<std::string> getParams() { return params; };
 	std::string generateSvgTag();
+	const char* figureName = "Function";
+	const char* getName() { return figureName; };
 private:
 	std::vector<std::string> params;
 };
@@ -121,7 +141,10 @@ class Cartesian : public Figure {
 public:
 	Cartesian();
 	int setParams(std::vector<std::string> params);
+	std::vector<std::string> getParams() { return params; };
 	std::string generateSvgTag();
+	const char* figureName = "Cartesian System";
+	const char* getName() { return figureName; };
 private:
 	std::vector<std::string> params;
 };

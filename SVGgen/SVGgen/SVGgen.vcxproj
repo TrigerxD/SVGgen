@@ -23,7 +23,7 @@
     <ProjectGuid>{A09FD7D0-5BBC-414B-914B-C90DA7AC266E}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>SVGgen</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
