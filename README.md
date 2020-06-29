@@ -41,11 +41,6 @@ Uzupełnianie pliku Readme.md - użyjemy go jako raportu końcowego projektu :D
     -	kwadrat
     -	trojkat (rownoboczny, rownoramienny, prostokatny)
     -	prostokat 
-    -	trapez (prostokatny, rownoramienny)
-    -	romb
-    -	rownoleglobok
-    -	gwiazda (6-sioramienna)
-    -	szeciokat (n-kat max n =10) - foremne
 
 3. (opcjonalnie) możliwość podglądu generowanego obrazu
 
@@ -72,6 +67,11 @@ W razie problemów w file explorer (Visual Studio) SVGgen -> Proporties:
   - generowanie kwadratu, prostokąta, trójkąta równobocznego i równoramiennego - Generator branch - Bartek
   - simple viewer -> przycisk show otwiera okno z podgladem na plik (rozdzielczosc FHD, podglad 960x540 (skalowanie /2) - Jarek + Bartek
   - generowanie ukadu kartezjańskiego i funkcji w postaci obszaru o krawedziach 1px i szerokosci 1px - Jarek
+  - dodanie listy dodanych obiektów - Magda, Amanda
+  - zmiana rysowania krawędzi figur - Bartek
+  - mozliwość usuwania dodanych obiektów - Magda, Amanda
+  - możliwość edycji dodanych obiektów - Magda, Amanda
+  - zmiana liczby pól opisu - Bartek
   
 # TODO:
 1. <s>Rozszerzenie pola opisu do opisywania poszczególnych składowych parametrów rysowanej figury/wykresu (min 3) -> Bartek</s>
