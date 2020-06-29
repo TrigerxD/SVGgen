@@ -76,7 +76,7 @@ W razie problemów w file explorer (Visual Studio) SVGgen -> Proporties:
 # TODO:
 1. <s>Rozszerzenie pola opisu do opisywania poszczególnych składowych parametrów rysowanej figury/wykresu (min 3) -> Bartek</s>
 2. <s>Rozdzielczość każdego obrazu - full HD 1920x1080</s> DONE
-3. Linie rysować jako małe prostokąty, pomijać kolory oraz <b>wypełnienie</b> - figury -> Bartek
+3. <s>Linie rysować jako małe prostokąty, pomijać kolory oraz <b>wypełnienie</b> - figury -> Bartek </s>
 4. <s>Dodać wykresy - parametry: -> Jarek (przykladowy wykres)
     - wzór - np. sin(2x), cos(x/2), x^2+2*x+1, 2x+2, (⅓)x - 3, 1/x
     - przedział - od do : <3,4) ; (5,6) ; <1, 100> ; (,)
