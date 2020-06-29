@@ -74,7 +74,7 @@ W razie problemów w file explorer (Visual Studio) SVGgen -> Proporties:
   - generowanie ukadu kartezjańskiego i funkcji w postaci obszaru o krawedziach 1px i szerokosci 1px - Jarek
   
 # TODO:
-1. Rozszerzenie pola opisu do opisywania poszczególnych składowych parametrów rysowanej figury/wykresu (min 3) -> Bartek
+1. <s>Rozszerzenie pola opisu do opisywania poszczególnych składowych parametrów rysowanej figury/wykresu (min 3) -> Bartek</s>
 2. <s>Rozdzielczość każdego obrazu - full HD 1920x1080</s> DONE
 3. Linie rysować jako małe prostokąty, pomijać kolory oraz <b>wypełnienie</b> - figury -> Bartek
 4. <s>Dodać wykresy - parametry: -> Jarek (przykladowy wykres)
@@ -82,13 +82,14 @@ W razie problemów w file explorer (Visual Studio) SVGgen -> Proporties:
     - przedział - od do : <3,4) ; (5,6) ; <1, 100> ; (,)
     - zbiór - domyślne liczby rzeczywiste (możliwość wybrania całkowitych, naturalnych)</s>
 
-5. Tylko podstawowe figury -> Bartek
+5. <s>Tylko podstawowe figury -> Bartek
   - trojkat - 3 opisy
   - kwadrat - 1 opis
   - prostokat - 2 opisy
   - kolo - 1 opis
   - linia - do rysowania bokow, przekatnych itd, - 1 opis - na bazie wspolrzednych poczatku i konca
-  KAZDA LINIA MUSI BYC PROSTOKATEM
+  KAZDA LINIA MUSI BYC PROSTOKATEM</s>
 6. <s>must be - podglad -> Jarek + Bartek</s> DONE
-7. Lista figur -> Jarek + (przedyskutowanie Bartek)
+7. <s>Lista figur -> Jarek + (przedyskutowanie Bartek) </s>
 8. <s>Dynamiczne dodawanie dodanych ksztaltow do generowanego rysunku</s>
+9. <s>Dodanie do projektu mozliwości edytowania i usuwania dodanych obiektów - Amanda, Magda </s>
