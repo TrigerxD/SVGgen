@@ -289,7 +289,7 @@ std::string Triangle::generateSvgTag()
 		//Tu obs³uga z Lini A(X,Y)
 		retVal.append("d=\"M" + std::to_string(AX) + " " + std::to_string(AY) + " ");
 		retVal.append("L" + std::to_string(BX) + " " + std::to_string(BY) + " ");
-
+		retVal.append("L" + std::to_string(AX) + " " + std::to_string(AY) + " ");
 
 		retVal.append("\" fill=\"" + params[3] + " ");
 		retVal.append(this->tag[1]);
@@ -301,7 +301,7 @@ std::string Triangle::generateSvgTag()
 		//Tu obs³uga z Lini B(X,Y)
 		retVal.append("d=\"M" + std::to_string(BX) + " " + std::to_string(BY) + " ");
 		retVal.append("L" + std::to_string(CX) + " " + std::to_string(CY) + " ");
-
+		retVal.append("L" + std::to_string(BX) + " " + std::to_string(BY) + " ");
 
 		retVal.append("\" fill=\"" + params[3] + " ");
 		retVal.append(this->tag[1]);
@@ -313,11 +313,17 @@ std::string Triangle::generateSvgTag()
 		//Tu obs³uga z Lini C(X,Y)
 		retVal.append("d=\"M" + std::to_string(CX) + " " + std::to_string(CY) + " ");
 		retVal.append("L" + std::to_string(AX) + " " + std::to_string(AY) + " ");
-
+		retVal.append("L" + std::to_string(CX) + " " + std::to_string(CY) + " ");
 
 		retVal.append("\" fill=\"" + params[3] + " ");
 		retVal.append(this->tag[1]);
 
+		retVal.append(this->tag[0]);
+		retVal.append("d=\"M" + std::to_string(AX) + " " + std::to_string(AY) + " ");
+		retVal.append("L" + std::to_string(BX) + " " + std::to_string(BY) + " ");
+		retVal.append("L" + std::to_string(CX) + " " + std::to_string(CY) + " ");
+		retVal.append("L" + std::to_string(AX) + " " + std::to_string(AY) + " ");
+		retVal.append("\" fill= \"none\" stroke=\"white\" stroke-width=\"1\" />\n");
 	}
 
 
