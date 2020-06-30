@@ -72,6 +72,7 @@ W razie problemów w file explorer (Visual Studio) SVGgen -> Proporties:
   - mozliwość usuwania dodanych obiektów - Magda, Amanda
   - możliwość edycji dodanych obiektów - Magda, Amanda
   - zmiana liczby pól opisu - Bartek
+  - dodanie możliwości wypełnienia - Bartek
   
 # TODO:
 1. <s>Rozszerzenie pola opisu do opisywania poszczególnych składowych parametrów rysowanej figury/wykresu (min 3) -> Bartek</s>
