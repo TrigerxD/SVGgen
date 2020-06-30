@@ -938,11 +938,11 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 					stateChangedGenerateSet(RECTANGLE, index2);
 					figure = RECTANGLE;
 				}
-				else if (strcmp(text, "Equilateral") == 0) {
+				else if (strcmp(text, "Triangle") == 0) {
 					stateChangedGenerateSet(TRIANGLE, index2);
 					figure = TRIANGLE;
 				}
-				else if (strcmp(text, "Isosceles") == 0) {
+				else if (strcmp(text, "Line") == 0) {
 					stateChangedGenerateSet(LINE, index2);
 					figure = LINE;
 				}

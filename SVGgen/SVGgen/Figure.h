@@ -90,7 +90,7 @@ public:
 	int setParams(std::vector<std::string> params);
 	std::vector<std::string> getParams() { return params; };
 	std::string generateSvgTag();
-	const char* figureName = "Equilateral Triangle";
+	const char* figureName = "Triangle";
 	const char* getName() { return figureName; };
 private:
 	std::vector<std::string> params;
@@ -102,7 +102,7 @@ public:
 	int setParams(std::vector<std::string> params);
 	std::vector<std::string> getParams() { return params; };
 	std::string generateSvgTag();
-	const char* figureName = "Isosceles Triangle";
+	const char* figureName = "Line";
 	const char* getName() { return figureName; };
 private:
 	std::vector<std::string> params;
