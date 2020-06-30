@@ -826,6 +826,8 @@ LRESULT CALLBACK UI::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				SendMessage(hGenerateSet, CB_DELETESTRING, (WPARAM)index2, (LPARAM)0);
 				prevPrintSVGSize = printSVG.size();
 				indexIncAfterErase++;
+				ShowWindow(hEdit, SW_HIDE);
+				ShowWindow(hErase, SW_HIDE);
 		}
 		else if ((HWND)lParam == hShow) {
 			Generator generator = Generator();
