@@ -94,3 +94,11 @@ W razie problemów w file explorer (Visual Studio) SVGgen -> Proporties:
 7. <s>Lista figur -> Jarek + (przedyskutowanie Bartek) </s>
 8. <s>Dynamiczne dodawanie dodanych ksztaltow do generowanego rysunku</s>
 9. <s>Dodanie do projektu mozliwości edytowania i usuwania dodanych obiektów - Amanda, Magda </s>
+
+# Autorzy
+
+Bajerska Magdalena </br>
+Wieczorek Amanda </br>
+Bobek Jarosław </br>
+Czech Bartosz </br>
+Gawron Bartosz </br>
